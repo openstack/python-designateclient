@@ -18,4 +18,4 @@ import sys
 from monikerclient.shell import MonikerShell
 
 shell = MonikerShell()
-shell.run(sys.argv[1:])
+sys.exit(shell.run(sys.argv[1:]))
