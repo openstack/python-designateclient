@@ -27,12 +27,12 @@ dependency_links = common_setup.parse_dependency_links([
 ])
 
 setup(
-    name='monikerclient',
+    name='python-monikerclient',
     version='0.0',
     description='DNS as a Service - Client',
     author='Kiall Mac Innes',
     author_email='kiall@managedit.ie',
-    url='https://launchpad.net/monikerclient',
+    url='https://launchpad.net/python-monikerclient',
     packages=find_packages(exclude=['bin']),
     include_package_data=True,
     test_suite='nose.collector',
