@@ -1,0 +1,52 @@
+{
+    "id": "/schemas/record",
+
+    "$schema": "http://json-schema.org/draft-03/hyper-schema",
+
+    "title": "record",
+    "description": "Record",
+
+    "properties": {
+        "id": {
+            "type": "string",
+            "description": "Record Identifier",
+            "pattern": "^([0-9a-fA-F]){8}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){12}$",
+            "readonly": true
+        },
+        "name": {
+            "type": "string",
+            "description": "DNS Record Name",
+            "maxLength": 255,
+            "pattern": "^.+[^\\.]$",
+            "required": true
+        },
+        "type": {
+            "type": "string",
+            "description": "DNS Record Type",
+            "enum": ["A", "AAAA", "CNAME", "MX", "SRV", "TXT", "SPF", "NS"]
+        },
+        "data": {
+            "type": "string",
+            "description": "DNS Record Value",
+            "maxLength": 255,
+            "required": true
+        },
+        "ttl": {
+            "type": "integer",
+            "description": "Time to live",
+            "min": 60
+        },
+        "created_at": {
+            "type": "string",
+            "description": "Date and time of image registration",
+            "format": "date-time",
+            "readonly": true
+        },
+        "updated_at": {
+            "type": "string",
+            "description": "Date and time of image registration",
+            "format": "date-time",
+            "readonly": true
+        }
+    }
+}
