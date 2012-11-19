@@ -113,6 +113,9 @@ def model_factory(schema):
         def itervalues(self):
             return copy.deepcopy(dict(self)).itervalues()
 
+        def keys(self):
+            return copy.deepcopy(dict(self)).keys()
+
         def values(self):
             return copy.deepcopy(dict(self)).values()
 

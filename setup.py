@@ -14,6 +14,7 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations
 # under the License.
+import textwrap
 from setuptools import setup, find_packages
 from monikerclient.openstack.common import setup as common_setup
 from monikerclient.version import version_info as version
@@ -46,6 +47,14 @@ setup(
         'bin/moniker',
     ],
     cmdclass=common_setup.get_cmdclass(),
+    entry_points=textwrap.dedent("""
+        [moniker.cli]
+        domain-list = monikerclient.cli.domains:ListDomainsCommand
+        domain-get = monikerclient.cli.domains:GetDomainCommand
+        domain-create = monikerclient.cli.domains:CreateDomainCommand
+        domain-update = monikerclient.cli.domains:UpdateDomainCommand
+        domain-delete = monikerclient.cli.domains:DeleteDomainCommand
+        """),
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Topic :: Internet :: Name Service (DNS)',

@@ -1,3 +1,4 @@
 nose
 mox
 openstack.nose_plugin
+sphinx

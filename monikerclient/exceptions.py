@@ -21,3 +21,23 @@ class Base(Exception):
 
 class ResourceNotFound(Base):
     pass
+
+
+class RemoteError(Base):
+    pass
+
+
+class Unknown(RemoteError):
+    pass
+
+
+class Forbidden(RemoteError):
+    pass
+
+
+class Conflict(RemoteError):
+    pass
+
+
+class NotFound(RemoteError):
+    pass

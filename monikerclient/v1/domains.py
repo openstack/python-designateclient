@@ -13,20 +13,25 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations
 # under the License.
+import json
 from monikerclient import warlock
 from monikerclient import utils
+from monikerclient.v1.base import Controller
 
 
 Domain = warlock.model_factory(utils.load_schema('v1', 'domain'))
 
 
-class Controller(object):
+class DomainsController(Controller):
     def list(self):
         """
         Retrieve a list of domains
 
         :returns: A list of :class:`Domain`s
         """
+        response = self.client.get('/domains')
+
+        return [Domain(i) for i in response.json['domains']]
 
     def get(self, domain_id):
         """
@@ -35,6 +40,9 @@ class Controller(object):
         :param domain_id: Domain Identifier
         :returns: :class:`Domain`
         """
+        response = self.client.get('/domains/%s' % domain_id)
+
+        return Domain(response.json)
 
     def create(self, domain):
         """
@@ -43,6 +51,9 @@ class Controller(object):
         :param domain: A :class:`Domain` to create
         :returns: :class:`Domain`
         """
+        response = self.client.post('/domains', data=json.dumps(domain))
+
+        return Domain(response.json)
 
     def update(self, domain):
         """
@@ -51,6 +62,10 @@ class Controller(object):
         :param domain: A :class:`Domain` to update
         :returns: :class:`Domain`
         """
+        response = self.client.put('/domains/%s' % domain.id,
+                                   data=json.dumps(domain.changes))
+
+        return Domain(response.json)
 
     def delete(self, domain):
         """
@@ -58,3 +73,7 @@ class Controller(object):
 
         :param domain: A :class:`Domain`, or Domain Identifier to delete
         """
+        if isinstance(domain, Domain):
+            self.client.delete('/domains/%s' % domain.id)
+        else:
+            self.client.delete('/domains/%s' % domain)
