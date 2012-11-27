@@ -14,40 +14,88 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 import abc
+import json
 
 
 class Controller(object):
     __metaclass__ = abc.ABCMeta
 
+    resource = None
+    schema = None
+
     def __init__(self, client):
         self.client = client
 
-    def list(self, *args, **kw):
+    @property
+    def path(self):
+        return '/' + self.plural
+
+    @property
+    def plural(self):
+        return self.resource + 's'
+
+    def _list(self):
         """
         List something
         """
-        raise NotImplementedError
+        response = self.client.get(self.path)
+        return [self.schema(i) for i in response.json[self.plural]]
 
-    def get(self, *args, **kw):
+    def _get(self, id_):
         """
         Get something
         """
-        raise NotImplementedError
+        response = self.client.get(self.path + '/%s' % id_)
+        return self.schema(response.json)
 
-    def create(self, *args, **kw):
+    def _create(self, values):
         """
         Create something
         """
-        raise NotImplementedError
+        response = self.client.post(self.path, data=json.dumps(values))
+        return self.schema(response.json)
 
-    def update(self, *args, **kw):
+    def _update(self, values):
         """
         Update something
         """
-        raise NotImplementedError
+        response = self.client.put(self.path + '/%s' % values['id'],
+                                   data=json.dumps(values))
+        return self.schema(response.json)
 
-    def delete(self, *args, **kw):
+    def _delete(self, obj):
         """
         Delete something
         """
-        raise NotImplementedError
+        id_ = obj.id if isinstance(obj, self.schema) else obj
+        response = self.client.delete(self.path + '/%s' % id_)
+
+    @abc.abstractmethod
+    def list(self, *args, **kw):
+        """
+        List a resource
+        """
+
+    @abc.abstractmethod
+    def get(self, *args, **kw):
+        """
+        Get a resouce
+        """
+
+    @abc.abstractmethod
+    def create(self, *args, **kw):
+        """
+        Create a resource
+        """
+
+    @abc.abstractmethod
+    def update(self, *args, **kw):
+        """
+        Update a resource
+        """
+
+    @abc.abstractmethod
+    def delete(self, *args, **kw):
+        """
+        Delete a resource
+        """
