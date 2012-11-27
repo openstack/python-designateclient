@@ -17,6 +17,7 @@ import abc
 from cliff.command import Command as CliffCommand
 from cliff.lister import Lister
 from cliff.show import ShowOne
+from monikerclient import utils
 from monikerclient.v1 import Client
 
 
@@ -67,10 +68,9 @@ class Command(CliffCommand):
 class ListCommand(Command, Lister):
     def post_execute(self, results):
         if len(results) > 0:
-            column_names = results[0].keys()
-            data = [r.values() for r in results]
-
-            return column_names, data
+            columns = utils.get_columns(results)
+            data = [utils.get_item_properties(i, columns) for i in results]
+            return columns, data
         else:
             return [], ()
 

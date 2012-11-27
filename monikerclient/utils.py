@@ -36,3 +36,49 @@ def load_schema(version, name):
     schema_string = resource_string('schemas', version, '%s.json' % name)
 
     return json.loads(schema_string)
+
+
+def get_item_properties(item, fields, mixed_case_fields=[], formatters={}):
+    """Return a tuple containing the item properties.
+
+    :param item: a single item resource (e.g. Server, Tenant, etc)
+    :param fields: tuple of strings with the desired field names
+    :param mixed_case_fields: tuple of field names to preserve case
+    :param formatters: dictionary mapping field names to callables
+        to format the values
+    """
+    row = []
+
+    for field in fields:
+        if field in formatters:
+            row.append(formatters[field](item))
+        else:
+            if field in mixed_case_fields:
+                field_name = field.replace(' ', '_')
+            else:
+                field_name = field.lower().replace(' ', '_')
+            if not hasattr(item, field_name) and \
+                    (isinstance(item, dict) and field_name in item):
+                data = item[field_name]
+            else:
+                data = getattr(item, field_name, '')
+            if data is None:
+                data = ''
+            row.append(data)
+    return tuple(row)
+
+
+def get_columns(data):
+    """
+    Some row's might have variable count of columns, ensure that we have the
+    same.
+
+    :param data: Results in [{}, {]}]
+    """
+    columns = set()
+
+    def _seen(col):
+        columns.add(str(col))
+
+    map(lambda item: map(_seen, item.keys()), data)
+    return list(columns)
