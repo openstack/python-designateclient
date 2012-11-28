@@ -76,11 +76,6 @@ class ListCommand(Command, Lister):
 
 
 class GetCommand(Command, ShowOne):
-    def get_parser(self, prog_name):
-        parser = super(GetCommand, self).get_parser(prog_name)
-        parser.add_argument('id', help='The ID or Name to get')
-        return parser
-
     def post_execute(self, results):
         return results.keys(), results.values()
 

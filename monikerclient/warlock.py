@@ -16,7 +16,10 @@
 # Hopefully we can upstream the changes ASAP.
 #
 import copy
+import logging
 import jsonschema
+
+LOG = logging.getLogger(__name__)
 
 
 class InvalidOperation(RuntimeError):
@@ -38,8 +41,8 @@ def model_factory(schema):
         """Apply a JSON schema to an object"""
         try:
             jsonschema.validate(obj, schema)
-        except jsonschema.ValidationError:
-            raise ValidationError()
+        except jsonschema.ValidationError, e:
+            raise ValidationError(str(e))
 
     class Model(dict):
         """Self-validating model for arbitrary objects"""
@@ -51,8 +54,8 @@ def model_factory(schema):
             self.__dict__['validator'] = validator
             try:
                 self.validator(d)
-            except ValidationError:
-                raise ValueError()
+            except ValidationError, e:
+                raise ValueError('Validation Error: %s' % str(e))
             else:
                 dict.__init__(self, d)
 

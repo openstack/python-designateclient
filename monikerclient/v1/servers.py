@@ -53,7 +53,7 @@ class ServersController(Controller):
         """
         response = self.client.post('/servers', data=json.dumps(server))
 
-        return server.update(response.json)
+        return Server(response.json)
 
     def update(self, server):
         """

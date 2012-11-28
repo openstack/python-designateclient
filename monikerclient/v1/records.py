@@ -17,63 +17,97 @@ import json
 from monikerclient import warlock
 from monikerclient import utils
 from monikerclient.v1.base import Controller
+from monikerclient.v1.domains import Domain
 
 
 Record = warlock.model_factory(utils.load_schema('v1', 'record'))
 
 
 class RecordsController(Controller):
-    def list(self):
+    def list(self, domain):
         """
         Retrieve a list of records
 
+        :param domain: :class:`Domain` or Domain Identifier
         :returns: A list of :class:`Record`s
         """
-        response = self.client.get('/records')
+        domain_id = domain.id if isinstance(domain, Domain) else domain
+
+        response = self.client.get('/domains/%(domain_id)s/records' % {
+            'domain_id': domain_id
+        })
 
         return [Record(i) for i in response.json['records']]
 
-    def get(self, record_id):
+    def get(self, domain, record_id):
         """
         Retrieve a record
 
+        :param domain: :class:`Domain` or Domain Identifier
         :param record_id: Record Identifier
         :returns: :class:`Record`
         """
-        response = self.client.get('/records/%s' % record_id)
+        domain_id = domain.id if isinstance(domain, Domain) else domain
+
+        uri = '/domains/%(domain_id)s/records/%(record_id)s' % {
+            'domain_id': domain_id,
+            'record_id': record_id
+        }
+
+        response = self.client.get(uri)
 
         return Record(response.json)
 
-    def create(self, record):
+    def create(self, domain, record):
         """
         Create a record
 
+        :param domain: :class:`Domain` or Domain Identifier
         :param record: A :class:`Record` to create
         :returns: :class:`Record`
         """
-        response = self.client.post('/records', data=json.dumps(record))
+        domain_id = domain.id if isinstance(domain, Domain) else domain
 
-        return record.update(response.json)
+        uri = '/domains/%(domain_id)s/records' % {
+            'domain_id': domain_id
+        }
 
-    def update(self, record):
+        response = self.client.post(uri, data=json.dumps(record))
+
+        return Record(response.json)
+
+    def update(self, domain, record):
         """
         Update a record
 
+        :param domain: :class:`Domain` or Domain Identifier
         :param record: A :class:`Record` to update
         :returns: :class:`Record`
         """
-        response = self.client.put('/records/%s' % record.id,
-                                   data=json.dumps(record))
+        domain_id = domain.id if isinstance(domain, Domain) else domain
+
+        uri = '/domains/%(domain_id)s/records/%(record_id)s' % {
+            'domain_id': domain_id,
+            'record_id': record.id
+        }
+
+        response = self.client.put(uri, data=json.dumps(record))
 
         return record.update(response.json)
 
-    def delete(self, record):
+    def delete(self, domain, record):
         """
         Delete a record
 
+        :param domain: :class:`Domain` or Domain Identifier
         :param record: A :class:`Record`, or Record Identifier to delete
         """
-        if isinstance(record, Record):
-            self.client.delete('/records/%s' % record.id)
-        else:
-            self.client.delete('/records/%s' % record)
+        domain_id = domain.id if isinstance(domain, Domain) else domain
+        record_id = record.id if isinstance(record, Record) else record
+
+        uri = '/domains/%(domain_id)s/records/%(record_id)s' % {
+            'domain_id': domain_id,
+            'record_id': record_id
+        }
+
+        self.client.delete(uri)

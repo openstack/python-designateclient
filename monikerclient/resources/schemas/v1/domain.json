@@ -16,8 +16,8 @@
         "name": {
             "type": "string",
             "description": "Domain name",
+            "format": "host-name",
             "maxLength": 255,
-            "pattern": "^.+[^\\.]$",
             "required": true
         },
         "email": {
@@ -43,10 +43,20 @@
             "readonly": true
         },
         "updated_at": {
-            "type": "string",
+            "type": ["string", "null"],
             "description": "Date and time of image registration",
             "format": "date-time",
             "readonly": true
         }
-    }
+    },
+    "links": [{
+        "rel": "self",
+        "href": "/domains/{id}"
+    }, {
+        "rel": "records",
+        "href": "/domains/{id}/records"
+    }, {
+        "rel": "collection",
+        "href": "/domains"
+    }]
 }

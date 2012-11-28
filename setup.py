@@ -54,6 +54,18 @@ setup(
         domain-create = monikerclient.cli.domains:CreateDomainCommand
         domain-update = monikerclient.cli.domains:UpdateDomainCommand
         domain-delete = monikerclient.cli.domains:DeleteDomainCommand
+
+        record-list = monikerclient.cli.records:ListRecordsCommand
+        record-get = monikerclient.cli.records:GetRecordCommand
+        record-create = monikerclient.cli.records:CreateRecordCommand
+        record-update = monikerclient.cli.records:UpdateRecordCommand
+        record-delete = monikerclient.cli.records:DeleteRecordCommand
+
+        server-list = monikerclient.cli.servers:ListServersCommand
+        server-get = monikerclient.cli.servers:GetServerCommand
+        server-create = monikerclient.cli.servers:CreateServerCommand
+        server-update = monikerclient.cli.servers:UpdateServerCommand
+        server-delete = monikerclient.cli.servers:DeleteServerCommand
         """),
     classifiers=[
         'Development Status :: 3 - Alpha',
