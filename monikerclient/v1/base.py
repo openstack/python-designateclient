@@ -68,7 +68,7 @@ class Controller(object):
         Delete something
         """
         id_ = obj.id if isinstance(obj, self.schema) else obj
-        response = self.client.delete(self.path + '/%s' % id_)
+        self.client.delete(self.path + '/%s' % id_)
 
     @abc.abstractmethod
     def list(self, *args, **kw):
