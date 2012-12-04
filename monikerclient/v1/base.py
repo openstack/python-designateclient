@@ -14,61 +14,13 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 import abc
-import json
 
 
 class Controller(object):
     __metaclass__ = abc.ABCMeta
 
-    resource = None
-    schema = None
-
     def __init__(self, client):
         self.client = client
-
-    @property
-    def path(self):
-        return '/' + self.plural
-
-    @property
-    def plural(self):
-        return self.resource + 's'
-
-    def _list(self):
-        """
-        List something
-        """
-        response = self.client.get(self.path)
-        return [self.schema(i) for i in response.json[self.plural]]
-
-    def _get(self, id_):
-        """
-        Get something
-        """
-        response = self.client.get(self.path + '/%s' % id_)
-        return self.schema(response.json)
-
-    def _create(self, values):
-        """
-        Create something
-        """
-        response = self.client.post(self.path, data=json.dumps(values))
-        return self.schema(response.json)
-
-    def _update(self, values):
-        """
-        Update something
-        """
-        response = self.client.put(self.path + '/%s' % values['id'],
-                                   data=json.dumps(values))
-        return self.schema(response.json)
-
-    def _delete(self, obj):
-        """
-        Delete something
-        """
-        id_ = obj.id if isinstance(obj, self.schema) else obj
-        self.client.delete(self.path + '/%s' % id_)
 
     @abc.abstractmethod
     def list(self, *args, **kw):
