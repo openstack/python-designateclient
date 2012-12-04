@@ -33,7 +33,7 @@ class GetServerCommand(base.GetCommand):
     def get_parser(self, prog_name):
         parser = super(GetServerCommand, self).get_parser(prog_name)
 
-        parser.add_argument('id', help="Server ID", required=True)
+        parser.add_argument('id', help="Server ID")
 
         return parser
 
@@ -69,7 +69,7 @@ class UpdateServerCommand(base.UpdateCommand):
     def get_parser(self, prog_name):
         parser = super(UpdateServerCommand, self).get_parser(prog_name)
 
-        parser.add_argument('id', help="Server ID", required=True)
+        parser.add_argument('id', help="Server ID")
         parser.add_argument('--name', help="Server Name")
         parser.add_argument('--ipv4', help="Server IPv4 Address")
         parser.add_argument('--ipv6', help="Server IPv6 Address")
@@ -97,7 +97,7 @@ class DeleteServerCommand(base.DeleteCommand):
     def get_parser(self, prog_name):
         parser = super(DeleteServerCommand, self).get_parser(prog_name)
 
-        parser.add_argument('id', help="Server ID", required=True)
+        parser.add_argument('id', help="Server ID")
 
         return parser
 
