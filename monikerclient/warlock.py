@@ -72,8 +72,8 @@ def model_factory(schema):
             mutation[key] = value
             try:
                 self.validator(mutation)
-            except ValidationError:
-                raise InvalidOperation()
+            except ValidationError, e:
+                raise InvalidOperation(str(e))
 
             dict.__setitem__(self, key, value)
 
@@ -103,8 +103,8 @@ def model_factory(schema):
             mutation.update(other)
             try:
                 self.validator(mutation)
-            except ValidationError:
-                raise InvalidOperation()
+            except ValidationError, e:
+                raise InvalidOperation(str(e))
             dict.update(self, other)
 
         def iteritems(self):
