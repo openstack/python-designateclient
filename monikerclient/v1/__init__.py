@@ -74,7 +74,9 @@ class Client(object):
         """
         response = func(*args, **kw)
 
-        if response.status_code in (401, 403):
+        if response.status_code == 400:
+            raise exceptions.BadRequest(response.json['errors'])
+        elif response.status_code in (401, 403):
             raise exceptions.Forbidden()
         elif response.status_code == 404:
             raise exceptions.NotFound()

@@ -31,6 +31,10 @@ class Unknown(RemoteError):
     pass
 
 
+class BadRequest(RemoteError):
+    pass
+
+
 class Forbidden(RemoteError):
     pass
 
