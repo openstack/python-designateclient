@@ -33,7 +33,7 @@ class GetDomainCommand(base.GetCommand):
     def get_parser(self, prog_name):
         parser = super(GetDomainCommand, self).get_parser(prog_name)
 
-        parser.add_argument('id', help="Domain ID", required=True)
+        parser.add_argument('id', help="Domain ID")
 
         return parser
 
@@ -67,7 +67,7 @@ class UpdateDomainCommand(base.UpdateCommand):
     def get_parser(self, prog_name):
         parser = super(UpdateDomainCommand, self).get_parser(prog_name)
 
-        parser.add_argument('id', help="Domain ID", required=True)
+        parser.add_argument('id', help="Domain ID")
         parser.add_argument('--name', help="Domain Name")
         parser.add_argument('--email', help="Domain Email")
 
@@ -93,7 +93,7 @@ class DeleteDomainCommand(base.DeleteCommand):
     def get_parser(self, prog_name):
         parser = super(DeleteDomainCommand, self).get_parser(prog_name)
 
-        parser.add_argument('id', help="Domain ID", required=True)
+        parser.add_argument('id', help="Domain ID")
 
         return parser
 
