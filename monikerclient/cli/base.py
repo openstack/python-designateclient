@@ -36,6 +36,10 @@ class Command(CliffCommand):
             'region_name': self.app.options.os_region_name,
         }
 
+        if client_args['endpoint'] is None and client_args['auth_url'] is None:
+            raise ValueError('Either the --os-endpoint or --os-auth-url '
+                             'argument must be supplied')
+
         self.client = Client(**client_args)
 
         return super(Command, self).run(parsed_args)

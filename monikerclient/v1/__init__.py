@@ -46,7 +46,7 @@ class Client(object):
         elif endpoint:
             auth = None
         else:
-            raise ValueError('Either an auth_url or endpoint must be supplied')
+            raise ValueError('Either an endpoint or auth_url must be supplied')
 
         headers = {'Content-Type': 'application/json'}
 
