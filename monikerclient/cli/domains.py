@@ -49,6 +49,7 @@ class CreateDomainCommand(base.CreateCommand):
 
         parser.add_argument('--name', help="Domain Name", required=True)
         parser.add_argument('--email', help="Domain Email", required=True)
+        parser.add_argument('--ttl', type=int, help="Time To Live (Seconds)")
 
         return parser
 
@@ -56,6 +57,7 @@ class CreateDomainCommand(base.CreateCommand):
         domain = Domain(
             name=parsed_args.name,
             email=parsed_args.email,
+            ttl=parsed_args.ttl,
         )
 
         return self.client.domains.create(domain)
@@ -70,6 +72,7 @@ class UpdateDomainCommand(base.UpdateCommand):
         parser.add_argument('id', help="Domain ID")
         parser.add_argument('--name', help="Domain Name")
         parser.add_argument('--email', help="Domain Email")
+        parser.add_argument('--ttl', help="Time To Live (Seconds)")
 
         return parser
 
@@ -77,12 +80,14 @@ class UpdateDomainCommand(base.UpdateCommand):
         # TODO: API needs updating.. this get is silly
         domain = self.client.domains.get(parsed_args.id)
 
-        # TODO: How do we tell if an arg was supplied or intentionally set to
-        #       None?
-        domain.update({
-            'name': parsed_args.name,
-            'email': parsed_args.email,
-        })
+        if parsed_args.name:
+            domain.name = parsed_args.name
+
+        if parsed_args.email:
+            domain.email = parsed_args.email
+
+        if parsed_args.ttl:
+            domain.ttl = parsed_args.ttl
 
         return self.client.domains.update(domain)
 

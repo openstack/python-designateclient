@@ -71,8 +71,14 @@ class UpdateServerCommand(base.UpdateCommand):
 
         parser.add_argument('id', help="Server ID")
         parser.add_argument('--name', help="Server Name")
-        parser.add_argument('--ipv4', help="Server IPv4 Address")
-        parser.add_argument('--ipv6', help="Server IPv6 Address")
+
+        ipv4_group = parser.add_mutually_exclusive_group()
+        ipv4_group.add_argument('--ipv4', help="Server IPv4 Address")
+        ipv4_group.add_argument('--no-ipv4', action='store_true')
+
+        ipv6_group = parser.add_mutually_exclusive_group()
+        ipv6_group.add_argument('--ipv6', help="Server IPv6 Address")
+        ipv6_group.add_argument('--no-ipv6', action='store_true')
 
         return parser
 
@@ -80,13 +86,18 @@ class UpdateServerCommand(base.UpdateCommand):
         # TODO: API needs updating.. this get is silly
         server = self.client.servers.get(parsed_args.id)
 
-        # TODO: How do we tell if an arg was supplied or intentionally set to
-        #       None?
-        server.update({
-            'name': parsed_args.name,
-            'ipv4': parsed_args.ipv4,
-            'ipv6': parsed_args.ipv6,
-        })
+        if parsed_args.name:
+            server.name = parsed_args.name
+
+        if parsed_args.no_ipv4:
+            server.ipv4 = None
+        elif parsed_args.ipv4:
+            server.ipv4 = parsed_args.ipv4
+
+        if parsed_args.no_ipv6:
+            server.ipv6 = None
+        elif parsed_args.ipv6:
+            server.ipv6 = parsed_args.ipv6
 
         return self.client.servers.update(server)
 

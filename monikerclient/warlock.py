@@ -99,6 +99,8 @@ def model_factory(schema):
             return copy.deepcopy(dict(self))
 
         def update(self, other):
+            # NOTE(kiall): It seems update() doesn't update the
+            #              self.__dict__['changes'] dict correctly.
             mutation = dict(self.items())
             mutation.update(other)
             try:

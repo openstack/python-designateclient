@@ -68,8 +68,10 @@ class CreateRecordCommand(base.CreateCommand):
             name=parsed_args.name,
             type=parsed_args.type,
             data=parsed_args.data,
-            ttl=parsed_args.ttl,
         )
+
+        if parsed_args.ttl:
+            record.ttl = parsed_args.ttl
 
         return self.client.records.create(parsed_args.domain_id, record)
 
@@ -85,7 +87,11 @@ class UpdateRecordCommand(base.UpdateCommand):
         parser.add_argument('--name', help="Record Name")
         parser.add_argument('--type', help="Record Type")
         parser.add_argument('--data', help="Record Data")
-        parser.add_argument('--ttl', type=int, help="Record TTL")
+
+        ttl_group = parser.add_mutually_exclusive_group()
+        ttl_group.add_argument('--ttl', type=int,
+                               help="Record Time To Live (Seconds)")
+        ttl_group.add_argument('--no-ttl', action='store_true')
 
         return parser
 
@@ -93,14 +99,19 @@ class UpdateRecordCommand(base.UpdateCommand):
         # TODO: API needs updating.. this get is silly
         record = self.client.records.get(parsed_args.domain_id, parsed_args.id)
 
-        # TODO: How do we tell if an arg was supplied or intentionally set to
-        #       None?
-        record.update({
-            'name': parsed_args.name,
-            'type': parsed_args.type,
-            'data': parsed_args.data,
-            'ttl': parsed_args.ttl,
-        })
+        if parsed_args.name:
+            record.name = parsed_args.name
+
+        if parsed_args.type:
+            record.type = parsed_args.type
+
+        if parsed_args.data:
+            record.data = parsed_args.data
+
+        if parsed_args.no_ttl:
+            record.ttl = None
+        elif parsed_args.ttl:
+            record.ttl = parsed_args.ttl
 
         return self.client.records.update(parsed_args.domain_id, record)
 
