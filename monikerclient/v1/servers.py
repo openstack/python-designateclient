@@ -63,9 +63,9 @@ class ServersController(Controller):
         :returns: :class:`Server`
         """
         response = self.client.put('/servers/%s' % server.id,
-                                   data=json.dumps(server))
+                                   data=json.dumps(server.changes))
 
-        return server.update(response.json)
+        return Server(response.json)
 
     def delete(self, server):
         """

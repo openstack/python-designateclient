@@ -91,9 +91,9 @@ class RecordsController(Controller):
             'record_id': record.id
         }
 
-        response = self.client.put(uri, data=json.dumps(record))
+        response = self.client.put(uri, data=json.dumps(record.changes))
 
-        return record.update(response.json)
+        return Record(response.json)
 
     def delete(self, domain, record):
         """
