@@ -47,6 +47,7 @@
         "description": "IPv4",
         "properties": {
             "ipv4": {
+                "type": "string",
                 "required": true
             }
         }
@@ -54,6 +55,7 @@
         "description": "IPv6",
         "properties": {
             "ipv6": {
+                "type": "string",
                 "required": true
             }
         }
