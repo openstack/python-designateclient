@@ -60,6 +60,7 @@ class CreateRecordCommand(base.CreateCommand):
         parser.add_argument('--type', help="Record Type", required=True)
         parser.add_argument('--data', help="Record Data", required=True)
         parser.add_argument('--ttl', type=int, help="Record TTL")
+        parser.add_argument('--priority', type=int, help="Record Priority")
 
         return parser
 
@@ -72,6 +73,9 @@ class CreateRecordCommand(base.CreateCommand):
 
         if parsed_args.ttl:
             record.ttl = parsed_args.ttl
+
+        if parsed_args.priority:
+            record.priority = parsed_args.priority
 
         return self.client.records.create(parsed_args.domain_id, record)
 
@@ -92,6 +96,8 @@ class UpdateRecordCommand(base.UpdateCommand):
         ttl_group.add_argument('--ttl', type=int,
                                help="Record Time To Live (Seconds)")
         ttl_group.add_argument('--no-ttl', action='store_true')
+
+        parser.add_argument('--priority', type=int, help="Record Priority")
 
         return parser
 
