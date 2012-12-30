@@ -75,20 +75,3 @@ class KeystoneAuth(AuthBase):
         ks = self.get_ksclient()
         self.token = ks.auth_token
         self.service_catalog = ks.service_catalog
-
-    def args_hook(self, args):
-        url = urlparse(args['url'])
-
-        if str(url.scheme) == '':
-            if not self.token:
-                self.refresh_token()
-
-            endpoints = self.get_endpoints()
-
-            if url.netloc in endpoints.keys():
-
-                args['url'] = '%s/%s?%s' % (
-                    self.get_url(),
-                    url.path.lstrip('/'),
-                    url.query
-                )

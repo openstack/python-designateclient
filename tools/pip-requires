@@ -1,4 +1,4 @@
 cliff>=1.2.1
 jsonschema>=0.7
-requests
+requests>1.0
 python-keystoneclient>=0.2.0

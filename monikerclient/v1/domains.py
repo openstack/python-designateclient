@@ -31,7 +31,7 @@ class DomainsController(Controller):
         """
         response = self.client.get('/domains')
 
-        return [Domain(i) for i in response.json['domains']]
+        return [Domain(i) for i in response.json()['domains']]
 
     def get(self, domain_id):
         """
@@ -42,7 +42,7 @@ class DomainsController(Controller):
         """
         response = self.client.get('/domains/%s' % domain_id)
 
-        return Domain(response.json)
+        return Domain(response.json())
 
     def create(self, domain):
         """
@@ -53,7 +53,7 @@ class DomainsController(Controller):
         """
         response = self.client.post('/domains', data=json.dumps(domain))
 
-        return Domain(response.json)
+        return Domain(response.json())
 
     def update(self, domain):
         """
@@ -65,7 +65,7 @@ class DomainsController(Controller):
         response = self.client.put('/domains/%s' % domain.id,
                                    data=json.dumps(domain.changes))
 
-        return Domain(response.json)
+        return Domain(response.json())
 
     def delete(self, domain):
         """

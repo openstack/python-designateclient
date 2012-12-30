@@ -14,7 +14,6 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 import requests
-from urlparse import urlparse
 from monikerclient import exceptions
 from monikerclient.auth import KeystoneAuth
 from monikerclient.v1 import domains
@@ -42,25 +41,18 @@ class Client(object):
         if auth_url:
             auth = KeystoneAuth(auth_url, username, password, tenant_id,
                                 tenant_name, token, 'dns', endpoint_type)
-            endpoint = auth.get_url()
+            self.endpoint = auth.get_url()
         elif endpoint:
             auth = None
+            self.endpoint = endpoint
         else:
             raise ValueError('Either an endpoint or auth_url must be supplied')
 
         headers = {'Content-Type': 'application/json'}
 
-        def _ensure_url_hook(args):
-            url_ = urlparse(args['url'])
-            if not url_.scheme:
-                args['url'] = endpoint + url_.path
-
-        hooks = {'args': _ensure_url_hook}
-
-        self.requests = requests.session(
-            auth=auth,
-            headers=headers,
-            hooks=hooks)
+        self.requests = requests.Session()
+        self.requests.auth = auth
+        self.requests.headers.update(headers)
 
         self.domains = domains.DomainsController(client=self)
         self.records = records.RecordsController(client=self)
@@ -72,10 +64,15 @@ class Client(object):
 
         :param func: The function to wrap
         """
+        # Prepend the endpoint URI
+        args = list(args)
+        args[0] = '%s/%s' % (self.endpoint, args[0])
+
+        # Trigger the request
         response = func(*args, **kw)
 
         if response.status_code == 400:
-            raise exceptions.BadRequest(response.json['errors'])
+            raise exceptions.BadRequest(response.json()['errors'])
         elif response.status_code in (401, 403):
             raise exceptions.Forbidden()
         elif response.status_code == 404:
