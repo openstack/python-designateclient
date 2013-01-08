@@ -16,13 +16,14 @@
 import os
 from cliff.app import App
 from cliff.commandmanager import CommandManager
+from monikerclient.version import version_info as version
 
 
 class MonikerShell(App):
     def __init__(self):
         super(MonikerShell, self).__init__(
             description='Moniker Client',
-            version='0.1',
+            version=version.canonical_version_string(),
             command_manager=CommandManager('moniker.cli'),
         )
 
