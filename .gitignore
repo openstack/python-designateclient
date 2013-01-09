@@ -1,6 +1,7 @@
 *.pyc
 *.dat
 TAGS
+*.egg
 *.egg-info
 build
 .coverage

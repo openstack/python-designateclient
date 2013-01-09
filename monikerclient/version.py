@@ -15,4 +15,5 @@
 # under the License.
 from monikerclient.openstack.common import version as common_version
 
-version_info = common_version.VersionInfo('monikerclient')
+version_info = common_version.VersionInfo('monikerclient',
+                                          'python-monikerclient')
