@@ -26,7 +26,8 @@ class Client(object):
 
     def __init__(self, endpoint=None, auth_url=None, username=None,
                  password=None, tenant_id=None, tenant_name=None, token=None,
-                 region_name=None, endpoint_type='publicURL'):
+                 region_name=None, service_type='dns',
+                 endpoint_type='publicURL'):
         """
         :param endpoint: Endpoint URL
         :param auth_url: Keystone auth_url
@@ -40,7 +41,8 @@ class Client(object):
         """
         if auth_url:
             auth = KeystoneAuth(auth_url, username, password, tenant_id,
-                                tenant_name, token, 'dns', endpoint_type)
+                                tenant_name, token, service_type,
+                                endpoint_type)
             self.endpoint = auth.get_url()
         elif endpoint:
             auth = None

@@ -33,6 +33,7 @@ class Command(CliffCommand):
             'tenant_id': self.app.options.os_tenant_id,
             'tenant_name': self.app.options.os_tenant_name,
             'token': self.app.options.os_token,
+            'service_type': self.app.options.os_service_type,
             'region_name': self.app.options.os_region_name,
         }
 
