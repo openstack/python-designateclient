@@ -22,14 +22,14 @@
         "name": {
             "type": "string",
             "description": "DNS Record Name",
-            "format": "host-name",
+            "pattern": "^(\\*\\.)?(([a-zA-Z0-9_]|[a-zA-Z0-9_][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)*([A-Za-z0-9_]|[A-Za-z0-9_][A-Za-z0-9\\-]*[A-Za-z0-9])\\.$",
             "maxLength": 255,
             "required": true
         },
         "type": {
             "type": "string",
             "description": "DNS Record Type",
-            "enum": ["A", "AAAA", "CNAME", "MX", "SRV", "TXT", "SPF", "NS"],
+            "enum": ["A", "AAAA", "CNAME", "MX", "SRV", "TXT", "SPF", "NS", "PTR"],
             "required": true
         },
         "data": {
@@ -163,6 +163,25 @@
             "type": {
                 "type": "string",
                 "enum": ["NS"]
+            },
+            "data": {
+                "format": "host-name",
+                "required": true
+            },
+            "priority": {
+                "type": "null"
+            }
+        }
+    }, {
+        "description": "A PTR Record",
+        "properties": {
+            "type": {
+                "type": "string",
+                "enum": ["PTR"]
+            },
+            "name": {
+                "type": "string",
+                "pattern": "^(?:(?:\\d{1,3}\\.){4}in-addr\\.arpa\\.|(?:[a-f|\\d]\\.){32}ip6\\.arpa\\.)$"
             },
             "data": {
                 "format": "host-name",
