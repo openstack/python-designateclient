@@ -17,7 +17,6 @@
 import textwrap
 from setuptools import setup, find_packages
 from monikerclient.openstack.common import setup as common_setup
-from monikerclient.version import version_info as version
 
 install_requires = common_setup.parse_requirements(['tools/pip-requires'])
 tests_require = common_setup.parse_requirements(['tools/test-requires'])
@@ -30,7 +29,7 @@ dependency_links = common_setup.parse_dependency_links([
 
 setup(
     name='python-monikerclient',
-    version=version.canonical_version_string(always=True),
+    version=common_setup.get_version('python-monikerclient'),
     description='DNS as a Service - Client',
     author='Kiall Mac Innes',
     author_email='kiall@managedit.ie',
