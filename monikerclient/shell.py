@@ -23,7 +23,7 @@ class MonikerShell(App):
     def __init__(self):
         super(MonikerShell, self).__init__(
             description='Moniker Client',
-            version=version.canonical_version_string(),
+            version=version.version_string(),
             command_manager=CommandManager('moniker.cli'),
         )
 
