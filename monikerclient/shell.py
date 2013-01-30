@@ -27,9 +27,9 @@ class MonikerShell(App):
             command_manager=CommandManager('moniker.cli'),
         )
 
-    def build_option_parser(self, description, version, argparse_kwargs=None):
+    def build_option_parser(self, description, version):
         parser = super(MonikerShell, self).build_option_parser(
-            description, version, argparse_kwargs)
+            description, version)
 
         parser.add_argument('--os-endpoint',
                             default=os.environ.get('OS_SERVICE_ENDPOINT'),
