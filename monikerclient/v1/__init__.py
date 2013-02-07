@@ -16,6 +16,7 @@
 import requests
 from monikerclient import exceptions
 from monikerclient.auth import KeystoneAuth
+from monikerclient.v1 import diagnostics
 from monikerclient.v1 import domains
 from monikerclient.v1 import records
 from monikerclient.v1 import servers
@@ -56,6 +57,7 @@ class Client(object):
         self.requests.auth = auth
         self.requests.headers.update(headers)
 
+        self.diagnostics = diagnostics.DiagnosticsController(client=self)
         self.domains = domains.DomainsController(client=self)
         self.records = records.RecordsController(client=self)
         self.servers = servers.ServersController(client=self)

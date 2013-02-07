@@ -22,6 +22,10 @@ class Controller(object):
     def __init__(self, client):
         self.client = client
 
+
+class CrudController(Controller):
+    __metaclass__ = abc.ABCMeta
+
     @abc.abstractmethod
     def list(self, *args, **kw):
         """

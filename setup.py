@@ -65,6 +65,13 @@ setup(
         server-create = monikerclient.cli.servers:CreateServerCommand
         server-update = monikerclient.cli.servers:UpdateServerCommand
         server-delete = monikerclient.cli.servers:DeleteServerCommand
+
+        diagnostics-ping = monikerclient.cli.diagnostics:PingCommand
+        diagnostics-sync-all = monikerclient.cli.diagnostics:SyncAllCommand
+        diagnostics-sync-domain = monikerclient.cli.diagnostics\
+                                  :SyncDomainCommand
+        diagnostics-sync-record = monikerclient.cli.diagnostics\
+                                  :SyncRecordCommand
         """),
     classifiers=[
         'Development Status :: 3 - Alpha',

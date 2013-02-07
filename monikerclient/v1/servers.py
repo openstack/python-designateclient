@@ -16,13 +16,13 @@
 import json
 from monikerclient import warlock
 from monikerclient import utils
-from monikerclient.v1.base import Controller
+from monikerclient.v1.base import CrudController
 
 
 Server = warlock.model_factory(utils.load_schema('v1', 'server'))
 
 
-class ServersController(Controller):
+class ServersController(CrudController):
     def list(self):
         """
         Retrieve a list of servers

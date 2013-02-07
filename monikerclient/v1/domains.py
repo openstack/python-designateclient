@@ -16,13 +16,13 @@
 import json
 from monikerclient import warlock
 from monikerclient import utils
-from monikerclient.v1.base import Controller
+from monikerclient.v1.base import CrudController
 
 
 Domain = warlock.model_factory(utils.load_schema('v1', 'domain'))
 
 
-class DomainsController(Controller):
+class DomainsController(CrudController):
     def list(self):
         """
         Retrieve a list of domains
