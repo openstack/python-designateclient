@@ -35,6 +35,7 @@ class Command(CliffCommand):
             'token': self.app.options.os_token,
             'service_type': self.app.options.os_service_type,
             'region_name': self.app.options.os_region_name,
+            'sudo_tenant_id': self.app.options.sudo_tenant_id
         }
 
         if client_args['endpoint'] is None and client_args['auth_url'] is None:

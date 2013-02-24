@@ -67,4 +67,8 @@ class MonikerShell(App):
                             default=os.environ.get('OS_REGION_NAME'),
                             help="Defaults to env[OS_REGION_NAME]")
 
+        parser.add_argument('--sudo-tenant-id',
+                            default=os.environ.get('MONIKER_SUDO_TENANT_ID'),
+                            help="Defaults to env[MONIKER_SUDO_TENANT_ID]")
+
         return parser

@@ -22,13 +22,14 @@ from keystoneclient.v2_0.client import Client
 class KeystoneAuth(AuthBase):
     def __init__(self, auth_url, username=None, password=None, tenant_id=None,
                  tenant_name=None, token=None, service_type=None,
-                 endpoint_type=None):
+                 endpoint_type=None, sudo_tenant_id=None):
         self.auth_url = str(auth_url).rstrip('/')
         self.username = username
         self.password = password
         self.tenant_id = tenant_id
         self.tenant_name = tenant_name
         self.token = token
+        self.sudo_tenant_id = sudo_tenant_id
 
         if (not username and not password) and not token:
             raise ValueError('A username and password, or token is required')
@@ -46,6 +47,9 @@ class KeystoneAuth(AuthBase):
             self.refresh_auth()
 
         request.headers['X-Auth-Token'] = self.token
+
+        if self.sudo_tenant_id:
+            request.headers['X-Moniker-Sudo-Tenant-ID'] = self.sudo_tenant_id
 
         return request
 
