@@ -60,8 +60,10 @@ class MonikerShell(App):
                             help="Defaults to env[OS_SERVICE_TOKEN]")
 
         parser.add_argument('--os-service-type',
-                            default=os.environ.get('OS_SERVICE_TYPE', 'dns'),
-                            help="Defaults to env[OS_SERVICE_TYPE], or 'dns'")
+                            default=os.environ.get('OS_DNS_SERVICE_TYPE',
+                                                   'dns'),
+                            help=("Defaults to env[OS_DNS_SERVICE_TYPE], or "
+                                  "'dns'"))
 
         parser.add_argument('--os-region-name',
                             default=os.environ.get('OS_REGION_NAME'),
