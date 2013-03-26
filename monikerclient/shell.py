@@ -13,6 +13,7 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations
 # under the License.
+import logging
 import os
 from cliff.app import App
 from cliff.commandmanager import CommandManager
@@ -20,12 +21,27 @@ from monikerclient.version import version_info as version
 
 
 class MonikerShell(App):
+    CONSOLE_MESSAGE_FORMAT = '%(levelname)s: %(message)s'
+
     def __init__(self):
         super(MonikerShell, self).__init__(
             description='Moniker Client',
             version=version.version_string(),
             command_manager=CommandManager('moniker.cli'),
         )
+
+        self.log = logging.getLogger(__name__)
+
+    def configure_logging(self):
+        super(MonikerShell, self).configure_logging()
+
+        # Set requests logging
+        requests_logger = logging.getLogger('requests')
+
+        if self.options.verbose_level <= 1:
+            requests_logger.setLevel(logging.WARN)
+        else:
+            requests_logger.setLevel(logging.DEBUG)
 
     def build_option_parser(self, description, version):
         parser = super(MonikerShell, self).build_option_parser(

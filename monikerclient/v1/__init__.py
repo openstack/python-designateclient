@@ -52,7 +52,6 @@ class Client(object):
             raise ValueError('Either an endpoint or auth_url must be supplied')
 
         headers = {'Content-Type': 'application/json'}
-
         self.requests = requests.Session()
         self.requests.auth = auth
         self.requests.headers.update(headers)
@@ -76,15 +75,15 @@ class Client(object):
         response = func(*args, **kw)
 
         if response.status_code == 400:
-            raise exceptions.BadRequest(response.json['errors'])
+            raise exceptions.BadRequest(**response.json)
         elif response.status_code in (401, 403):
-            raise exceptions.Forbidden()
+            raise exceptions.Forbidden(**response.json)
         elif response.status_code == 404:
-            raise exceptions.NotFound()
+            raise exceptions.NotFound(**response.json)
         elif response.status_code == 409:
-            raise exceptions.Conflict()
+            raise exceptions.Conflict(**response.json)
         elif response.status_code == 500:
-            raise exceptions.Unknown()
+            raise exceptions.Unknown(**response.json)
         else:
             return response
 

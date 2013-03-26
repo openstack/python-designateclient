@@ -24,7 +24,13 @@ class ResourceNotFound(Base):
 
 
 class RemoteError(Base):
-    pass
+    def __init__(self, message=None, code=None, type=None, errors=None):
+        super(RemoteError, self).__init__(message)
+
+        self.message = message
+        self.code = code
+        self.type = type
+        self.errors = errors
 
 
 class Unknown(RemoteError):

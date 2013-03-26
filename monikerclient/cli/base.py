@@ -17,6 +17,7 @@ import abc
 from cliff.command import Command as CliffCommand
 from cliff.lister import Lister
 from cliff.show import ShowOne
+from monikerclient import exceptions
 from monikerclient import utils
 from monikerclient.v1 import Client
 
@@ -44,7 +45,30 @@ class Command(CliffCommand):
 
         self.client = Client(**client_args)
 
-        return super(Command, self).run(parsed_args)
+        try:
+            return super(Command, self).run(parsed_args)
+        except exceptions.RemoteError, e:
+            columns = ['Code', 'Type']
+            values = [e.code, e.type]
+
+            if e.message:
+                columns.append('Message')
+                values.append(e.message)
+
+            if e.errors:
+                columns.append('Errors')
+                values.append(e.errors)
+
+            self.error_output(parsed_args, columns, values)
+
+            return 1
+
+    def error_output(self, parsed_args, column_names, data):
+        self.formatter.emit_one(column_names,
+                                data,
+                                self.app.stdout,
+                                parsed_args)
+        self.app.log.error('The requested action did not complete sucessfully')
 
     @abc.abstractmethod
     def execute(self, parsed_args):
@@ -66,7 +90,6 @@ class Command(CliffCommand):
         return data
 
     def take_action(self, parsed_args):
-        # TODO: Common Exception Handling Here
         results = self.execute(parsed_args)
         return self.post_execute(results)
 
