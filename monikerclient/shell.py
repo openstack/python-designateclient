@@ -32,8 +32,8 @@ class MonikerShell(App):
             description, version)
 
         parser.add_argument('--os-endpoint',
-                            default=os.environ.get('OS_SERVICE_ENDPOINT'),
-                            help="Defaults to env[OS_SERVICE_ENDPOINT]")
+                            default=os.environ.get('OS_DNS_ENDPOINT'),
+                            help="Defaults to env[OS_DNS_ENDPOINT]")
 
         parser.add_argument('--os-auth-url',
                             default=os.environ.get('OS_AUTH_URL'),
