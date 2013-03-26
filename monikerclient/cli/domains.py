@@ -57,8 +57,10 @@ class CreateDomainCommand(base.CreateCommand):
         domain = Domain(
             name=parsed_args.name,
             email=parsed_args.email,
-            ttl=parsed_args.ttl,
         )
+
+        if parsed_args.ttl:
+            domain.ttl = parsed_args.ttl
 
         return self.client.domains.create(domain)
 

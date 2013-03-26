@@ -97,7 +97,10 @@ class UpdateRecordCommand(base.UpdateCommand):
                                help="Record Time To Live (Seconds)")
         ttl_group.add_argument('--no-ttl', action='store_true')
 
-        parser.add_argument('--priority', type=int, help="Record Priority")
+        priotity_group = parser.add_mutually_exclusive_group()
+        priotity_group.add_argument('--priority', type=int,
+                                    help="Record Priority")
+        priotity_group.add_argument('--no-priority', action='store_true')
 
         return parser
 
@@ -118,6 +121,11 @@ class UpdateRecordCommand(base.UpdateCommand):
             record.ttl = None
         elif parsed_args.ttl:
             record.ttl = parsed_args.ttl
+
+        if parsed_args.no_priority:
+            record.priority = None
+        elif parsed_args.priority:
+            record.priority = parsed_args.priority
 
         return self.client.records.update(parsed_args.domain_id, record)
 
