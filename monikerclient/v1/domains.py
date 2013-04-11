@@ -20,6 +20,7 @@ from monikerclient.v1.base import CrudController
 
 
 Domain = warlock.model_factory(utils.load_schema('v1', 'domain'))
+Server = warlock.model_factory(utils.load_schema('v1', 'server'))
 
 
 class DomainsController(CrudController):
@@ -77,3 +78,14 @@ class DomainsController(CrudController):
             self.client.delete('/domains/%s' % domain.id)
         else:
             self.client.delete('/domains/%s' % domain)
+
+    def list_domain_servers(self, domain_id):
+        """
+        Retrieve the list of nameservers for a domain
+
+        :param domain_id: Domain Identifier
+        :returns: A list of :class:`Server`s
+        """
+        response = self.client.get('/domains/%s/servers' % domain_id)
+
+        return [Server(i) for i in response.json['servers']]

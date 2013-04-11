@@ -53,6 +53,8 @@ setup(
         domain-create = monikerclient.cli.domains:CreateDomainCommand
         domain-update = monikerclient.cli.domains:UpdateDomainCommand
         domain-delete = monikerclient.cli.domains:DeleteDomainCommand
+        domain-servers-list = monikerclient.cli.domains\
+                              :ListDomainServersCommand
 
         record-list = monikerclient.cli.records:ListRecordsCommand
         record-get = monikerclient.cli.records:GetRecordCommand

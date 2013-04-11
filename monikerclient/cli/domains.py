@@ -108,3 +108,19 @@ class DeleteDomainCommand(base.DeleteCommand):
 
     def execute(self, parsed_args):
         return self.client.domains.delete(parsed_args.id)
+
+
+class ListDomainServersCommand(base.ListCommand):
+    """ List Domain Servers """
+
+    columns = ['name']
+
+    def get_parser(self, prog_name):
+        parser = super(ListDomainServersCommand, self).get_parser(prog_name)
+
+        parser.add_argument('id', help="Domain ID")
+
+        return parser
+
+    def execute(self, parsed_args):
+        return self.client.domains.list_domain_servers(parsed_args.id)
