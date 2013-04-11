@@ -23,6 +23,8 @@ LOG = logging.getLogger(__name__)
 class ListServersCommand(base.ListCommand):
     """ List Servers """
 
+    columns = ['id', 'name']
+
     def execute(self, parsed_args):
         return self.client.servers.list()
 

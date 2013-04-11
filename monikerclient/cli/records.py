@@ -23,6 +23,8 @@ LOG = logging.getLogger(__name__)
 class ListRecordsCommand(base.ListCommand):
     """ List Records """
 
+    columns = ['id', 'name']
+
     def get_parser(self, prog_name):
         parser = super(ListRecordsCommand, self).get_parser(prog_name)
 

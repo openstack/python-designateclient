@@ -95,9 +95,11 @@ class Command(CliffCommand):
 
 
 class ListCommand(Command, Lister):
+    columns = None
+
     def post_execute(self, results):
         if len(results) > 0:
-            columns = utils.get_columns(results)
+            columns = self.columns or utils.get_columns(results)
             data = [utils.get_item_properties(i, columns) for i in results]
             return columns, data
         else:

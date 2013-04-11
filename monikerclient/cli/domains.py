@@ -23,6 +23,8 @@ LOG = logging.getLogger(__name__)
 class ListDomainsCommand(base.ListCommand):
     """ List Domains """
 
+    columns = ['id', 'name', 'serial']
+
     def execute(self, parsed_args):
         return self.client.domains.list()
 
