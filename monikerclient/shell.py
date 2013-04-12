@@ -27,7 +27,7 @@ class MonikerShell(App):
         super(MonikerShell, self).__init__(
             description='Moniker Client',
             version=version.version_string(),
-            command_manager=CommandManager('moniker.cli'),
+            command_manager=CommandManager('monikerclient.cli'),
         )
 
         self.log = logging.getLogger(__name__)

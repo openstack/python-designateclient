@@ -47,7 +47,13 @@ setup(
     ],
     cmdclass=common_setup.get_cmdclass(),
     entry_points=textwrap.dedent("""
-        [moniker.cli]
+        [monikerclient.v1.controllers]
+        diagnostics = monikerclient.v1.diagnostics:DiagnosticsController
+        domains = monikerclient.v1.domains:DomainsController
+        records = monikerclient.v1.records:RecordsController
+        servers = monikerclient.v1.servers:ServersController
+
+        [monikerclient.cli]
         domain-list = monikerclient.cli.domains:ListDomainsCommand
         domain-get = monikerclient.cli.domains:GetDomainCommand
         domain-create = monikerclient.cli.domains:CreateDomainCommand

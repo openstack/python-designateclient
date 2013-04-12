@@ -14,12 +14,9 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 import requests
+from stevedore import extension
 from monikerclient import exceptions
 from monikerclient.auth import KeystoneAuth
-from monikerclient.v1 import diagnostics
-from monikerclient.v1 import domains
-from monikerclient.v1 import records
-from monikerclient.v1 import servers
 
 
 class Client(object):
@@ -56,10 +53,13 @@ class Client(object):
         self.requests.auth = auth
         self.requests.headers.update(headers)
 
-        self.diagnostics = diagnostics.DiagnosticsController(client=self)
-        self.domains = domains.DomainsController(client=self)
-        self.records = records.RecordsController(client=self)
-        self.servers = servers.ServersController(client=self)
+        def _load_controller(ext):
+            controller = ext.plugin(client=self)
+            setattr(self, ext.name, controller)
+
+        # Load all controllers
+        mgr = extension.ExtensionManager('monikerclient.v1.controllers')
+        mgr.map(_load_controller)
 
     def wrap_api_call(self, func, *args, **kw):
         """
