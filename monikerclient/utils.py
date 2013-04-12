@@ -19,21 +19,27 @@ import json
 from monikerclient import exceptions
 
 
-def resource_string(*args):
+def resource_string(*args, **kwargs):
     if len(args) == 0:
         raise ValueError()
 
+    package = kwargs.pop('package', None)
+
+    if not package:
+        package = 'monikerclient'
+
     resource_path = os.path.join('resources', *args)
 
-    if not pkg_resources.resource_exists('monikerclient', resource_path):
+    if not pkg_resources.resource_exists(package, resource_path):
         raise exceptions.ResourceNotFound('Could not find the requested '
                                           'resource: %s' % resource_path)
 
-    return pkg_resources.resource_string('monikerclient', resource_path)
+    return pkg_resources.resource_string(package, resource_path)
 
 
-def load_schema(version, name):
-    schema_string = resource_string('schemas', version, '%s.json' % name)
+def load_schema(version, name, package=None):
+    schema_string = resource_string('schemas', version, '%s.json' % name,
+                                    package=package)
 
     return json.loads(schema_string)
 
