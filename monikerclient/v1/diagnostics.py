@@ -16,15 +16,12 @@
 from monikerclient.v1.base import Controller
 
 
-# NOTE(kiall): The /../ is an awful hack.. But keystone only gives us a
-#              versioned endpoint. Maybe we should make the diags calls part
-#              of v1?
 class DiagnosticsController(Controller):
     def ping(self, service, host):
         """
         Ping a service on a given host
         """
-        response = self.client.get('/../diagnostics/ping/%s/%s' %
+        response = self.client.get('/diagnostics/ping/%s/%s' %
                                    (service, host))
 
         return response.json
@@ -33,7 +30,7 @@ class DiagnosticsController(Controller):
         """
         Sync Everything
         """
-        response = self.client.post('/../diagnostics/sync/all')
+        response = self.client.post('/diagnostics/sync/all')
 
         return response.json
 
@@ -41,7 +38,7 @@ class DiagnosticsController(Controller):
         """
         Sync Single Domain
         """
-        response = self.client.post('/../diagnostics/sync/domain/%s' %
+        response = self.client.post('/diagnostics/sync/domain/%s' %
                                     domain_id)
 
         return response.json
@@ -50,7 +47,7 @@ class DiagnosticsController(Controller):
         """
         Sync Single Record
         """
-        response = self.client.post('/../diagnostics/sync/record/%s/%s' %
+        response = self.client.post('/diagnostics/sync/record/%s/%s' %
                                     (domain_id, record_id))
 
         return response.json
