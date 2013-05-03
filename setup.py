@@ -48,6 +48,7 @@ setup(
     cmdclass=common_setup.get_cmdclass(),
     entry_points=textwrap.dedent("""
         [monikerclient.v1.controllers]
+        reports = monikerclient.v1.reports:ReportsController
         diagnostics = monikerclient.v1.diagnostics:DiagnosticsController
         domains = monikerclient.v1.domains:DomainsController
         records = monikerclient.v1.records:RecordsController
@@ -80,6 +81,13 @@ setup(
                                   :SyncDomainCommand
         diagnostics-sync-record = monikerclient.cli.diagnostics\
                                   :SyncRecordCommand
+
+        report-count-all = monikerclient.cli.reports:CountsCommand
+        report-count-domains = monikerclient.cli.reports:DomainCountCommand
+        report-count-records = monikerclient.cli.reports:RecordCountCommand
+        report-count-tenants = monikerclient.cli.reports:TenantCountCommand
+        report-tenants-all = monikerclient.cli.reports:TenantsCommand
+        report-tenant-domains = monikerclient.cli.reports:TenantCommand
         """),
     classifiers=[
         'Development Status :: 3 - Alpha',
