@@ -20,3 +20,4 @@ doc/source/api/*
 doc/build/*
 dist
 monikerclient/versioninfo
+.testrepository
