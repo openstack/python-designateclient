@@ -1,7 +1,5 @@
 flake8
-nose
 mox
-openstack.nose_plugin
 python-subunit
 sphinx
 testrepository
