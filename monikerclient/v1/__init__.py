@@ -41,7 +41,10 @@ class Client(object):
             auth = KeystoneAuth(auth_url, username, password, tenant_id,
                                 tenant_name, token, service_type,
                                 endpoint_type, sudo_tenant_id)
-            self.endpoint = auth.get_url()
+            if endpoint:
+                self.endpoint = endpoint
+            else:
+                self.endpoint = auth.get_url()
         elif endpoint:
             auth = None
             self.endpoint = endpoint
