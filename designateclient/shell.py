@@ -17,23 +17,23 @@ import logging
 import os
 from cliff.app import App
 from cliff.commandmanager import CommandManager
-from monikerclient.version import version_info as version
+from designateclient.version import version_info as version
 
 
-class MonikerShell(App):
+class DesignateShell(App):
     CONSOLE_MESSAGE_FORMAT = '%(levelname)s: %(message)s'
 
     def __init__(self):
-        super(MonikerShell, self).__init__(
-            description='Moniker Client',
+        super(DesignateShell, self).__init__(
+            description='Designate Client',
             version=version.version_string(),
-            command_manager=CommandManager('monikerclient.cli'),
+            command_manager=CommandManager('designateclient.cli'),
         )
 
         self.log = logging.getLogger(__name__)
 
     def configure_logging(self):
-        super(MonikerShell, self).configure_logging()
+        super(DesignateShell, self).configure_logging()
 
         # Set requests logging
         requests_logger = logging.getLogger('requests')
@@ -44,7 +44,7 @@ class MonikerShell(App):
             requests_logger.setLevel(logging.DEBUG)
 
     def build_option_parser(self, description, version):
-        parser = super(MonikerShell, self).build_option_parser(
+        parser = super(DesignateShell, self).build_option_parser(
             description, version)
 
         parser.add_argument('--os-endpoint',
@@ -86,7 +86,7 @@ class MonikerShell(App):
                             help="Defaults to env[OS_REGION_NAME]")
 
         parser.add_argument('--sudo-tenant-id',
-                            default=os.environ.get('MONIKER_SUDO_TENANT_ID'),
-                            help="Defaults to env[MONIKER_SUDO_TENANT_ID]")
+                            default=os.environ.get('DESIGNATE_SUDO_TENANT_ID'),
+                            help="Defaults to env[DESIGNATE_SUDO_TENANT_ID]")
 
         return parser

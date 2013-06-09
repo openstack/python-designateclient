@@ -17,9 +17,9 @@ import abc
 from cliff.command import Command as CliffCommand
 from cliff.lister import Lister
 from cliff.show import ShowOne
-from monikerclient import exceptions
-from monikerclient import utils
-from monikerclient.v1 import Client
+from designateclient import exceptions
+from designateclient import utils
+from designateclient.v1 import Client
 
 
 class Command(CliffCommand):

@@ -15,12 +15,12 @@
 # under the License.
 import requests
 from stevedore import extension
-from monikerclient import exceptions
-from monikerclient.auth import KeystoneAuth
+from designateclient import exceptions
+from designateclient.auth import KeystoneAuth
 
 
 class Client(object):
-    """ Client for the Moniker v1 API """
+    """ Client for the Designate v1 API """
 
     def __init__(self, endpoint=None, auth_url=None, username=None,
                  password=None, tenant_id=None, tenant_name=None, token=None,
@@ -61,7 +61,7 @@ class Client(object):
             setattr(self, ext.name, controller)
 
         # Load all controllers
-        mgr = extension.ExtensionManager('monikerclient.v1.controllers')
+        mgr = extension.ExtensionManager('designateclient.v1.controllers')
         mgr.map(_load_controller)
 
     def wrap_api_call(self, func, *args, **kw):

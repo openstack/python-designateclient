@@ -16,7 +16,7 @@
 import os
 import pkg_resources
 import json
-from monikerclient import exceptions
+from designateclient import exceptions
 
 
 def resource_string(*args, **kwargs):
@@ -26,7 +26,7 @@ def resource_string(*args, **kwargs):
     package = kwargs.pop('package', None)
 
     if not package:
-        package = 'monikerclient'
+        package = 'designateclient'
 
     resource_path = os.path.join('resources', *args)
 

@@ -19,5 +19,5 @@ ChangeLog
 doc/source/api/*
 doc/build/*
 dist
-monikerclient/versioninfo
+designateclient/versioninfo
 .testrepository

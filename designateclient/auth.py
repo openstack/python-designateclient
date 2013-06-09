@@ -49,7 +49,7 @@ class KeystoneAuth(AuthBase):
         request.headers['X-Auth-Token'] = self.token
 
         if self.sudo_tenant_id:
-            request.headers['X-Moniker-Sudo-Tenant-ID'] = self.sudo_tenant_id
+            request.headers['X-Designate-Sudo-Tenant-ID'] = self.sudo_tenant_id
 
         return request
 

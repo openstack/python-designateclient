@@ -15,7 +15,7 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 import sys
-from monikerclient.shell import MonikerShell
+from designateclient.shell import DesignateShell
 
-shell = MonikerShell()
+shell = DesignateShell()
 sys.exit(shell.run(sys.argv[1:]))

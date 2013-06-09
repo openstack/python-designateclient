@@ -1,8 +1,8 @@
 include AUTHORS
 include ChangeLog
-include monikerclient/versioninfo
+include designateclient/versioninfo
 include *.txt *.ini *.cfg *.rst *.md
-recursive-include monikerclient/resources *
+recursive-include designateclient/resources *
 recursive-include tools *
 
 exclude .gitignore

@@ -14,8 +14,8 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 import logging
-from monikerclient.cli import base
-from monikerclient.v1.records import Record
+from designateclient.cli import base
+from designateclient.v1.records import Record
 
 LOG = logging.getLogger(__name__)
 
