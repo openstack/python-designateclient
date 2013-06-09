@@ -107,7 +107,7 @@ class UpdateRecordCommand(base.UpdateCommand):
         return parser
 
     def execute(self, parsed_args):
-        # TODO: API needs updating.. this get is silly
+        # TODO(kiall): API needs updating.. this get is silly
         record = self.client.records.get(parsed_args.domain_id, parsed_args.id)
 
         if parsed_args.name:
