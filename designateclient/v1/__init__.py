@@ -78,15 +78,15 @@ class Client(object):
         response = func(*args, **kw)
 
         if response.status_code == 400:
-            raise exceptions.BadRequest(**response.json)
+            raise exceptions.BadRequest(**response.json())
         elif response.status_code in (401, 403):
-            raise exceptions.Forbidden(**response.json)
+            raise exceptions.Forbidden(**response.json())
         elif response.status_code == 404:
-            raise exceptions.NotFound(**response.json)
+            raise exceptions.NotFound(**response.json())
         elif response.status_code == 409:
-            raise exceptions.Conflict(**response.json)
+            raise exceptions.Conflict(**response.json())
         elif response.status_code == 500:
-            raise exceptions.Unknown(**response.json)
+            raise exceptions.Unknown(**response.json())
         else:
             return response
 

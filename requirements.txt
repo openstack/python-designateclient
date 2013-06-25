@@ -1,8 +1,9 @@
+# This file is managed by openstack-depends
+cliff>=1.4
 d2to1>=0.2.10,<0.3
-pbr>=0.5,<0.6
-cliff>=1.2.1
-jsonschema>=0.8,<1
-stevedore
-requests>=0.8.3,<1.0
-python-keystoneclient>=0.2.0
+jsonschema>=1.0.0,!=1.4.0,<2
 keyring
+pbr>=0.5.16,<0.6
+python-keystoneclient>=0.2,<0.3
+requests>=1.1,<1.2.1
+stevedore>=0.9

@@ -24,7 +24,7 @@ class DiagnosticsController(Controller):
         response = self.client.get('/diagnostics/ping/%s/%s' %
                                    (service, host))
 
-        return response.json
+        return response.json()
 
     def sync_all(self):
         """
@@ -32,7 +32,7 @@ class DiagnosticsController(Controller):
         """
         response = self.client.post('/diagnostics/sync/all')
 
-        return response.json
+        return response.json()
 
     def sync_domain(self, domain_id):
         """
@@ -41,7 +41,7 @@ class DiagnosticsController(Controller):
         response = self.client.post('/diagnostics/sync/domain/%s' %
                                     domain_id)
 
-        return response.json
+        return response.json()
 
     def sync_record(self, domain_id, record_id):
         """
@@ -50,4 +50,4 @@ class DiagnosticsController(Controller):
         response = self.client.post('/diagnostics/sync/record/%s/%s' %
                                     (domain_id, record_id))
 
-        return response.json
+        return response.json()

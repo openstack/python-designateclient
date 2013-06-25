@@ -40,7 +40,7 @@ def model_factory(schema):
     def validator(obj):
         """Apply a JSON schema to an object"""
         try:
-            jsonschema.validate(obj, schema)
+            jsonschema.validate(obj, schema, cls=jsonschema.Draft3Validator)
         except jsonschema.ValidationError, e:
             raise ValidationError(str(e))
 

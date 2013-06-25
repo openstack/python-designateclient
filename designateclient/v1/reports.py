@@ -23,7 +23,7 @@ class ReportsController(Controller):
         """
         response = self.client.get('/reports/counts')
 
-        return response.json
+        return response.json()
 
     def count_domains(self):
         """
@@ -31,7 +31,7 @@ class ReportsController(Controller):
         """
         response = self.client.get('/reports/counts/domains')
 
-        return response.json
+        return response.json()
 
     def count_tenants(self):
         """
@@ -39,7 +39,7 @@ class ReportsController(Controller):
         """
         response = self.client.get('/reports/counts/tenants')
 
-        return response.json
+        return response.json()
 
     def count_records(self):
         """
@@ -47,7 +47,7 @@ class ReportsController(Controller):
         """
         response = self.client.get('/reports/counts/records')
 
-        return response.json
+        return response.json()
 
     def tenants_all(self):
         """
@@ -55,7 +55,7 @@ class ReportsController(Controller):
         """
         response = self.client.get('/reports/tenants')
 
-        return response.json['tenants']
+        return response.json()['tenants']
 
     def tenant_domains(self, other_tenant_id):
         """
@@ -64,4 +64,4 @@ class ReportsController(Controller):
         response = self.client.get('/reports/tenants/%s' %
                                    other_tenant_id)
 
-        return [{'domain': d} for d in response.json['domains']]
+        return [{'domain': d} for d in response.json()['domains']]

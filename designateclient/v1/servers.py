@@ -31,7 +31,7 @@ class ServersController(CrudController):
         """
         response = self.client.get('/servers')
 
-        return [Server(i) for i in response.json['servers']]
+        return [Server(i) for i in response.json()['servers']]
 
     def get(self, server_id):
         """
@@ -42,7 +42,7 @@ class ServersController(CrudController):
         """
         response = self.client.get('/servers/%s' % server_id)
 
-        return Server(response.json)
+        return Server(response.json())
 
     def create(self, server):
         """
@@ -53,7 +53,7 @@ class ServersController(CrudController):
         """
         response = self.client.post('/servers', data=json.dumps(server))
 
-        return Server(response.json)
+        return Server(response.json())
 
     def update(self, server):
         """
@@ -65,7 +65,7 @@ class ServersController(CrudController):
         response = self.client.put('/servers/%s' % server.id,
                                    data=json.dumps(server.changes))
 
-        return Server(response.json)
+        return Server(response.json())
 
     def delete(self, server):
         """

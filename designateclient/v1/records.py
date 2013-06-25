@@ -37,7 +37,7 @@ class RecordsController(CrudController):
             'domain_id': domain_id
         })
 
-        return [Record(i) for i in response.json['records']]
+        return [Record(i) for i in response.json()['records']]
 
     def get(self, domain, record_id):
         """
@@ -56,7 +56,7 @@ class RecordsController(CrudController):
 
         response = self.client.get(uri)
 
-        return Record(response.json)
+        return Record(response.json())
 
     def create(self, domain, record):
         """
@@ -74,7 +74,7 @@ class RecordsController(CrudController):
 
         response = self.client.post(uri, data=json.dumps(record))
 
-        return Record(response.json)
+        return Record(response.json())
 
     def update(self, domain, record):
         """
@@ -93,7 +93,7 @@ class RecordsController(CrudController):
 
         response = self.client.put(uri, data=json.dumps(record.changes))
 
-        return Record(response.json)
+        return Record(response.json())
 
     def delete(self, domain, record):
         """
