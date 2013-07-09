@@ -1,4 +1,3 @@
-cliff
-jsonschema>=0.7
-requests
-python-keystoneclient>=0.2.0
+sphinx
+-r ../requirements.txt
+-r ../test-requirements.txt
