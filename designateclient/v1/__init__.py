@@ -52,6 +52,10 @@ class Client(object):
             raise ValueError('Either an endpoint or auth_url must be supplied')
 
         headers = {'Content-Type': 'application/json'}
+
+        if token is not None:
+            headers['X-Auth-Token'] = token
+
         self.requests = requests.Session()
         self.requests.auth = auth
         self.requests.headers.update(headers)
