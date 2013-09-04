@@ -41,7 +41,7 @@ def model_factory(schema):
         """Apply a JSON schema to an object"""
         try:
             jsonschema.validate(obj, schema, cls=jsonschema.Draft3Validator)
-        except jsonschema.ValidationError, e:
+        except jsonschema.ValidationError as e:
             raise ValidationError(str(e))
 
     class Model(dict):
@@ -54,7 +54,7 @@ def model_factory(schema):
             self.__dict__['validator'] = validator
             try:
                 self.validator(d)
-            except ValidationError, e:
+            except ValidationError as e:
                 raise ValueError('Validation Error: %s' % str(e))
             else:
                 dict.__init__(self, d)
@@ -72,7 +72,7 @@ def model_factory(schema):
             mutation[key] = value
             try:
                 self.validator(mutation)
-            except ValidationError, e:
+            except ValidationError as e:
                 raise InvalidOperation(str(e))
 
             dict.__setitem__(self, key, value)
@@ -105,7 +105,7 @@ def model_factory(schema):
             mutation.update(other)
             try:
                 self.validator(mutation)
-            except ValidationError, e:
+            except ValidationError as e:
                 raise InvalidOperation(str(e))
             dict.update(self, other)
 

@@ -47,7 +47,7 @@ class Command(CliffCommand):
 
         try:
             return super(Command, self).run(parsed_args)
-        except exceptions.RemoteError, e:
+        except exceptions.RemoteError as e:
             columns = ['Code', 'Type']
             values = [e.code, e.type]
 
