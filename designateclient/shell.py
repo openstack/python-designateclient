@@ -89,4 +89,7 @@ class DesignateShell(App):
                             default=os.environ.get('DESIGNATE_SUDO_TENANT_ID'),
                             help="Defaults to env[DESIGNATE_SUDO_TENANT_ID]")
 
+        parser.add_argument('--insecure', action='store_true',
+                            help="Explicitly allow 'insecure' SSL requests")
+
         return parser

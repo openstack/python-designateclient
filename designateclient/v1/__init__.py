@@ -25,7 +25,8 @@ class Client(object):
     def __init__(self, endpoint=None, auth_url=None, username=None,
                  password=None, tenant_id=None, tenant_name=None, token=None,
                  region_name=None, service_type='dns',
-                 endpoint_type='publicURL', sudo_tenant_id=None):
+                 endpoint_type='publicURL', sudo_tenant_id=None,
+                 insecure=False):
         """
         :param endpoint: Endpoint URL
         :param auth_url: Keystone auth_url
@@ -36,6 +37,7 @@ class Client(object):
         :param token: A token instead of username / password
         :param region_name: The region name
         :param endpoint_type: The endpoint type (publicURL for example)
+        :param insecure: Allow "insecure" HTTPS requests
         """
         if auth_url:
             auth = KeystoneAuth(auth_url, username, password, tenant_id,
@@ -50,6 +52,8 @@ class Client(object):
             self.endpoint = endpoint
         else:
             raise ValueError('Either an endpoint or auth_url must be supplied')
+
+        self.insecure = insecure
 
         headers = {'Content-Type': 'application/json'}
 
@@ -77,6 +81,9 @@ class Client(object):
         # Prepend the endpoint URI
         args = list(args)
         args[0] = '%s/%s' % (self.endpoint, args[0])
+
+        if self.insecure is True:
+            kw['verify'] = False
 
         # Trigger the request
         response = func(*args, **kw)
