@@ -1,16 +1,26 @@
-.. designate documentation master file, created by
-   sphinx-quickstart on Wed Oct 31 18:58:17 2012.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+======================
+python-designateclient
+======================
 
-Welcome to designateclients's documentation!
-===================================
+This is a client for Designate API. There's a :doc:`Python API
+<api>` (the :program:`designateclient` module), and a :doc:`command-line tool
+<shell>` (installed as :program:`designate`).
 
-Contents:
+You'll need credentials for an OpenStack cloud that is implementing the Designate API ,
+such as HP's `Cloud DNS`_, in order to use the designate client.
+
+Contents
+======================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
+   installation
+   api
+   api-examples
+   shell
+   shell-examples
+   contributing
 
 Indices and tables
 ==================
@@ -19,3 +29,4 @@ Indices and tables
 * :ref:`modindex`
 * :ref:`search`
 
+.. _Cloud DNS: http://www.hpcloud.com/products-services/dns
