@@ -334,7 +334,7 @@ Updating a Record
    record.ttl = 300
 
    # Send the Update Record API call
-   record = client.records.update(record)
+   record = client.records.update(domain_id, record)
 
 Deleting a Record
 -----------------
@@ -354,7 +354,7 @@ Deleting a Record
    record_id = 'bd3e8520-25e0-11e3-8224-0800200c9a66'
 
    # Fetch the record
-   records = client.records.delete(record_id)
+   records = client.records.delete(domain_id, record_id)
 
 Working with Servers
 ====================
