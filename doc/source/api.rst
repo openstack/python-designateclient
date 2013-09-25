@@ -1,4 +1,0 @@
-designateclient python module
-=============================
-
-TODO

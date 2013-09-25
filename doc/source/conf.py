@@ -213,10 +213,7 @@ latex_documents = [
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [
-    ('index', 'designateclient', u'Designate Client Documentation',
-     [u'Managed I.T.'], 1)
-]
+#man_pages = []
 
 # If true, show URL addresses after external links.
 #man_show_urls = False

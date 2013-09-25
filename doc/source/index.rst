@@ -16,8 +16,7 @@ Contents
    :maxdepth: 1
 
    installation
-   api
-   api-examples
+   bindings
    shell
    shell-examples
    contributing

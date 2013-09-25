@@ -25,7 +25,7 @@ params, but it's easier to just set them as environment variables::
 You will also need to define the authentication url with ``--os-auth-url``
 or set is as an environment variable as well::
 
-    export OS_AUTH_URL=http://example.com:5000/v2.0/
+    export OS_AUTH_URL=https://example.com:5000/v2.0/
 
 Since Keystone can return multiple regions in the Service Catalog, you
 can specify the one you want with ``--os-region-name`` (or
