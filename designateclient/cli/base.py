@@ -122,5 +122,6 @@ class UpdateCommand(Command, ShowOne):
         return results.keys(), results.values()
 
 
-class DeleteCommand(Command):
-    pass
+class DeleteCommand(Command, ShowOne):
+    def post_execute(self, results):
+        return [], []

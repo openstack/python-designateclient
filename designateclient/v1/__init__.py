@@ -88,16 +88,22 @@ class Client(object):
         # Trigger the request
         response = func(*args, **kw)
 
+        # Decode is response, if possible
+        try:
+            response_payload = response.json()
+        except ValueError:
+            response_payload = {}
+
         if response.status_code == 400:
-            raise exceptions.BadRequest(**response.json())
+            raise exceptions.BadRequest(**response_payload)
         elif response.status_code in (401, 403):
-            raise exceptions.Forbidden(**response.json())
+            raise exceptions.Forbidden(**response_payload)
         elif response.status_code == 404:
-            raise exceptions.NotFound(**response.json())
+            raise exceptions.NotFound(**response_payload)
         elif response.status_code == 409:
-            raise exceptions.Conflict(**response.json())
-        elif response.status_code == 500:
-            raise exceptions.Unknown(**response.json())
+            raise exceptions.Conflict(**response_payload)
+        elif response.status_code >= 500:
+            raise exceptions.Unknown(**response_payload)
         else:
             return response
 
