@@ -76,7 +76,7 @@ class UpdateDomainCommand(base.UpdateCommand):
         parser.add_argument('id', help="Domain ID")
         parser.add_argument('--name', help="Domain Name")
         parser.add_argument('--email', help="Domain Email")
-        parser.add_argument('--ttl', help="Time To Live (Seconds)")
+        parser.add_argument('--ttl', type=int, help="Time To Live (Seconds)")
 
         return parser
 
