@@ -121,6 +121,7 @@ ttl                     Default TTL for records
 serial                  Domain Server Number
 created_at              Date and time this domain was created at
 updated_at              Date and time this domain was last updated
+description             Domain Description
 ======================= =======================================================
 
 Listing Domains
@@ -245,6 +246,7 @@ priority                Rercord Priority (Valid only for MX and SRV records)
 ttl                     Record TTL
 created_at              Date and time this record was created at
 updated_at              Date and time this record was last updated
+description             Record Description
 ======================= =======================================================
 
 Listing Records

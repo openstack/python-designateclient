@@ -63,6 +63,7 @@ class CreateRecordCommand(base.CreateCommand):
         parser.add_argument('--data', help="Record Data", required=True)
         parser.add_argument('--ttl', type=int, help="Record TTL")
         parser.add_argument('--priority', type=int, help="Record Priority")
+        parser.add_argument('--description', help="Description")
 
         return parser
 
@@ -79,6 +80,9 @@ class CreateRecordCommand(base.CreateCommand):
         if parsed_args.priority:
             record.priority = parsed_args.priority
 
+        if parsed_args.description:
+            record.description = parsed_args.description
+
         return self.client.records.create(parsed_args.domain_id, record)
 
 
@@ -93,6 +97,10 @@ class UpdateRecordCommand(base.UpdateCommand):
         parser.add_argument('--name', help="Record Name")
         parser.add_argument('--type', help="Record Type")
         parser.add_argument('--data', help="Record Data")
+
+        description_group = parser.add_mutually_exclusive_group()
+        description_group.add_argument('--description', help="Description")
+        description_group.add_argument('--no-description', action='store_true')
 
         ttl_group = parser.add_mutually_exclusive_group()
         ttl_group.add_argument('--ttl', type=int,
@@ -128,6 +136,11 @@ class UpdateRecordCommand(base.UpdateCommand):
             record.priority = None
         elif parsed_args.priority:
             record.priority = parsed_args.priority
+
+        if parsed_args.no_description:
+            record.description = None
+        elif parsed_args.description:
+            record.description = parsed_args.description
 
         return self.client.records.update(parsed_args.domain_id, record)
 

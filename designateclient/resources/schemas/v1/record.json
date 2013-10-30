@@ -1,10 +1,11 @@
 {
-    "id": "/schemas/record",
+    "id": "record",
 
     "$schema": "http://json-schema.org/draft-03/hyper-schema",
 
     "title": "record",
     "description": "Record",
+    "additionalProperties": false,
 
     "properties": {
         "id": {
@@ -41,24 +42,29 @@
         "priority": {
             "type": ["integer", "null"],
             "description": "DNS Record Priority",
-            "min": 1,
-            "max": 65535
+            "minimum": 1,
+            "maximum": 65535
         },
         "ttl": {
             "type": ["integer", "null"],
             "description": "Time to live",
-            "min": 1,
-            "max": 4294967295
+            "minimum": 0,
+            "maximum": 2147483647
+        },
+        "description": {
+            "type": ["string", "null"],
+            "description": "Description for the record",
+            "maxLength": 160
         },
         "created_at": {
             "type": "string",
-            "description": "Date and time of image registration",
+            "description": "Date and time of record creation",
             "format": "date-time",
             "readonly": true
         },
         "updated_at": {
             "type": ["string", "null"],
-            "description": "Date and time of image registration",
+            "description": "Date and time of last record update",
             "format": "date-time",
             "readonly": true
         }
