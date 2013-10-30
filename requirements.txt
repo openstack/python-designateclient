@@ -1,6 +1,5 @@
 cliff>=1.4.3
 jsonschema>=1.3.0,!=1.4.0
-keyring>=1.6.1,<2.0
 pbr>=0.5.21,<1.0
 python-keystoneclient>=0.3.2
 requests>=1.1
