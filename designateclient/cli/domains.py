@@ -52,6 +52,7 @@ class CreateDomainCommand(base.CreateCommand):
         parser.add_argument('--name', help="Domain Name", required=True)
         parser.add_argument('--email', help="Domain Email", required=True)
         parser.add_argument('--ttl', type=int, help="Time To Live (Seconds)")
+        parser.add_argument('--description', help="Description")
 
         return parser
 
@@ -60,6 +61,9 @@ class CreateDomainCommand(base.CreateCommand):
             name=parsed_args.name,
             email=parsed_args.email,
         )
+
+        if parsed_args.description:
+            domain.description = parsed_args.description
 
         if parsed_args.ttl:
             domain.ttl = parsed_args.ttl
@@ -77,6 +81,9 @@ class UpdateDomainCommand(base.UpdateCommand):
         parser.add_argument('--name', help="Domain Name")
         parser.add_argument('--email', help="Domain Email")
         parser.add_argument('--ttl', type=int, help="Time To Live (Seconds)")
+        description_group = parser.add_mutually_exclusive_group()
+        description_group.add_argument('--description', help="Description")
+        description_group.add_argument('--no-description', action='store_true')
 
         return parser
 
@@ -92,6 +99,11 @@ class UpdateDomainCommand(base.UpdateCommand):
 
         if parsed_args.ttl:
             domain.ttl = parsed_args.ttl
+
+        if parsed_args.no_description:
+            domain.description = None
+        elif parsed_args.description:
+            domain.description = parsed_args.description
 
         return self.client.domains.update(domain)
 
