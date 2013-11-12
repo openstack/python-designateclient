@@ -16,12 +16,22 @@
 from designateclient.v1.base import Controller
 
 
-class DiagnosticsController(Controller):
-    def ping(self, service, host):
+class SyncController(Controller):
+    def sync_all(self):
         """
-        Ping a service on a given host
+        Sync Everything
         """
-        response = self.client.get('/diagnostics/ping/%s/%s' %
-                                   (service, host))
+        self.client.post('/domains/sync')
 
-        return response.json()
+    def sync_domain(self, domain_id):
+        """
+        Sync Single Domain
+        """
+        self.client.post('/domains/%s/sync' % domain_id)
+
+    def sync_record(self, domain_id, record_id):
+        """
+        Sync Single Record
+        """
+        self.client.post('/domains/%s/records/%s/sync' %
+                         (domain_id, record_id))
