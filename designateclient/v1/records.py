@@ -13,11 +13,13 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations
 # under the License.
+
 import json
-from designateclient import warlock
+
 from designateclient import utils
 from designateclient.v1.base import CrudController
 from designateclient.v1.domains import Domain
+from designateclient import warlock
 
 
 Record = warlock.model_factory(utils.load_schema('v1', 'record'))

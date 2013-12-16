@@ -13,8 +13,10 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations
 # under the License.
+
 import logging
 import os
+
 from cliff.app import App
 from cliff.commandmanager import CommandManager
 from designateclient.version import version_info as version

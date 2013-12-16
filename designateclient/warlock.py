@@ -15,8 +15,10 @@
 # Code copied from Warlock, as warlock depends on jsonschema==0.2
 # Hopefully we can upstream the changes ASAP.
 #
+
 import copy
 import logging
+
 import jsonschema
 
 LOG = logging.getLogger(__name__)

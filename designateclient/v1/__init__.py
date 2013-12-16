@@ -15,8 +15,9 @@
 # under the License.
 import requests
 from stevedore import extension
-from designateclient import exceptions
+
 from designateclient.auth import KeystoneAuth
+from designateclient import exceptions
 
 
 class Client(object):

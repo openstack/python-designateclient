@@ -14,9 +14,10 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 import json
-from designateclient import warlock
+
 from designateclient import utils
 from designateclient.v1.base import CrudController
+from designateclient import warlock
 
 
 Domain = warlock.model_factory(utils.load_schema('v1', 'domain'))
