@@ -24,6 +24,7 @@ from designateclient.version import version_info as version
 
 class DesignateShell(App):
     CONSOLE_MESSAGE_FORMAT = '%(levelname)s: %(message)s'
+    DEFAULT_VERBOSE_LEVEL = 0
 
     def __init__(self):
         super(DesignateShell, self).__init__(
@@ -33,17 +34,6 @@ class DesignateShell(App):
         )
 
         self.log = logging.getLogger(__name__)
-
-    def configure_logging(self):
-        super(DesignateShell, self).configure_logging()
-
-        # Set requests logging
-        requests_logger = logging.getLogger('requests')
-
-        if self.options.verbose_level <= 1:
-            requests_logger.setLevel(logging.WARN)
-        else:
-            requests_logger.setLevel(logging.DEBUG)
 
     def build_option_parser(self, description, version):
         parser = super(DesignateShell, self).build_option_parser(
