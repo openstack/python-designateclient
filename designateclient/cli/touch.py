@@ -34,4 +34,4 @@ class TouchDomainCommand(base.Command):
     def execute(self, parsed_args):
         self.client.touch.domain(parsed_args.domain_id)
 
-        LOG.info('Domain touched sucessfully')
+        LOG.info('Domain touched successfully')

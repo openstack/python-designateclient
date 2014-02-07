@@ -69,7 +69,8 @@ class Command(CliffCommand):
                                 data,
                                 self.app.stdout,
                                 parsed_args)
-        self.app.log.error('The requested action did not complete sucessfully')
+        self.app.log.error('The requested action did not complete '
+                           'successfully')
 
     @abc.abstractmethod
     def execute(self, parsed_args):
