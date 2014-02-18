@@ -45,14 +45,19 @@ class Client(object):
                                 tenant_name, token, service_type,
                                 endpoint_type, region_name, sudo_tenant_id)
             if endpoint:
-                self.endpoint = endpoint
+                self.endpoint = endpoint.rstrip('/')
             else:
                 self.endpoint = auth.get_url()
         elif endpoint:
             auth = None
-            self.endpoint = endpoint
+            self.endpoint = endpoint.rstrip('/')
         else:
             raise ValueError('Either an endpoint or auth_url must be supplied')
+
+        # NOTE(kiall): As we're in the Version 1 client, we ensure we're
+        #              pointing at the version 1 API.
+        if not self.endpoint.endswith('v1'):
+            self.endpoint = "%s/v1" % self.endpoint
 
         self.insecure = insecure
 

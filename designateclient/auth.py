@@ -80,7 +80,12 @@ class KeystoneAuth(AuthBase):
         endpoints = self.get_endpoints(service_type, endpoint_type,
                                        region_name)
 
-        return endpoints[service_type][0][endpoint_type].rstrip('/')
+        url = endpoints[service_type][0][endpoint_type]
+
+        # NOTE(kiall): The Version 1 API is the only API that has ever included
+        #              the version number in the endpoint. Thus, it's safe to
+        #              simply remove it if present.
+        return url.rstrip('/').rstrip('v1').rstrip('/')
 
     def refresh_auth(self):
         ks = self.get_ksclient()
