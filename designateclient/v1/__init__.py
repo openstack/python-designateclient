@@ -43,7 +43,7 @@ class Client(object):
         if auth_url:
             auth = KeystoneAuth(auth_url, username, password, tenant_id,
                                 tenant_name, token, service_type,
-                                endpoint_type, sudo_tenant_id)
+                                endpoint_type, region_name, sudo_tenant_id)
             if endpoint:
                 self.endpoint = endpoint
             else:
