@@ -85,7 +85,10 @@ class KeystoneAuth(AuthBase):
         # NOTE(kiall): The Version 1 API is the only API that has ever included
         #              the version number in the endpoint. Thus, it's safe to
         #              simply remove it if present.
-        return url.rstrip('/').rstrip('v1').rstrip('/')
+        url = url.rstrip('/')
+        if url.endswith('/v1'):
+            url = url[:-3]
+        return url
 
     def refresh_auth(self):
         ks = self.get_ksclient()
