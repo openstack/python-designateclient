@@ -307,7 +307,7 @@ Creating a Record
    domain_id = 'fb505f10-25df-11e3-8224-0800200c9a66'
 
    # Create a new Record object
-   record = Record(name="www.example.com.", type="A", content="127.0.0.1")
+   record = Record(name="www.example.com.", type="A", data="127.0.0.1")
 
    # Send the Create Record API call
    record = client.records.create(domain_id, record)

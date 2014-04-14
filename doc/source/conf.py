@@ -41,7 +41,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'designateclient'
-copyright = u'2012, Managed I.T.'
+copyright = u'2012, Managed I.T. 2013-2014, Hewlett-Packard Development Company, L.P.'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -185,7 +185,7 @@ latex_elements = {
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
   ('index', 'designateclient.tex', u'Designate Client Documentation',
-   u'Managed I.T.', 'manual'),
+   u'OpenStack', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
