@@ -16,43 +16,50 @@
 import requests
 from stevedore import extension
 
-from designateclient.auth import KeystoneAuth
 from designateclient import exceptions
+from designateclient import utils
 
 
 class Client(object):
     """ Client for the Designate v1 API """
 
-    def __init__(self, endpoint=None, auth_url=None, username=None,
-                 password=None, tenant_id=None, tenant_name=None, token=None,
-                 region_name=None, service_type='dns',
-                 endpoint_type='publicURL', sudo_tenant_id=None,
+    def __init__(self, endpoint=None, username=None, user_id=None,
+                 user_domain_id=None, user_domain_name=None, password=None,
+                 tenant_name=None, tenant_id=None, domain_name=None,
+                 domain_id=None, project_name=None,
+                 project_id=None, project_domain_name=None,
+                 project_domain_id=None, auth_url=None, token=None,
+                 endpoint_type=None, region_name=None, service_type=None,
                  insecure=False):
         """
         :param endpoint: Endpoint URL
-        :param auth_url: Keystone auth_url
-        :param username: The username to auth with
-        :param password: The password to auth with
-        :param tenant_id: The tenant ID
-        :param tenant_name: The tenant name
         :param token: A token instead of username / password
-        :param region_name: The region name
-        :param endpoint_type: The endpoint type (publicURL for example)
         :param insecure: Allow "insecure" HTTPS requests
         """
-        if auth_url:
-            auth = KeystoneAuth(auth_url, username, password, tenant_id,
-                                tenant_name, token, service_type,
-                                endpoint_type, region_name, sudo_tenant_id)
-            if endpoint:
-                self.endpoint = endpoint.rstrip('/')
-            else:
-                self.endpoint = auth.get_url()
-        elif endpoint:
-            auth = None
-            self.endpoint = endpoint.rstrip('/')
-        else:
-            raise ValueError('Either an endpoint or auth_url must be supplied')
+        if not endpoint or not token:
+            ksclient = utils.get_ksclient(
+                username=username, user_id=user_id,
+                user_domain_id=user_domain_id,
+                user_domain_name=user_domain_name, password=password,
+                tenant_id=tenant_id, tenant_name=tenant_name,
+                project_id=project_id, project_name=project_name,
+                project_domain_id=project_domain_id,
+                project_domain_name=project_domain_name,
+                auth_url=auth_url,
+                token=token,
+                insecure=insecure)
+            ksclient.authenticate()
+
+            token = token or ksclient.auth_token
+
+            filters = {
+                'region_name': region_name,
+                'service_type': service_type,
+                'endpoint_type': endpoint_type,
+            }
+            endpoint = endpoint or self._get_endpoint(ksclient, **filters)
+
+        self.endpoint = endpoint.rstrip('/')
 
         # NOTE(kiall): As we're in the Version 1 client, we ensure we're
         #              pointing at the version 1 API.
@@ -67,7 +74,6 @@ class Client(object):
             headers['X-Auth-Token'] = token
 
         self.requests = requests.Session()
-        self.requests.auth = auth
         self.requests.headers.update(headers)
 
         def _load_controller(ext):
@@ -112,6 +118,18 @@ class Client(object):
             raise exceptions.Unknown(**response_payload)
         else:
             return response
+
+    def _get_endpoint(self, client, **kwargs):
+        """Get an endpoint using the provided keystone client."""
+        if kwargs.get('region_name'):
+            return client.service_catalog.url_for(
+                service_type=kwargs.get('service_type') or 'dns',
+                attr='region',
+                filter_value=kwargs.get('region_name'),
+                endpoint_type=kwargs.get('endpoint_type') or 'publicURL')
+        return client.service_catalog.url_for(
+            service_type=kwargs.get('service_type') or 'dns',
+            endpoint_type=kwargs.get('endpoint_type') or 'publicURL')
 
     def get(self, path, **kw):
         return self.wrap_api_call(self.requests.get, path, **kw)
