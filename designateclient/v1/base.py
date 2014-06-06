@@ -14,17 +14,18 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 import abc
+import six
 
 
+@six.add_metaclass(abc.ABCMeta)
 class Controller(object):
-    __metaclass__ = abc.ABCMeta
 
     def __init__(self, client):
         self.client = client
 
 
+@six.add_metaclass(abc.ABCMeta)
 class CrudController(Controller):
-    __metaclass__ = abc.ABCMeta
 
     @abc.abstractmethod
     def list(self, *args, **kw):

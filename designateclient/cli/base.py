@@ -20,10 +20,11 @@ from cliff.show import ShowOne
 from designateclient import exceptions
 from designateclient import utils
 from designateclient.v1 import Client
+import six
 
 
+@six.add_metaclass(abc.ABCMeta)
 class Command(CliffCommand):
-    __metaclass__ = abc.ABCMeta
 
     def run(self, parsed_args):
         client_args = {
