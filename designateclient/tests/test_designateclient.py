@@ -11,3 +11,18 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations
 # under the License.
+
+"""
+test_designateclient
+----------------------------------
+
+Tests for `designateclient` module.
+"""
+
+from designateclient.tests import base
+
+
+class DummyTestCase(base.TestCase):
+
+    def test_dummy(self):
+        pass
