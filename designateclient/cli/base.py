@@ -14,13 +14,15 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 import abc
+
 from cliff.command import Command as CliffCommand
 from cliff.lister import Lister
 from cliff.show import ShowOne
+import six
+
 from designateclient import exceptions
 from designateclient import utils
 from designateclient.v1 import Client
-import six
 
 
 @six.add_metaclass(abc.ABCMeta)

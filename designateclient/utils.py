@@ -14,10 +14,10 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
-import os
-import pkg_resources
-
 import json
+import os
+
+import pkg_resources
 
 from designateclient import exceptions
 

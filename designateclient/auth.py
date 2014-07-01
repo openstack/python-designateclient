@@ -14,10 +14,10 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
-from requests.auth import AuthBase
 from urlparse import urlparse
 
 from keystoneclient.v2_0.client import Client
+from requests.auth import AuthBase
 
 
 class KeystoneAuth(AuthBase):

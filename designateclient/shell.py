@@ -19,6 +19,7 @@ import os
 
 from cliff.app import App
 from cliff.commandmanager import CommandManager
+
 from designateclient.version import version_info as version
 
 
