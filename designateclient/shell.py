@@ -16,6 +16,7 @@
 
 import logging
 import os
+import traceback
 
 from cliff.app import App
 from cliff.commandmanager import CommandManager
@@ -86,3 +87,59 @@ class DesignateShell(App):
                             help="Explicitly allow 'insecure' SSL requests")
 
         return parser
+
+    def configure_logging(self):
+        """Configure logging for the app
+
+        Cliff sets some defaults we don't want so re-work it a bit
+        """
+
+        if self.options.debug:
+            # --debug forces verbose_level 3
+            # Set this here so cliff.app.configure_logging() can work
+            self.options.verbose_level = 3
+
+        super(DesignateShell, self).configure_logging()
+        root_logger = logging.getLogger('')
+
+        # Requests logs some stuff at INFO that we don't want
+        # unless we have DEBUG
+        requests_log = logging.getLogger("requests")
+        requests_log.setLevel(logging.ERROR)
+
+        # Other modules we don't want DEBUG output for so
+        # don't reset them below
+        iso8601_log = logging.getLogger("iso8601")
+        iso8601_log.setLevel(logging.ERROR)
+
+        # Set logging to the requested level
+        self.dump_stack_trace = False
+        if self.options.verbose_level == 0:
+            # --quiet
+            root_logger.setLevel(logging.ERROR)
+        elif self.options.verbose_level == 1:
+            # This is the default case, no --debug, --verbose or --quiet
+            root_logger.setLevel(logging.WARNING)
+        elif self.options.verbose_level == 2:
+            # One --verbose
+            root_logger.setLevel(logging.INFO)
+        elif self.options.verbose_level >= 3:
+            # Two or more --verbose
+            root_logger.setLevel(logging.DEBUG)
+            requests_log.setLevel(logging.DEBUG)
+
+        if self.options.debug:
+            # --debug forces traceback
+            self.dump_stack_trace = True
+
+    def run(self, argv):
+        try:
+            return super(DesignateShell, self).run(argv)
+        except Exception as e:
+            if not logging.getLogger('').handlers:
+                logging.basicConfig()
+            if self.dump_stack_trace:
+                self.log.error(traceback.format_exc(e))
+            else:
+                self.log.error('Exception raised: ' + str(e))
+            return 1
