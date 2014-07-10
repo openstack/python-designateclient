@@ -17,35 +17,35 @@ from designateclient.cli import base
 
 
 class DomainCountCommand(base.GetCommand):
-    """ Get counts for total domains """
+    """Get counts for total domains"""
 
     def execute(self, parsed_args):
         return self.client.reports.count_domains()
 
 
 class RecordCountCommand(base.GetCommand):
-    """ Get counts for total records """
+    """Get counts for total records"""
 
     def execute(self, parsed_args):
         return self.client.reports.count_records()
 
 
 class TenantCountCommand(base.GetCommand):
-    """ Get counts for total tenants """
+    """Get counts for total tenants"""
 
     def execute(self, parsed_args):
         return self.client.reports.count_tenants()
 
 
 class CountsCommand(base.GetCommand):
-    """ Get count totals for all tenants, domains and records """
+    """Get count totals for all tenants, domains and records"""
 
     def execute(self, parsed_args):
         return self.client.reports.count_all()
 
 
 class TenantsCommand(base.ListCommand):
-    """ Get list of tenants and domain count for each """
+    """Get list of tenants and domain count for each"""
 
     columns = ['domain_count', 'id']
 
@@ -54,7 +54,7 @@ class TenantsCommand(base.ListCommand):
 
 
 class TenantCommand(base.ListCommand):
-    """ Get a list of domains for given tenant """
+    """Get a list of domains for given tenant"""
 
     columns = ['domain']
 

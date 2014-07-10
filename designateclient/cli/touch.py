@@ -22,7 +22,7 @@ LOG = logging.getLogger(__name__)
 
 
 class TouchDomainCommand(base.Command):
-    """ Touch a single Domain """
+    """Touch a single Domain"""
 
     def get_parser(self, prog_name):
         parser = super(TouchDomainCommand, self).get_parser(prog_name)

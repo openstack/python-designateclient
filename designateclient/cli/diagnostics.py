@@ -22,7 +22,7 @@ LOG = logging.getLogger(__name__)
 
 
 class PingCommand(base.GetCommand):
-    """ Ping a service on a given host """
+    """Ping a service on a given host"""
 
     def get_parser(self, prog_name):
         parser = super(PingCommand, self).get_parser(prog_name)

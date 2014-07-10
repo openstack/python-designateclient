@@ -23,7 +23,7 @@ LOG = logging.getLogger(__name__)
 
 
 class ListDomainsCommand(base.ListCommand):
-    """ List Domains """
+    """List Domains"""
 
     columns = ['id', 'name', 'serial']
 
@@ -32,7 +32,7 @@ class ListDomainsCommand(base.ListCommand):
 
 
 class GetDomainCommand(base.GetCommand):
-    """ Get Domain """
+    """Get Domain"""
 
     def get_parser(self, prog_name):
         parser = super(GetDomainCommand, self).get_parser(prog_name)
@@ -46,7 +46,7 @@ class GetDomainCommand(base.GetCommand):
 
 
 class CreateDomainCommand(base.CreateCommand):
-    """ Create Domain """
+    """Create Domain"""
 
     def get_parser(self, prog_name):
         parser = super(CreateDomainCommand, self).get_parser(prog_name)
@@ -74,7 +74,7 @@ class CreateDomainCommand(base.CreateCommand):
 
 
 class UpdateDomainCommand(base.UpdateCommand):
-    """ Update Domain """
+    """Update Domain"""
 
     def get_parser(self, prog_name):
         parser = super(UpdateDomainCommand, self).get_parser(prog_name)
@@ -111,7 +111,7 @@ class UpdateDomainCommand(base.UpdateCommand):
 
 
 class DeleteDomainCommand(base.DeleteCommand):
-    """ Delete Domain """
+    """Delete Domain"""
 
     def get_parser(self, prog_name):
         parser = super(DeleteDomainCommand, self).get_parser(prog_name)
@@ -125,7 +125,7 @@ class DeleteDomainCommand(base.DeleteCommand):
 
 
 class ListDomainServersCommand(base.ListCommand):
-    """ List Domain Servers """
+    """List Domain Servers"""
 
     columns = ['name']
 

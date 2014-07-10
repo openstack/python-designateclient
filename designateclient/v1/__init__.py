@@ -21,7 +21,7 @@ from designateclient import exceptions
 
 
 class Client(object):
-    """ Client for the Designate v1 API """
+    """Client for the Designate v1 API"""
 
     def __init__(self, endpoint=None, auth_url=None, username=None,
                  password=None, tenant_id=None, tenant_name=None, token=None,

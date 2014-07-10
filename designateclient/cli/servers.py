@@ -23,7 +23,7 @@ LOG = logging.getLogger(__name__)
 
 
 class ListServersCommand(base.ListCommand):
-    """ List Servers """
+    """List Servers"""
 
     columns = ['id', 'name']
 
@@ -32,7 +32,7 @@ class ListServersCommand(base.ListCommand):
 
 
 class GetServerCommand(base.GetCommand):
-    """ Get Server """
+    """Get Server"""
 
     def get_parser(self, prog_name):
         parser = super(GetServerCommand, self).get_parser(prog_name)
@@ -46,7 +46,7 @@ class GetServerCommand(base.GetCommand):
 
 
 class CreateServerCommand(base.CreateCommand):
-    """ Create Server """
+    """Create Server"""
 
     def get_parser(self, prog_name):
         parser = super(CreateServerCommand, self).get_parser(prog_name)
@@ -64,7 +64,7 @@ class CreateServerCommand(base.CreateCommand):
 
 
 class UpdateServerCommand(base.UpdateCommand):
-    """ Update Server """
+    """Update Server"""
 
     def get_parser(self, prog_name):
         parser = super(UpdateServerCommand, self).get_parser(prog_name)
@@ -85,7 +85,7 @@ class UpdateServerCommand(base.UpdateCommand):
 
 
 class DeleteServerCommand(base.DeleteCommand):
-    """ Delete Server """
+    """Delete Server"""
 
     def get_parser(self, prog_name):
         parser = super(DeleteServerCommand, self).get_parser(prog_name)

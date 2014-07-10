@@ -23,7 +23,7 @@ LOG = logging.getLogger(__name__)
 
 
 class ListRecordsCommand(base.ListCommand):
-    """ List Records """
+    """List Records"""
 
     columns = ['id', 'type', 'name', 'data']
 
@@ -39,7 +39,7 @@ class ListRecordsCommand(base.ListCommand):
 
 
 class GetRecordCommand(base.GetCommand):
-    """ Get Record """
+    """Get Record"""
 
     def get_parser(self, prog_name):
         parser = super(GetRecordCommand, self).get_parser(prog_name)
@@ -54,7 +54,7 @@ class GetRecordCommand(base.GetCommand):
 
 
 class CreateRecordCommand(base.CreateCommand):
-    """ Create Record """
+    """Create Record"""
 
     def get_parser(self, prog_name):
         parser = super(CreateRecordCommand, self).get_parser(prog_name)
@@ -89,7 +89,7 @@ class CreateRecordCommand(base.CreateCommand):
 
 
 class UpdateRecordCommand(base.UpdateCommand):
-    """ Update Record """
+    """Update Record"""
 
     def get_parser(self, prog_name):
         parser = super(UpdateRecordCommand, self).get_parser(prog_name)
@@ -148,7 +148,7 @@ class UpdateRecordCommand(base.UpdateCommand):
 
 
 class DeleteRecordCommand(base.DeleteCommand):
-    """ Delete Record """
+    """Delete Record"""
 
     def get_parser(self, prog_name):
         parser = super(DeleteRecordCommand, self).get_parser(prog_name)

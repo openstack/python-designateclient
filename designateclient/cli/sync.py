@@ -21,7 +21,7 @@ LOG = logging.getLogger(__name__)
 
 
 class SyncAllCommand(base.Command):
-    """ Sync Everything """
+    """Sync Everything"""
 
     def execute(self, parsed_args):
         self.client.sync.sync_all()
@@ -30,7 +30,7 @@ class SyncAllCommand(base.Command):
 
 
 class SyncDomainCommand(base.Command):
-    """ Sync a single Domain """
+    """Sync a single Domain"""
 
     def get_parser(self, prog_name):
         parser = super(SyncDomainCommand, self).get_parser(prog_name)
@@ -46,7 +46,7 @@ class SyncDomainCommand(base.Command):
 
 
 class SyncRecordCommand(base.Command):
-    """ Sync a single Record """
+    """Sync a single Record"""
 
     def get_parser(self, prog_name):
         parser = super(SyncRecordCommand, self).get_parser(prog_name)
