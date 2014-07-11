@@ -17,7 +17,13 @@
 import json
 import os
 
+
+from keystoneclient import client as ksclient
+from keystoneclient.exceptions import DiscoveryFailure
+from keystoneclient.v2_0 import client as v2_ksclient
+from keystoneclient.v3 import client as v3_ksclient
 import pkg_resources
+import six.moves.urllib.parse as urlparse
 
 from designateclient import exceptions
 
@@ -91,3 +97,45 @@ def get_columns(data):
 
     map(lambda item: map(_seen, item.keys()), data)
     return list(columns)
+
+
+def get_ksclient(username=None, user_id=None, user_domain_id=None,
+                 user_domain_name=None, password=None, tenant_id=None,
+                 tenant_name=None, domain_id=None, domain_name=None,
+                 project_id=None, project_name=None,
+                 project_domain_id=None, project_domain_name=None,
+                 auth_url=None, token=None, insecure=None):
+    kwargs = {
+        'username': username,
+        'user_domain_id': user_domain_id,
+        'user_domain_name': user_domain_name,
+        'password': password,
+        'tenant_id': tenant_id,
+        'tenant_name': tenant_name,
+        'domain_id': domain_id,
+        'domain_name': domain_name,
+        'project_id': project_id,
+        'project_name': project_name,
+        'project_domain_id': project_domain_id,
+        'project_domain_name': project_domain_name,
+        'auth_url': auth_url,
+        'token': token,
+        'insecure': insecure
+    }
+
+    try:
+        return ksclient.Client(**kwargs)
+    except DiscoveryFailure:
+        # Discovery response mismatch. Raise the error
+        raise
+    except Exception:
+        # Some public clouds throw some other exception or doesn't support
+        # discovery. In that case try to determine version from auth_url
+        # API version from the original URL
+        url_parts = urlparse.urlparse(auth_url)
+        (scheme, netloc, path, params, query, fragment) = url_parts
+        path = path.lower()
+        if path.startswith('/v3'):
+            return v3_ksclient.Client(**kwargs)
+        elif path.startswith('/v2'):
+            return v2_ksclient.Client(**kwargs)
