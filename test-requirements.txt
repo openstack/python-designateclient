@@ -5,3 +5,5 @@ discover
 python-subunit>=0.0.18
 sphinx>=1.1.2,!=1.2.0,<1.3
 testrepository>=0.0.18
+# Needed for the incubation theme on oslosphinx
+http://tarballs.openstack.org/oslosphinx/oslosphinx-2.2.0.0a3.tar.gz#egg=oslosphinx-2.2.0.0a3
