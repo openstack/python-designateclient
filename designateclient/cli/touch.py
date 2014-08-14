@@ -21,7 +21,7 @@ from designateclient.cli import base
 LOG = logging.getLogger(__name__)
 
 
-class TouchDomainCommand(base.Command):
+class TouchDomainCommand(base.DeleteCommand):
     """Touch a single Domain"""
 
     def get_parser(self, prog_name):
