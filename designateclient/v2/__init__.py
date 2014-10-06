@@ -1,27 +1,11 @@
-# Copyright 2012 Managed I.T.
-#
-# Author: Kiall Mac Innes <kiall@managedit.ie>
-#
-# Licensed under the Apache License, Version 2.0 (the "License"); you may
-# not use this file except in compliance with the License. You may obtain
-# a copy of the License at
-#
-#      http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
-# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
-# License for the specific language governing permissions and limitations
-# under the License.
 import requests
 from stevedore import extension
 
 from designateclient import exceptions
 from designateclient import utils
 
-
 class Client(object):
-    """Client for the Designate v1 API"""
+    """Client for the Designate v2 API"""
 
     def __init__(self, endpoint=None, username=None, user_id=None,
                  user_domain_id=None, user_domain_name=None, password=None,
@@ -61,10 +45,10 @@ class Client(object):
 
         self.endpoint = endpoint.rstrip('/')
 
-        # NOTE(kiall): As we're in the Version 1 client, we ensure we're
-        #              pointing at the version 1 API.
-#        if not self.endpoint.endswith('v1'):
-#            self.endpoint = "%s/v1" % self.endpoint
+        # NOTE(wjb): As we're in the Version 2 client, we ensure we're
+        #              pointing at the version 2 API.
+        if not self.endpoint.endswith('v2'):
+            self.endpoint = "%s/v2" % self.endpoint
 
         self.insecure = insecure
 
@@ -81,7 +65,7 @@ class Client(object):
             setattr(self, ext.name, controller)
 
         # Load all controllers
-        mgr = extension.ExtensionManager('designateclient.v1.controllers')
+        mgr = extension.ExtensionManager('designateclient.v2.controllers')
         mgr.map(_load_controller)
 
     def wrap_api_call(self, func, *args, **kw):
@@ -123,7 +107,7 @@ class Client(object):
         """Get an endpoint using the provided keystone client."""
         if kwargs.get('region_name'):
             return client.service_catalog.url_for(
-                service_type=kwargs.get('service_type') or 'dns',
+                service_type=kwargs.get('service_type') or 'dnsV2',
                 attr='region',
                 filter_value=kwargs.get('region_name'),
                 endpoint_type=kwargs.get('endpoint_type') or 'publicURL')

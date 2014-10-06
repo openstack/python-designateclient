@@ -23,6 +23,7 @@ import six
 from designateclient import exceptions
 from designateclient import utils
 from designateclient.v1 import Client
+from designateclient.v2 import Client as Client2
 
 
 @six.add_metaclass(abc.ABCMeta)
@@ -51,7 +52,10 @@ class Command(CliffCommand):
             'insecure': self.app.options.insecure,
         }
 
-        self.client = Client(**kwargs)
+        if kwargs['service_type'] == 'dnsV2':
+            self.client = Client2(**kwargs)
+        else:
+            self.client = Client(**kwargs)
 
         try:
             return super(Command, self).run(parsed_args)

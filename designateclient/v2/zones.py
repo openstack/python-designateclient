@@ -53,6 +53,7 @@ class DomainsController(CrudController):
         :param domain: A :class:`Domain` to create
         :returns: :class:`Domain`
         """
+        data=json.dumps(domain)
         response = self.client.post('/domains', data=json.dumps(domain))
 
         return Domain(response.json())

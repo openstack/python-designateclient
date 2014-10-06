@@ -93,7 +93,7 @@ class RecordsController(CrudController):
             'record_id': record.id
         }
 
-        response = self.client.put(uri, data=json.dumps(record.changes))
+        response = self.client.put(uri, data=json.dumps(record))
 
         return Record(response.json())
 
