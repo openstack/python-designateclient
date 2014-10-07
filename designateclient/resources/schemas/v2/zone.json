@@ -1,0 +1,113 @@
+{
+    "id": "zone",
+
+    "$schema": "http://json-schema.org/draft-03/hyper-schema",
+
+    "title": "zone",
+    "description": "Zone",
+
+    "properties": {
+        "zone": {                                                               
+            "type": "object",                                                  
+            "properties":{                                                     
+                "id": {
+                    "type": "string",
+                    "description": "Zone Identifier",
+                    "pattern": "^([0-9a-fA-F]){8}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){12}$",
+                    "readonly": true
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Zone name",
+                    "format": "zone-name",
+                    "maxLength": 255,
+                    "required": true,
+                    "readonly": true
+                },
+                "email": {
+                    "type": "string",
+                    "description": "Hostmaster email address",
+                    "format": "email",
+                    "maxLength": 255,
+                    "required": true
+                },
+                "ttl": {
+                    "type": "integer",
+                    "description": "Time to live",
+                    "minimum": 0,
+                    "maximum": 2147483647
+                },
+                "serial": {
+                    "type": "integer",
+                    "description": "Serial Number",
+                    "minimum": 1,
+                    "maximum": 4294967295,
+                    "readonly": true
+                },
+                "version": {
+                    "type": "integer",
+                    "description": "Version Number",
+                    "minimum": 1,
+                    "maximum": 4294967295,
+                    "readonly": true
+                },
+                "description": {
+                    "type": ["string", "null"],
+                    "description": "Description for the Zone",
+                    "maxLength": 160
+                },
+                "status": {
+                    "type": "string",
+                    "description": "Depicts if the zone is active or delete",
+                    "maxLength": 160
+                },
+                "project_id": {
+                    "type": ["string", "null"],
+                    "description": "The project this zone belongs to",
+                    "maxLength": 160
+                },
+                "pool_id": {
+                            "type": ["string", "null"],
+                    "description": "The pool this zone belongs to",
+                    "maxLength": 160
+                },
+                "created_at": {
+                    "type": "string",
+                    "description": "Date and time of zone creation",
+                    "format": "date-time",
+                    "readonly": true
+                },
+                "updated_at": {
+                    "type": ["string", "null"],
+                    "description": "Date and time of last zone update",
+                    "format": "date-time",
+                    "readonly": true
+                },
+                "links": {                                                     
+                    "type": "object",                                          
+                    "additionalProperties": false,                             
+                                                                               
+                    "properties": {                                            
+                        "self": {                                              
+                            "type": "string",                                  
+                            "format": "url"                                    
+                        }                                                      
+                    }                                                          
+                }
+            }
+        }                                                              
+    },
+    "links": [{
+        "rel": "self",
+        "href": "/zones/{id}"
+    }, {
+        "rel": "records",
+        "href": "/zones/{id}/records"
+    }, {
+        "rel": "servers",
+        "href": "/zones/{id}/servers"
+    }, {
+        "rel": "collection",
+        "href": "/zones"
+    }]
+}

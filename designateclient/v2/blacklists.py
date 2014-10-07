@@ -1,5 +1,4 @@
 import json
-import collections
 
 from designateclient import utils
 from designateclient.v1.base import CrudController
@@ -35,7 +34,7 @@ class BlacklistsController(CrudController):
         """
         Create a blacklist
         """
-        blacklist = {"blacklist": self.convert(blacklist)}
+        blacklist = {"blacklist": utils.convert(blacklist)}
         response = self.client.post('/blacklists', 
                                    data=json.dumps(blacklist))
         return Blacklist(response.json())
@@ -62,12 +61,3 @@ class BlacklistsController(CrudController):
         else:
             self.client.delete('/blacklists/%s' % blacklist)
 
-    def convert(self, data):
-        if isinstance(data, basestring):
-            return str(data)
-        elif isinstance(data, collections.Mapping):
-            return dict(map(self.convert, data.iteritems()))
-        elif isinstance(data, collections.Iterable):
-            return type(data)(map(self.convert, data))
-        else:
-            return data

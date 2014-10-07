@@ -14,84 +14,72 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 import json
+import pdb
 
 from designateclient import utils
 from designateclient.v1.base import CrudController
 from designateclient import warlock
 
 
-Domain = warlock.model_factory(utils.load_schema('v1', 'domain'))
-Server = warlock.model_factory(utils.load_schema('v1', 'server'))
+Zone = warlock.model_factory(utils.load_schema('v2', 'zone'))
 
 
-class DomainsController(CrudController):
+class ZonesController(CrudController):
     def list(self):
         """
-        Retrieve a list of domains
+        Retrieve a list of zones
 
-        :returns: A list of :class:`Domain`s
+        :returns: A list of :class:`Zone`s
         """
-        response = self.client.get('/domains')
+        response = self.client.get('/zones')
 
-        return [Domain(i) for i in response.json()['domains']]
+        return [Zone(i) for i in response.json()['zones']]
 
-    def get(self, domain_id):
+    def get(self, zone_id):
         """
-        Retrieve a domain
+        Retrieve a zone
 
-        :param domain_id: Domain Identifier
-        :returns: :class:`Domain`
+        :param zone_id: Zone Identifier
+        :returns: :class:`Zone`
         """
-        response = self.client.get('/domains/%s' % domain_id)
+        response = self.client.get('/zones/%s' % zone_id)
 
-        return Domain(response.json())
+        return Zone(response.json())
 
-    def create(self, domain):
+    def create(self, zone):
         """
-        Create a domain
+        Create a zone
 
-        :param domain: A :class:`Domain` to create
-        :returns: :class:`Domain`
+        :param zone: A :class:`Zone` to create
+        :returns: :class:`Zone`
         """
-        data=json.dumps(domain)
-        response = self.client.post('/domains', data=json.dumps(domain))
+        response = self.client.post('/zones', data=json.dumps(zone))
 
-        return Domain(response.json())
+        return Zone(response.json())
 
-    def update(self, domain):
+    def update(self, zone):
         """
-        Update a domain
+        Update a zone
 
-        :param domain: A :class:`Domain` to update
-        :returns: :class:`Domain`
+        :param zone: A :class:`Zone` to update
+        :returns: :class:`Zone`
         """
+        pdb.set_trace()
+        id = zone['zone']['id']                                                  
+        del zone['zone']['id']                                                   
+        response = self.client.patch('/zones/%s' % id,                          
+                                   data=json.dumps(zone))                       
+                                                                               
+        return Zone(response.json())
 
-        #response = self.client.put('/domains/%s' % domain.id,
-        #                           data=json.dumps(domain.changes))
-
-        response = self.client.put('/domains/%s' % domain.id,
-                                   data=json.dumps(domain))
-
-        return Domain(response.json())
-
-    def delete(self, domain):
+    def delete(self, zone):
         """
-        Delete a domain
+        Delete a zone
 
-        :param domain: A :class:`Domain`, or Domain Identifier to delete
+        :param zone: A :class:`Zone`, or Zone Identifier to delete
         """
-        if isinstance(domain, Domain):
-            self.client.delete('/domains/%s' % domain.id)
+        if isinstance(zone, Zone):
+            self.client.delete('/zones/%s' % zone.id)
         else:
-            self.client.delete('/domains/%s' % domain)
+            self.client.delete('/zones/%s' % zone)
 
-    def list_domain_servers(self, domain_id):
-        """
-        Retrieve the list of nameservers for a domain
-
-        :param domain_id: Domain Identifier
-        :returns: A list of :class:`Server`s
-        """
-        response = self.client.get('/domains/%s/servers' % domain_id)
-
-        return [Server(i) for i in response.json()['servers']]

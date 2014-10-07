@@ -1,0 +1,64 @@
+{
+    "id": "tld",
+
+    "$schema": "http://json-schema.org/draft-03/hyper-schema",
+
+    "title": "tld",
+    "description": "Tld",
+
+    "properties": {
+        "tld": {
+            "type": "object",                                                  
+            "properties":{                                                     
+                "id": {
+                    "type": "string",
+                    "description": "Tld Identifier",
+                   "pattern": "^([0-9a-fA-F]){8}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){12}$",
+                    "readonly": true
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Tld DNS name",
+                    "format": "host-name",
+                    "maxLength": 255,
+                    "required": true
+                },
+                "description": {                                               
+                    "type": ["string", "null"],                                
+                    "description": "Description for the blacklisted zone",     
+                    "maxLength": 160                                           
+                }, 
+                "created_at": {
+                    "type": "string",
+                    "description": "Date and time of tld creation",
+                    "format": "date-time",
+                    "readonly": true
+                },
+                "updated_at": {
+                    "type": ["string", "null"],
+                    "description": "Date and time of last tld update",
+                    "format": "date-time",
+                    "readonly": true
+                } ,                                                             
+                "links": {                                                     
+                    "type": "object",                                          
+                    "additionalProperties": false,                             
+                                                                               
+                    "properties": {                                            
+                        "self": {                                              
+                            "type": "string",                                  
+                            "format": "url"                                    
+                        }                                                      
+                    }                                                          
+                }    
+            }
+        }
+    },
+    "links": [{
+        "rel": "self",
+        "href": "/tlds/{id}"
+    }, {
+        "rel": "collection",
+        "href": "/tlds"
+    }]
+}

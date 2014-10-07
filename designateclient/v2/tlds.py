@@ -53,6 +53,7 @@ class TldsController(CrudController):
         :param tld: A :class:`Tld` to create
         :returns: :class:`Tld`
         """
+        tld = {"tld": utils.convert(tld)}
         response = self.client.post('/tlds', data=json.dumps(tld))
 
         return Tld(response.json())
@@ -64,11 +65,13 @@ class TldsController(CrudController):
         :param tld: A :class:`Tld` to update
         :returns: :class:`Tld`
         """
-        response = self.client.put('/tlds/%s' % tld.id,
-                                   data=json.dumps(tld))
+        id = tld['tld']['id']                                      
+        del tld['tld']['id']                                       
+        response = self.client.patch('/tlds/%s' % id,                    
+                                   data=json.dumps(tld))                 
 
         return Tld(response.json())
-
+ 
     def delete(self, tld):
         """
         Delete a tld
