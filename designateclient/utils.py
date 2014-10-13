@@ -16,6 +16,7 @@
 
 import json
 import os
+import collections
 
 
 from keystoneclient import client as ksclient
@@ -139,3 +140,15 @@ def get_ksclient(username=None, user_id=None, user_domain_id=None,
             return v3_ksclient.Client(**kwargs)
         elif path.startswith('/v2'):
             return v2_ksclient.Client(**kwargs)
+                                                                               
+
+def convert( data ):                                                   
+    if isinstance(data, basestring):                                       
+        return str(data)                                                   
+    elif isinstance(data, collections.Mapping):                            
+        return dict(map(convert, data.iteritems()))                   
+    elif isinstance(data, collections.Iterable):                           
+        return type(data)(map(convert, data))                         
+    else:                                                                  
+        return data                                                        
+

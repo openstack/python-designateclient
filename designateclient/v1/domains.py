@@ -64,8 +64,12 @@ class DomainsController(CrudController):
         :param domain: A :class:`Domain` to update
         :returns: :class:`Domain`
         """
+
+        #response = self.client.put('/domains/%s' % domain.id,
+        #                           data=json.dumps(domain.changes))
+
         response = self.client.put('/domains/%s' % domain.id,
-                                   data=json.dumps(domain.changes))
+                                   data=json.dumps(domain))
 
         return Domain(response.json())
 

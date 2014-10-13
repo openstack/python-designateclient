@@ -65,7 +65,7 @@ class ServersController(CrudController):
         :returns: :class:`Server`
         """
         response = self.client.put('/servers/%s' % server.id,
-                                   data=json.dumps(server.changes))
+                                   data=json.dumps(server))
 
         return Server(response.json())
 
