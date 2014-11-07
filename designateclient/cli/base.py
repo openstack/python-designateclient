@@ -27,31 +27,11 @@ from designateclient.v1 import Client
 
 @six.add_metaclass(abc.ABCMeta)
 class Command(CliffCommand):
-
     def run(self, parsed_args):
-        kwargs = {
-            'endpoint': self.app.options.os_endpoint,
-            'username': self.app.options.os_username,
-            'user_id': self.app.options.os_user_id,
-            'user_domain_id': self.app.options.os_user_domain_id,
-            'user_domain_name': self.app.options.os_user_domain_name,
-            'password': self.app.options.os_password,
-            'tenant_name': self.app.options.os_tenant_name,
-            'tenant_id': self.app.options.os_tenant_id,
-            'domain_name': self.app.options.os_domain_name,
-            'domain_id': self.app.options.os_domain_id,
-            'project_name': self.app.options.os_project_name,
-            'project_id': self.app.options.os_project_id,
-            'project_domain_name': self.app.options.os_project_domain_name,
-            'project_domain_id': self.app.options.os_project_domain_id,
-            'auth_url': self.app.options.os_auth_url,
-            'token': self.app.options.os_token,
-            'endpoint_type': self.app.options.os_endpoint_type,
-            'service_type': self.app.options.os_service_type,
-            'insecure': self.app.options.insecure,
-        }
-
-        self.client = Client(**kwargs)
+        self.client = Client(
+            region_name=self.app.options.os_region_name,
+            service_type=self.app.options.os_service_type,
+            session=self.app.session)
 
         try:
             return super(Command, self).run(parsed_args)
