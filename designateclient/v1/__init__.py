@@ -31,8 +31,9 @@ class Client(object):
                  domain_id=None, project_name=None,
                  project_id=None, project_domain_name=None,
                  project_domain_id=None, auth_url=None, token=None,
-                 endpoint_type=None, region_name=None, service_type=None,
-                 insecure=False, verify=None, session=None, auth=None):
+                 endpoint_type='publicURL', region_name=None,
+                 service_type='dns', insecure=False, verify=None, session=None,
+                 auth=None):
         """
         :param endpoint: Endpoint URL
         :param token: A token instead of username / password
