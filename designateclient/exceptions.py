@@ -19,7 +19,15 @@ class Base(Exception):
     pass
 
 
+class UnsupportedVersion(Base):
+    pass
+
+
 class ResourceNotFound(Base):
+    pass
+
+
+class NoUniqueMatch(Base):
     pass
 
 

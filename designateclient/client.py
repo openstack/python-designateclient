@@ -14,9 +14,13 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 import abc
-
+import json
+from urllib import urlencode
 
 import six
+from stevedore import extension
+
+from designateclient import exceptions
 
 
 @six.add_metaclass(abc.ABCMeta)
@@ -24,6 +28,57 @@ class Controller(object):
 
     def __init__(self, client):
         self.client = client
+
+    def build_url(self, url, criterion=None, marker=None, limit=None):
+        params = criterion or {}
+
+        if marker is not None:
+            params['marker'] = marker
+        if limit is not None:
+            params['limit'] = limit
+
+        q = urlencode(params) if params else ''
+        return '%(url)s%(params)s' % {
+            'url': url,
+            'params': '?%s' % q
+        }
+
+    def _serialize(self, kwargs):
+        if 'data' in kwargs:
+            kwargs['data'] = json.dumps(kwargs['data'])
+
+    def _post(self, url, response_key=None, **kwargs):
+        self._serialize(kwargs)
+
+        resp, body = self.client.session.post(url, **kwargs)
+        if response_key is not None:
+            return body[response_key]
+        return body
+
+    def _get(self, url, response_key=None):
+        resp, body = self.client.session.get(url)
+        if response_key is not None:
+            return body[response_key]
+        return body
+
+    def _patch(self, url, response_key=None, **kwargs):
+        self._serialize(kwargs)
+
+        resp, body = self.client.session.patch(url, **kwargs)
+        if response_key is not None:
+            return body[response_key]
+        return body
+
+    def _put(self, url, response_key=None, **kwargs):
+        self._serialize(kwargs)
+
+        resp, body = self.client.session.put(url, **kwargs)
+        if response_key is not None:
+            return body[response_key]
+        return body
+
+    def _delete(self, url):
+        resp, body = self.client.session.delete(url)
 
 
 @six.add_metaclass(abc.ABCMeta)
@@ -58,3 +113,17 @@ class CrudController(Controller):
         """
         Delete a resource
             """
+
+
+def get_versions():
+    mgr = extension.ExtensionManager('designateclient.versions')
+    return dict([(ep.name, ep.plugin) for ep in mgr.extensions])
+
+
+def Client(version, *args, **kwargs):  # noqa
+    versions = get_versions()
+    if version not in versions:
+        msg = 'Version %s is not supported, use one of (%s)' % (
+            version, versions.keys())
+        raise exceptions.UnsupportedVersion(msg)
+    return versions[version](*args, **kwargs)
