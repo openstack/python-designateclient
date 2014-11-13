@@ -15,6 +15,7 @@
 # under the License.
 import abc
 
+
 import six
 
 
@@ -56,4 +57,4 @@ class CrudController(Controller):
     def delete(self, *args, **kw):
         """
         Delete a resource
-        """
+            """

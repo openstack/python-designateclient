@@ -15,8 +15,8 @@
 # under the License.
 import json
 
+from designateclient import client
 from designateclient import utils
-from designateclient.v1.base import CrudController
 from designateclient import warlock
 
 
@@ -24,7 +24,7 @@ Domain = warlock.model_factory(utils.load_schema('v1', 'domain'))
 Server = warlock.model_factory(utils.load_schema('v1', 'server'))
 
 
-class DomainsController(CrudController):
+class DomainsController(client.CrudController):
     def list(self):
         """
         Retrieve a list of domains

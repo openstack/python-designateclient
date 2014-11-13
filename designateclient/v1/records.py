@@ -16,8 +16,8 @@
 
 import json
 
+from designateclient import client
 from designateclient import utils
-from designateclient.v1.base import CrudController
 from designateclient.v1.domains import Domain
 from designateclient import warlock
 
@@ -25,7 +25,7 @@ from designateclient import warlock
 Record = warlock.model_factory(utils.load_schema('v1', 'record'))
 
 
-class RecordsController(CrudController):
+class RecordsController(client.CrudController):
     def list(self, domain):
         """
         Retrieve a list of records

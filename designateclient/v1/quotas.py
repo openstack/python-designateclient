@@ -15,10 +15,10 @@
 # under the License.
 import json
 
-from designateclient.v1.base import Controller
+from designateclient import client
 
 
-class QuotasController(Controller):
+class QuotasController(client.Controller):
     def get(self, tenant_id):
         """
         Ping a service on a given host

@@ -13,10 +13,10 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations
 # under the License.
-from designateclient.v1.base import Controller
+from designateclient import client
 
 
-class DiagnosticsController(Controller):
+class DiagnosticsController(client.Controller):
     def ping(self, service, host):
         """
         Ping a service on a given host
