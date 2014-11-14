@@ -15,6 +15,7 @@
 # under the License.
 from keystoneclient import adapter
 from keystoneclient.auth.identity import generic
+from keystoneclient.auth import token_endpoint
 from keystoneclient import session as ks_session
 from stevedore import extension
 
@@ -62,8 +63,11 @@ class Client(object):
             }
 
             if token:
-                auth_args['token'] = token
-                session.auth = generic.Token(**auth_args)
+                # To mimic typical v1 behaviour I copied this
+                endpoint = endpoint.rstrip('/')
+                if not endpoint.endswith('v1'):
+                    endpoint = "%s/v1" % endpoint
+                session.auth = token_endpoint.Token(endpoint, token)
             else:
                 password_args = {
                     'username': username,
