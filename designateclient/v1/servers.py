@@ -16,15 +16,15 @@
 
 import json
 
+from designateclient import client
 from designateclient import utils
-from designateclient.v1.base import CrudController
 from designateclient import warlock
 
 
 Server = warlock.model_factory(utils.load_schema('v1', 'server'))
 
 
-class ServersController(CrudController):
+class ServersController(client.CrudController):
     def list(self):
         """
         Retrieve a list of servers
