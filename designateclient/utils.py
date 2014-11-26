@@ -18,6 +18,9 @@ import json
 import os
 
 
+from keystoneclient.auth.identity import generic
+from keystoneclient.auth import token_endpoint
+from keystoneclient import session as ks_session
 import pkg_resources
 
 from designateclient import exceptions
@@ -92,3 +95,48 @@ def get_columns(data):
 
     map(lambda item: map(_seen, item.keys()), data)
     return list(columns)
+
+
+def get_session(auth_url, endpoint, domain_id, domain_name, project_id,
+                project_name, project_domain_name, project_domain_id, username,
+                user_id, password, user_domain_id, user_domain_name, token,
+                insecure, cacert):
+    session = ks_session.Session()
+
+    # Build + Attach Authentication Plugin
+    auth_args = {
+        'auth_url': auth_url,
+        'domain_id': domain_id,
+        'domain_name': domain_name,
+        'project_id': project_id,
+        'project_name': project_name,
+        'project_domain_name': project_domain_name,
+        'project_domain_id': project_domain_id,
+    }
+
+    if token and endpoint:
+        session.auth = token_endpoint.Token(endpoint, token)
+
+    elif token:
+        auth_args.update({
+            'token': token
+        })
+        session.auth = generic.Token(**auth_args)
+
+    else:
+        auth_args.update({
+            'username': username,
+            'user_id': user_id,
+            'password': password,
+            'user_domain_id': user_domain_id,
+            'user_domain_name': user_domain_name,
+        })
+        session.auth = generic.Password(**auth_args)
+
+    # SSL/TLS Server Cert Verification
+    if insecure is True:
+        session.verify = False
+    else:
+        session.verify = cacert
+
+    return session

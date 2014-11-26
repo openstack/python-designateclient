@@ -14,12 +14,10 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 from keystoneclient import adapter
-from keystoneclient.auth.identity import generic
-from keystoneclient.auth import token_endpoint
-from keystoneclient import session as ks_session
 from stevedore import extension
 
 from designateclient import exceptions
+from designateclient import utils
 from designateclient import version
 
 
@@ -33,51 +31,39 @@ class Client(object):
                  project_id=None, project_domain_name=None,
                  project_domain_id=None, auth_url=None, token=None,
                  endpoint_type='publicURL', region_name=None,
-                 service_type='dns', insecure=False, verify=None, session=None,
-                 auth=None):
+                 service_type='dns', insecure=False, session=None,
+                 cacert=None):
         """
         :param endpoint: Endpoint URL
         :param token: A token instead of username / password
         :param insecure: Allow "insecure" HTTPS requests
         """
-        # Backwards compat to preserve the functionality of insecure.
-        if verify is None and insecure:
-            verify = False
-        else:
-            verify = True
+
+        if endpoint:
+            endpoint = endpoint.rstrip('/')
+            if not endpoint.endswith('v1'):
+                endpoint = "%s/v1" % endpoint
 
         # Compatibility code to mimic the old behaviour of the client
         if session is None:
-            session = ks_session.Session(verify=verify)
-
-            auth_args = {
-                'auth_url': auth_url,
-                'domain_id': domain_id,
-                'domain_name': domain_name,
-                'project_id': project_id,
-                'project_name': project_name,
-                'project_domain_name': project_domain_name,
-                'project_domain_id': project_domain_id,
-                'tenant_id': tenant_id,
-                'tenant_name': tenant_name,
-            }
-
-            if token:
-                # To mimic typical v1 behaviour I copied this
-                endpoint = endpoint.rstrip('/')
-                if not endpoint.endswith('v1'):
-                    endpoint = "%s/v1" % endpoint
-                session.auth = token_endpoint.Token(endpoint, token)
-            else:
-                password_args = {
-                    'username': username,
-                    'user_id': user_id,
-                    'user_domain_id': user_domain_id,
-                    'user_domain_name': user_domain_name,
-                    'password': password
-                }
-                auth_args.update(password_args)
-                session.auth = generic.Password(**auth_args)
+            session = utils.get_session(
+                auth_url=auth_url,
+                endpoint=endpoint,
+                domain_id=domain_id,
+                domain_name=domain_name,
+                project_id=project_id or tenant_id,
+                project_name=project_name or tenant_name,
+                project_domain_name=project_domain_name,
+                project_domain_id=project_domain_id,
+                username=username,
+                user_id=user_id,
+                password=password,
+                user_domain_id=user_domain_id,
+                user_domain_name=user_domain_name,
+                token=token,
+                insecure=insecure,
+                cacert=cacert,
+            )
 
         # Since we have to behave nicely like a legacy client/bindings we use
         # an adapter around the session to not modify it's state.
@@ -85,7 +71,7 @@ class Client(object):
 
         self.session = adapter.Adapter(
             session,
-            auth=auth,
+            auth=session.auth,
             endpoint_override=endpoint,
             region_name=region_name,
             service_type=service_type,
