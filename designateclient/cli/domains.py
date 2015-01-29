@@ -67,7 +67,7 @@ class CreateDomainCommand(base.CreateCommand):
         if parsed_args.description:
             domain.description = parsed_args.description
 
-        if parsed_args.ttl:
+        if parsed_args.ttl is not None:
             domain.ttl = parsed_args.ttl
 
         return self.client.domains.create(domain)
@@ -99,7 +99,7 @@ class UpdateDomainCommand(base.UpdateCommand):
         if parsed_args.email:
             domain.email = parsed_args.email
 
-        if parsed_args.ttl:
+        if parsed_args.ttl is not None:
             domain.ttl = parsed_args.ttl
 
         if parsed_args.no_description:

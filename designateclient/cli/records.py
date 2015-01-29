@@ -76,7 +76,7 @@ class CreateRecordCommand(base.CreateCommand):
             data=parsed_args.data,
         )
 
-        if parsed_args.ttl:
+        if parsed_args.ttl is not None:
             record.ttl = parsed_args.ttl
 
         if parsed_args.priority:
@@ -131,7 +131,7 @@ class UpdateRecordCommand(base.UpdateCommand):
 
         if parsed_args.no_ttl:
             record.ttl = None
-        elif parsed_args.ttl:
+        elif parsed_args.ttl is not None:
             record.ttl = parsed_args.ttl
 
         if parsed_args.no_priority:
