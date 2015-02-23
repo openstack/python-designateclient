@@ -100,7 +100,7 @@ def get_columns(data):
 def get_session(auth_url, endpoint, domain_id, domain_name, project_id,
                 project_name, project_domain_name, project_domain_id, username,
                 user_id, password, user_domain_id, user_domain_name, token,
-                insecure, cacert):
+                insecure, cacert, all_tenants):
     session = ks_session.Session()
 
     # Build + Attach Authentication Plugin
@@ -138,5 +138,6 @@ def get_session(auth_url, endpoint, domain_id, domain_name, project_id,
         session.verify = False
     else:
         session.verify = cacert
+    session.all_tenants = all_tenants
 
     return session
