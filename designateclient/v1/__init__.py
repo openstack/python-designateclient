@@ -32,7 +32,7 @@ class Client(object):
                  project_domain_id=None, auth_url=None, token=None,
                  endpoint_type='publicURL', region_name=None,
                  service_type='dns', insecure=False, session=None,
-                 cacert=None):
+                 cacert=None, all_tenants=False):
         """
         :param endpoint: Endpoint URL
         :param token: A token instead of username / password
@@ -63,6 +63,7 @@ class Client(object):
                 token=token,
                 insecure=insecure,
                 cacert=cacert,
+                all_tenants=all_tenants,
             )
 
         # Since we have to behave nicely like a legacy client/bindings we use
@@ -97,6 +98,8 @@ class Client(object):
         kw['raise_exc'] = False
         kw.setdefault('headers', {})
         kw['headers'].setdefault('Content-Type', 'application/json')
+        if self.session.session.all_tenants:
+            kw['headers'].update({'X-Auth-All-Projects': 'true'})
 
         # Trigger the request
         response = func(*args, **kw)
