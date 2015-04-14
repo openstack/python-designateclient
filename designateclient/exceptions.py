@@ -23,6 +23,10 @@ class ResourceNotFound(Base):
     pass
 
 
+class NoUniqueMatch(Base):
+    pass
+
+
 class RemoteError(Base):
     def __init__(self, message=None, code=None, type=None, errors=None,
                  request_id=None):

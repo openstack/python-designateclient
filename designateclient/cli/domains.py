@@ -37,12 +37,13 @@ class GetDomainCommand(base.GetCommand):
     def get_parser(self, prog_name):
         parser = super(GetDomainCommand, self).get_parser(prog_name)
 
-        parser.add_argument('id', help="Domain ID")
+        parser.add_argument('id', help="Domain ID or Name")
 
         return parser
 
     def execute(self, parsed_args):
-        return self.client.domains.get(parsed_args.id)
+        id = self.find_resourceid_by_name_or_id('domains', parsed_args.id)
+        return self.client.domains.get(id)
 
 
 class CreateDomainCommand(base.CreateCommand):
@@ -79,7 +80,7 @@ class UpdateDomainCommand(base.UpdateCommand):
     def get_parser(self, prog_name):
         parser = super(UpdateDomainCommand, self).get_parser(prog_name)
 
-        parser.add_argument('id', help="Domain ID")
+        parser.add_argument('id', help="Domain ID or Name")
         parser.add_argument('--name', help="Domain Name")
         parser.add_argument('--email', help="Domain Email")
         parser.add_argument('--ttl', type=int, help="Time To Live (Seconds)")
@@ -91,7 +92,8 @@ class UpdateDomainCommand(base.UpdateCommand):
 
     def execute(self, parsed_args):
         # TODO(kiall): API needs updating.. this get is silly
-        domain = self.client.domains.get(parsed_args.id)
+        id = self.find_resourceid_by_name_or_id('domains', parsed_args.id)
+        domain = self.client.domains.get(id)
 
         if parsed_args.name:
             domain.name = parsed_args.name
@@ -116,12 +118,13 @@ class DeleteDomainCommand(base.DeleteCommand):
     def get_parser(self, prog_name):
         parser = super(DeleteDomainCommand, self).get_parser(prog_name)
 
-        parser.add_argument('id', help="Domain ID")
+        parser.add_argument('id', help="Domain ID or Name")
 
         return parser
 
     def execute(self, parsed_args):
-        return self.client.domains.delete(parsed_args.id)
+        id = self.find_resourceid_by_name_or_id('domains', parsed_args.id)
+        return self.client.domains.delete(id)
 
 
 class ListDomainServersCommand(base.ListCommand):
@@ -132,9 +135,10 @@ class ListDomainServersCommand(base.ListCommand):
     def get_parser(self, prog_name):
         parser = super(ListDomainServersCommand, self).get_parser(prog_name)
 
-        parser.add_argument('id', help="Domain ID")
+        parser.add_argument('id', help="Domain ID or Name")
 
         return parser
 
     def execute(self, parsed_args):
-        return self.client.domains.list_domain_servers(parsed_args.id)
+        id = self.find_resourceid_by_name_or_id('domains', parsed_args.id)
+        return self.client.domains.list_domain_servers(id)
