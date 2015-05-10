@@ -16,6 +16,7 @@
 
 import json
 import os
+import uuid
 
 
 from keystoneclient.auth.identity import generic
@@ -141,3 +142,24 @@ def get_session(auth_url, endpoint, domain_id, domain_name, project_id,
     session.all_tenants = all_tenants
 
     return session
+
+
+def find_resourceid_by_name_or_id(resource_client, name_or_id):
+    """Find resource id from its id or name."""
+    try:
+        # Try to return a uuid
+        return str(uuid.UUID(name_or_id))
+    except ValueError:
+        # Not a uuid => asume it is resource name
+        pass
+
+    resources = resource_client.list()
+    candidate_ids = [r['id'] for r in resources if r.get('name') == name_or_id]
+    if not candidate_ids:
+        raise exceptions.ResourceNotFound(
+            'Could not find resource with name "%s"' % name_or_id)
+    elif len(candidate_ids) > 1:
+        str_ids = ','.join(candidate_ids)
+        raise exceptions.NoUniqueMatch(
+            'Multiple resources with name "%s": %s' % (name_or_id, str_ids))
+    return candidate_ids[0]

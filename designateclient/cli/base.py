@@ -82,6 +82,10 @@ class Command(CliffCommand):
         results = self.execute(parsed_args)
         return self.post_execute(results)
 
+    def find_resourceid_by_name_or_id(self, resource_plural, name_or_id):
+        resource_client = getattr(self.client, resource_plural)
+        return utils.find_resourceid_by_name_or_id(resource_client, name_or_id)
+
 
 class ListCommand(Command, Lister):
     columns = None

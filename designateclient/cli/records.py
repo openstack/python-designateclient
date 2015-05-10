@@ -30,12 +30,14 @@ class ListRecordsCommand(base.ListCommand):
     def get_parser(self, prog_name):
         parser = super(ListRecordsCommand, self).get_parser(prog_name)
 
-        parser.add_argument('domain_id', help="Domain ID")
+        parser.add_argument('domain_id', help="Domain ID or Name")
 
         return parser
 
     def execute(self, parsed_args):
-        return self.client.records.list(parsed_args.domain_id)
+        domain_id = self.find_resourceid_by_name_or_id(
+            'domains', parsed_args.domain_id)
+        return self.client.records.list(domain_id)
 
 
 class GetRecordCommand(base.GetCommand):
@@ -44,13 +46,15 @@ class GetRecordCommand(base.GetCommand):
     def get_parser(self, prog_name):
         parser = super(GetRecordCommand, self).get_parser(prog_name)
 
-        parser.add_argument('domain_id', help="Domain ID")
+        parser.add_argument('domain_id', help="Domain ID or Name")
         parser.add_argument('id', help="Record ID")
 
         return parser
 
     def execute(self, parsed_args):
-        return self.client.records.get(parsed_args.domain_id, parsed_args.id)
+        domain_id = self.find_resourceid_by_name_or_id(
+            'domains', parsed_args.domain_id)
+        return self.client.records.get(domain_id, parsed_args.id)
 
 
 class CreateRecordCommand(base.CreateCommand):
@@ -59,7 +63,7 @@ class CreateRecordCommand(base.CreateCommand):
     def get_parser(self, prog_name):
         parser = super(CreateRecordCommand, self).get_parser(prog_name)
 
-        parser.add_argument('domain_id', help="Domain ID")
+        parser.add_argument('domain_id', help="Domain ID or Name")
         parser.add_argument('--name', help="Record Name", required=True)
         parser.add_argument('--type', help="Record Type", required=True)
         parser.add_argument('--data', help="Record Data", required=True)
@@ -85,7 +89,9 @@ class CreateRecordCommand(base.CreateCommand):
         if parsed_args.description:
             record.description = parsed_args.description
 
-        return self.client.records.create(parsed_args.domain_id, record)
+        domain_id = self.find_resourceid_by_name_or_id(
+            'domains', parsed_args.domain_id)
+        return self.client.records.create(domain_id, record)
 
 
 class UpdateRecordCommand(base.UpdateCommand):
@@ -94,7 +100,7 @@ class UpdateRecordCommand(base.UpdateCommand):
     def get_parser(self, prog_name):
         parser = super(UpdateRecordCommand, self).get_parser(prog_name)
 
-        parser.add_argument('domain_id', help="Domain ID")
+        parser.add_argument('domain_id', help="Domain ID or Name")
         parser.add_argument('id', help="Record ID")
         parser.add_argument('--name', help="Record Name")
         parser.add_argument('--type', help="Record Type")
@@ -144,7 +150,9 @@ class UpdateRecordCommand(base.UpdateCommand):
         elif parsed_args.description:
             record.description = parsed_args.description
 
-        return self.client.records.update(parsed_args.domain_id, record)
+        domain_id = self.find_resourceid_by_name_or_id(
+            'domains', parsed_args.domain_id)
+        return self.client.records.update(domain_id, record)
 
 
 class DeleteRecordCommand(base.DeleteCommand):
@@ -153,11 +161,12 @@ class DeleteRecordCommand(base.DeleteCommand):
     def get_parser(self, prog_name):
         parser = super(DeleteRecordCommand, self).get_parser(prog_name)
 
-        parser.add_argument('domain_id', help="Domain ID")
+        parser.add_argument('domain_id', help="Domain ID or Name")
         parser.add_argument('id', help="Record ID")
 
         return parser
 
     def execute(self, parsed_args):
-        return self.client.records.delete(parsed_args.domain_id,
-                                          parsed_args.id)
+        domain_id = self.find_resourceid_by_name_or_id(
+            'domains', parsed_args.domain_id)
+        return self.client.records.delete(domain_id, parsed_args.id)
