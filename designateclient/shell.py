@@ -165,6 +165,10 @@ class DesignateShell(App):
         parser.add_argument('--all-tenants', action='store_true',
                             help="Allows to list all domains from all tenants")
 
+        parser.add_argument('--edit-managed', action='store_true',
+                            help='Allows to edit records that are marked as '
+                            'managed')
+
         return parser
 
     def configure_logging(self):
@@ -232,6 +236,7 @@ class DesignateShell(App):
             insecure=self.options.insecure,
             cacert=self.options.os_cacert,
             all_tenants=self.options.all_tenants,
+            edit_managed=self.options.edit_managed
         )
 
     def run(self, argv):

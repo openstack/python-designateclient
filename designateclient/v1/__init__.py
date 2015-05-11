@@ -32,7 +32,7 @@ class Client(object):
                  project_domain_id=None, auth_url=None, token=None,
                  endpoint_type='publicURL', region_name=None,
                  service_type='dns', insecure=False, session=None,
-                 cacert=None, all_tenants=False):
+                 cacert=None, all_tenants=False, edit_managed=False):
         """
         :param endpoint: Endpoint URL
         :param token: A token instead of username / password
@@ -64,6 +64,7 @@ class Client(object):
                 insecure=insecure,
                 cacert=cacert,
                 all_tenants=all_tenants,
+                edit_managed=edit_managed,
             )
 
         # Since we have to behave nicely like a legacy client/bindings we use
@@ -100,6 +101,8 @@ class Client(object):
         kw['headers'].setdefault('Content-Type', 'application/json')
         if self.session.session.all_tenants:
             kw['headers'].update({'X-Auth-All-Projects': 'true'})
+        if self.session.session.edit_managed:
+            kw['headers'].update({'X-Designate-Edit-Managed-Records': 'true'})
 
         # Trigger the request
         response = func(*args, **kw)
