@@ -31,7 +31,9 @@ class Command(CliffCommand):
         self.client = Client(
             region_name=self.app.options.os_region_name,
             service_type=self.app.options.os_service_type,
-            session=self.app.session)
+            session=self.app.session,
+            all_tenants=self.app.options.all_tenants,
+            edit_managed=self.app.options.edit_managed)
 
         try:
             return super(Command, self).run(parsed_args)

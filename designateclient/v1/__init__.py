@@ -62,10 +62,11 @@ class Client(object):
                 user_domain_name=user_domain_name,
                 token=token,
                 insecure=insecure,
-                cacert=cacert,
-                all_tenants=all_tenants,
-                edit_managed=edit_managed,
+                cacert=cacert
             )
+
+        self.all_tenants = all_tenants
+        self.edit_managed = edit_managed
 
         # Since we have to behave nicely like a legacy client/bindings we use
         # an adapter around the session to not modify it's state.
@@ -99,9 +100,9 @@ class Client(object):
         kw['raise_exc'] = False
         kw.setdefault('headers', {})
         kw['headers'].setdefault('Content-Type', 'application/json')
-        if self.session.session.all_tenants:
+        if self.all_tenants:
             kw['headers'].update({'X-Auth-All-Projects': 'true'})
-        if self.session.session.edit_managed:
+        if self.edit_managed:
             kw['headers'].update({'X-Designate-Edit-Managed-Records': 'true'})
 
         # Trigger the request

@@ -234,9 +234,7 @@ class DesignateShell(App):
             user_domain_name=self.options.os_user_domain_name,
             token=self.options.os_token,
             insecure=self.options.insecure,
-            cacert=self.options.os_cacert,
-            all_tenants=self.options.all_tenants,
-            edit_managed=self.options.edit_managed
+            cacert=self.options.os_cacert
         )
 
     def run(self, argv):
