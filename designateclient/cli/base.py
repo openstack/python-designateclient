@@ -18,6 +18,7 @@ import abc
 from cliff.command import Command as CliffCommand
 from cliff.lister import Lister
 from cliff.show import ShowOne
+from keystoneclient import exceptions as ks_exceptions
 import six
 
 from designateclient import exceptions
@@ -50,6 +51,8 @@ class Command(CliffCommand):
                 values.append(e.errors)
 
             self.error_output(parsed_args, columns, values)
+        except ks_exceptions.EndpointNotFound:
+            self.app.log.error("No endpoint was found. Missing credentials?")
 
             return 1
 
