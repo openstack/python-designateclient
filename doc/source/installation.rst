@@ -19,7 +19,7 @@ If you want the latest version, straight from github:
 
 .. code-block:: shell-session
 
-    git clone git@github.com:stackforge/python-designateclient.git
+    git clone git@github.com:openstack/python-designateclient.git
     cd python-designateclient
     virtualenv .venv
     . .venv/bin/activate
