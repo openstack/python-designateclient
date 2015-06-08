@@ -64,7 +64,8 @@ class CreateRecordCommand(base.CreateCommand):
         parser = super(CreateRecordCommand, self).get_parser(prog_name)
 
         parser.add_argument('domain_id', help="Domain ID or Name")
-        parser.add_argument('--name', help="Record Name", required=True)
+        parser.add_argument(
+            '--name', help="Record (relative|absolute) Name", required=True)
         parser.add_argument('--type', help="Record Type", required=True)
         parser.add_argument('--data', help="Record Data", required=True)
         parser.add_argument('--ttl', type=int, help="Record TTL")
@@ -74,6 +75,22 @@ class CreateRecordCommand(base.CreateCommand):
         return parser
 
     def execute(self, parsed_args):
+        domain_id = self.find_resourceid_by_name_or_id(
+            'domains', parsed_args.domain_id)
+
+        if not parsed_args.name.endswith('.'):
+            # Relative name?
+            domain_name = self.client.domains.get(domain_id)['name']
+            absolute = parsed_args.name + '.'
+            relative = absolute + domain_name
+            if absolute.endswith('.' + domain_name):
+                # Relative name or absolute name missing final period?
+                msg = ('"%s" is a relative name but looks like an absolute '
+                       'name, use --name "%s" or "%s"'
+                       % (parsed_args.name, absolute, relative))
+                raise ValueError(msg)
+            parsed_args.name = relative
+
         record = Record(
             name=parsed_args.name,
             type=parsed_args.type,
@@ -89,8 +106,6 @@ class CreateRecordCommand(base.CreateCommand):
         if parsed_args.description:
             record.description = parsed_args.description
 
-        domain_id = self.find_resourceid_by_name_or_id(
-            'domains', parsed_args.domain_id)
         return self.client.records.create(domain_id, record)
 
 
