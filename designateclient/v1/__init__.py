@@ -32,7 +32,7 @@ class Client(object):
                  project_domain_id=None, auth_url=None, token=None,
                  endpoint_type='publicURL', region_name=None,
                  service_type='dns', insecure=False, session=None,
-                 cacert=None, all_tenants=False, edit_managed=False):
+                 cacert=None, all_tenants=None, edit_managed=None):
         """
         :param endpoint: Endpoint URL
         :param token: A token instead of username / password
@@ -65,8 +65,20 @@ class Client(object):
                 cacert=cacert
             )
 
-        self.all_tenants = all_tenants
-        self.edit_managed = edit_managed
+        # NOTE: all_tenants and edit_managed are pulled from the session for
+        #       backwards compat reasons, do not pull additional modifiers from
+        #       here. Once removed, the kwargs above should default to False.
+        if all_tenants is None:
+            self.all_tenants = getattr(self.session.session, 'all_tenants',
+                                       False)
+        else:
+            self.all_tenants = all_tenants
+
+        if edit_managed is None:
+            self.edit_managed = getattr(self.session.session, 'edit_managed',
+                                        False)
+        else:
+            self.edit_managed = edit_managed
 
         # Since we have to behave nicely like a legacy client/bindings we use
         # an adapter around the session to not modify it's state.
