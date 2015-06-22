@@ -3,6 +3,7 @@
 TAGS
 *.egg
 *.egg-info
+.eggs
 build
 .coverage
 .tox
