@@ -103,7 +103,7 @@ def get_columns(data):
 def get_session(auth_url, endpoint, domain_id, domain_name, project_id,
                 project_name, project_domain_name, project_domain_id, username,
                 user_id, password, user_domain_id, user_domain_name, token,
-                insecure, cacert, all_tenants=None, edit_managed=None):
+                insecure, cacert, all_tenants=False, edit_managed=False):
     # NOTE: all_tenants and edit_managed are here for backwards compat
     #       reasons, do not add additional modifiers here.
 

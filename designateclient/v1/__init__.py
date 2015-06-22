@@ -69,14 +69,12 @@ class Client(object):
         #       backwards compat reasons, do not pull additional modifiers from
         #       here. Once removed, the kwargs above should default to False.
         if all_tenants is None:
-            self.all_tenants = getattr(self.session.session, 'all_tenants',
-                                       False)
+            self.all_tenants = getattr(session, 'all_tenants', False)
         else:
             self.all_tenants = all_tenants
 
         if edit_managed is None:
-            self.edit_managed = getattr(self.session.session, 'edit_managed',
-                                        False)
+            self.edit_managed = getattr(session, 'edit_managed', False)
         else:
             self.edit_managed = edit_managed
 
