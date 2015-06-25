@@ -18,7 +18,7 @@ Typically the designate client talks to Keystone (or a Keystone like service) vi
     | updated_at | None                                 |
     +------------+--------------------------------------+
 
-    $ designate --os-endpoint http://127.0.0.1:9001/v1 domain-create --name testing123.net. --email simon@mccartney.ie
+    $ designate --os-endpoint http://127.0.0.1:9001/v1 domain-create --name testing123.net. --email me@mydomain.com
     +------------+--------------------------------------+
     | Field      | Value                                |
     +------------+--------------------------------------+
@@ -28,7 +28,7 @@ Typically the designate client talks to Keystone (or a Keystone like service) vi
     | id         | 5c02c519-4928-4a38-bd10-c748c200912f |
     | ttl        | 3600                                 |
     | serial     | 1373376030                           |
-    | email      | simon@mccartney.ie                   |
+    | email      | me@mydomain.com                      |
     +------------+--------------------------------------+
 
     $ designate --os-endpoint http://127.0.0.1:9001/v1 record-create --name myhost.testing123.net. --type A --data 1.2.3.4 5c02c519-4928-4a38-bd10-c748c200912f
