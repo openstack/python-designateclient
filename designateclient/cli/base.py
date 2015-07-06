@@ -51,8 +51,8 @@ class Command(CliffCommand):
                 values.append(e.errors)
 
             self.error_output(parsed_args, columns, values)
-        except ks_exceptions.EndpointNotFound:
-            self.app.log.error("No endpoint was found. Missing credentials?")
+        except ks_exceptions.EndpointNotFound as e:
+            self.app.log.error("No endpoint was found: %s", e.message)
 
             return 1
 
