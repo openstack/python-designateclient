@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 import logging
 
 from designateclient import exceptions
@@ -26,4 +28,4 @@ try:
 except exceptions.RemoteError:
     zone = dict([(z['name'], z) for z in client.zones.list()])['i.io.']
 
-print client.recordsets.list(zone['id'])
+print(client.recordsets.list(zone['id']))

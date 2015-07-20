@@ -1,3 +1,4 @@
+from __future__ import print_function
 import logging
 
 from designateclient.v2 import client
@@ -33,7 +34,7 @@ except exceptions.RemoteError:
 
 print("Recordset list...")
 for rs in client.recordsets.list(zone['id']):
-    print rs
+    print(rs)
 
 # Here's an example of just passing "www" as the record name vs "www.i.io."
 records = ["10.0.0.1"]

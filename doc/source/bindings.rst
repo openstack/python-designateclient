@@ -15,7 +15,7 @@ the bindings.
 .. code-block:: python
 
    #!/usr/bin/env python
-
+   from __future__ import print_function
    from designateclient.v1 import Client
 
    # Create an instance of the client, providing the necessary credentials
@@ -31,7 +31,7 @@ the bindings.
 
    # Iterate the list, printing some useful information
    for domain in domains:
-       print "Domain ID: %s, Name: %s" % (domain.id, domain.name)
+       print("Domain ID: %s, Name: %s" % (domain.id, domain.name))
 
 And the output this program might produce:
 
