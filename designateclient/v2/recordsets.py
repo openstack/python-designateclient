@@ -14,6 +14,7 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 from oslo_utils import uuidutils
+import six
 
 from designateclient import client
 from designateclient.v2 import utils as v2_utils
@@ -24,8 +25,9 @@ class RecordSetController(client.Controller):
         zone_info = None
 
         # If we get a zone name we'll need to get the ID of it before POST.
-        if isinstance(zone, basestring) and not uuidutils.is_uuid_like(zone):
-            zone_info = self.client.zones.get(zone)
+        if isinstance(zone, six.string_types) and not \
+                uuidutils.is_uuid_like(zone):
+                zone_info = self.client.zones.get(zone)
         elif isinstance(zone, dict):
             zone_info = zone
 

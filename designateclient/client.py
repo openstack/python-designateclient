@@ -15,9 +15,9 @@
 # under the License.
 import abc
 import json
-from urllib import urlencode
 
 import six
+from six.moves.urllib import parse
 from stevedore import extension
 
 from designateclient import exceptions
@@ -37,7 +37,7 @@ class Controller(object):
         if limit is not None:
             params['limit'] = limit
 
-        q = urlencode(params) if params else ''
+        q = parse.urlencode(params) if params else ''
         return '%(url)s%(params)s' % {
             'url': url,
             'params': '?%s' % q
