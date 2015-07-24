@@ -20,6 +20,7 @@ import copy
 import logging
 
 import jsonschema
+import six
 
 LOG = logging.getLogger(__name__)
 
@@ -112,19 +113,19 @@ def model_factory(schema):
             dict.update(self, other)
 
         def iteritems(self):
-            return copy.deepcopy(dict(self)).iteritems()
+            return six.iteritems(copy.deepcopy(dict(self)))
 
         def items(self):
-            return copy.deepcopy(dict(self)).items()
+            return list(six.iteritems(copy.deepcopy(dict(self))))
 
         def itervalues(self):
-            return copy.deepcopy(dict(self)).itervalues()
+            return six.itervalues(copy.deepcopy(dict(self)))
 
         def keys(self):
-            return copy.deepcopy(dict(self)).keys()
+            return list(six.iterkeys(copy.deepcopy(dict(self))))
 
         def values(self):
-            return copy.deepcopy(dict(self)).values()
+            return list(six.itervalues(copy.deepcopy(dict(self))))
 
         @property
         def changes(self):

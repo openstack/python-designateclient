@@ -23,6 +23,7 @@ from keystoneclient.auth.identity import generic
 from keystoneclient.auth import token_endpoint
 from keystoneclient import session as ks_session
 import pkg_resources
+import six
 
 from designateclient import exceptions
 
@@ -94,7 +95,8 @@ def get_columns(data):
     def _seen(col):
         columns.add(str(col))
 
-    map(lambda item: map(_seen, item.keys()), data)
+    six.moves.map(lambda item: six.moves.map(_seen,
+                  list(six.iterkeys(item))), data)
     return list(columns)
 
 
