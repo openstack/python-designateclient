@@ -62,3 +62,24 @@ class UtilsTestCase(base.TestCase):
         self.assertRaises(exceptions.NoUniqueMatch,
                           self._find_resourceid_by_name_or_id,
                           'baba', by_name=True)
+
+    def test_load_schema(self):
+        schema = utils.load_schema('v1', 'domain')
+        self.assertIsInstance(schema, dict)
+
+    def test_load_schema_missing(self):
+        self.assertRaises(exceptions.ResourceNotFound, utils.load_schema,
+                          'v1', 'missing')
+
+    def test_resource_string_empty_param(self):
+        self.assertRaises(ValueError, utils.resource_string)
+
+    def test_resource_string(self):
+        name = ['schemas', 'v1', 'domain.json']
+        resource_string = utils.resource_string(*name)
+        self.assertIsNotNone(resource_string)
+
+    def test_resource_string_missing(self):
+        name = ['schemas', 'v1', 'missing']
+        self.assertRaises(exceptions.ResourceNotFound, utils.resource_string,
+                          *name)
