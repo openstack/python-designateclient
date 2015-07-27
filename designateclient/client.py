@@ -124,6 +124,6 @@ def Client(version, *args, **kwargs):  # noqa
     versions = get_versions()
     if version not in versions:
         msg = 'Version %s is not supported, use one of (%s)' % (
-            version, versions.keys())
+            version, list(six.iterkeys(versions)))
         raise exceptions.UnsupportedVersion(msg)
     return versions[version](*args, **kwargs)
