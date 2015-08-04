@@ -50,7 +50,7 @@ def load_schema(version, name, package=None):
     schema_string = resource_string('schemas', version, '%s.json' % name,
                                     package=package)
 
-    return json.loads(schema_string)
+    return json.loads(schema_string.decode('utf-8'))
 
 
 def get_item_properties(item, fields, mixed_case_fields=[], formatters={}):
