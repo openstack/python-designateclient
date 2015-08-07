@@ -43,15 +43,15 @@ class UpdateQuotaCommand(base.UpdateCommand):
         parser = super(UpdateQuotaCommand, self).get_parser(prog_name)
 
         parser.add_argument('tenant_id', help="Tenant ID")
-        parser.add_argument('--domains', help="Allowed Domains", type=int)
+        parser.add_argument('--domains', help="Allowed domains", type=int)
         parser.add_argument('--domain-recordsets',
-                            help="Allowed Domain Records",
+                            help="Allowed domain records",
                             type=int)
         parser.add_argument('--recordset-records',
-                            help="Allowed Recordset Records",
+                            help="Allowed recordset records",
                             type=int)
         parser.add_argument('--domain-records',
-                            help="Allowed Domain Records",
+                            help="Allowed domain records",
                             type=int)
         return parser
 

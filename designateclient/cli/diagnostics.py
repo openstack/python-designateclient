@@ -27,7 +27,7 @@ class PingCommand(base.GetCommand):
     def get_parser(self, prog_name):
         parser = super(PingCommand, self).get_parser(prog_name)
 
-        parser.add_argument('--service', help="Service Name (e.g. central)",
+        parser.add_argument('--service', help="Service name (e.g. central)",
                             required=True)
         parser.add_argument('--host', help="Hostname", required=True)
 

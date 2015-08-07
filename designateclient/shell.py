@@ -152,22 +152,23 @@ class DesignateShell(App):
         parser.add_argument('--os-service-type',
                             default=env('OS_DNS_SERVICE_TYPE', default='dns'),
                             help=("Defaults to env[OS_DNS_SERVICE_TYPE], or "
-                                  "'dns'"))
+                                  "'dns'."))
 
         parser.add_argument('--os-cacert',
                             default=env('OS_CACERT'),
                             help=('CA certificate bundle file. Defaults to '
-                                  'env[OS_CACERT]'))
+                                  'env[OS_CACERT].'))
 
         parser.add_argument('--insecure', action='store_true',
-                            help="Explicitly allow 'insecure' SSL requests")
+                            help="Explicitly allow 'insecure' SSL requests.")
 
         parser.add_argument('--all-tenants', action='store_true',
-                            help="Allows to list all domains from all tenants")
+                            help="Allows to list all domains from all "
+                            "tenants.")
 
         parser.add_argument('--edit-managed', action='store_true',
                             help='Allows to edit records that are marked as '
-                            'managed')
+                            'managed.')
 
         return parser
 
