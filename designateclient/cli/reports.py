@@ -62,7 +62,7 @@ class TenantCommand(base.ListCommand):
         parser = super(TenantCommand, self).get_parser(prog_name)
 
         parser.add_argument('--report-tenant-id',
-                            help="tenant_id being reported on",
+                            help="The tenant_id being reported on.",
                             required=True)
 
         return parser

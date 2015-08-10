@@ -51,7 +51,7 @@ class CreateServerCommand(base.CreateCommand):
     def get_parser(self, prog_name):
         parser = super(CreateServerCommand, self).get_parser(prog_name)
 
-        parser.add_argument('--name', help="Server Name", required=True)
+        parser.add_argument('--name', help="Server name", required=True)
 
         return parser
 
@@ -70,7 +70,7 @@ class UpdateServerCommand(base.UpdateCommand):
         parser = super(UpdateServerCommand, self).get_parser(prog_name)
 
         parser.add_argument('id', help="Server ID")
-        parser.add_argument('--name', help="Server Name")
+        parser.add_argument('--name', help="Server name")
 
         return parser
 

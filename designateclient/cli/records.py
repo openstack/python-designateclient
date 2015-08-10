@@ -30,7 +30,7 @@ class ListRecordsCommand(base.ListCommand):
     def get_parser(self, prog_name):
         parser = super(ListRecordsCommand, self).get_parser(prog_name)
 
-        parser.add_argument('domain_id', help="Domain ID or Name")
+        parser.add_argument('domain_id', help="Domain ID or name")
 
         return parser
 
@@ -46,7 +46,7 @@ class GetRecordCommand(base.GetCommand):
     def get_parser(self, prog_name):
         parser = super(GetRecordCommand, self).get_parser(prog_name)
 
-        parser.add_argument('domain_id', help="Domain ID or Name")
+        parser.add_argument('domain_id', help="Domain ID or name")
         parser.add_argument('id', help="Record ID")
 
         return parser
@@ -63,13 +63,13 @@ class CreateRecordCommand(base.CreateCommand):
     def get_parser(self, prog_name):
         parser = super(CreateRecordCommand, self).get_parser(prog_name)
 
-        parser.add_argument('domain_id', help="Domain ID or Name")
+        parser.add_argument('domain_id', help="Domain ID or name")
         parser.add_argument(
-            '--name', help="Record (relative|absolute) Name", required=True)
-        parser.add_argument('--type', help="Record Type", required=True)
-        parser.add_argument('--data', help="Record Data", required=True)
+            '--name', help="Record (relative|absolute) name", required=True)
+        parser.add_argument('--type', help="Record type", required=True)
+        parser.add_argument('--data', help="Record data", required=True)
         parser.add_argument('--ttl', type=int, help="Record TTL")
-        parser.add_argument('--priority', type=int, help="Record Priority")
+        parser.add_argument('--priority', type=int, help="Record priority")
         parser.add_argument('--description', help="Description")
 
         return parser
@@ -115,11 +115,11 @@ class UpdateRecordCommand(base.UpdateCommand):
     def get_parser(self, prog_name):
         parser = super(UpdateRecordCommand, self).get_parser(prog_name)
 
-        parser.add_argument('domain_id', help="Domain ID or Name")
+        parser.add_argument('domain_id', help="Domain ID or name")
         parser.add_argument('id', help="Record ID")
-        parser.add_argument('--name', help="Record Name")
-        parser.add_argument('--type', help="Record Type")
-        parser.add_argument('--data', help="Record Data")
+        parser.add_argument('--name', help="Record name")
+        parser.add_argument('--type', help="Record type")
+        parser.add_argument('--data', help="Record data")
 
         description_group = parser.add_mutually_exclusive_group()
         description_group.add_argument('--description', help="Description")
@@ -127,12 +127,12 @@ class UpdateRecordCommand(base.UpdateCommand):
 
         ttl_group = parser.add_mutually_exclusive_group()
         ttl_group.add_argument('--ttl', type=int,
-                               help="Record Time To Live (Seconds)")
+                               help="Record time to live (seconds)")
         ttl_group.add_argument('--no-ttl', action='store_true')
 
         priotity_group = parser.add_mutually_exclusive_group()
         priotity_group.add_argument('--priority', type=int,
-                                    help="Record Priority")
+                                    help="Record priority")
         priotity_group.add_argument('--no-priority', action='store_true')
 
         return parser
@@ -176,7 +176,7 @@ class DeleteRecordCommand(base.DeleteCommand):
     def get_parser(self, prog_name):
         parser = super(DeleteRecordCommand, self).get_parser(prog_name)
 
-        parser.add_argument('domain_id', help="Domain ID or Name")
+        parser.add_argument('domain_id', help="Domain ID or name")
         parser.add_argument('id', help="Record ID")
 
         return parser
