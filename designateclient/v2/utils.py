@@ -26,7 +26,7 @@ def resolve_by_name(func, name, *args):
     if uuidutils.is_uuid_like(name):
         return name
 
-    results = func(criterion={"name": "*%s*" % name}, *args)
+    results = func(criterion={"name": "%s" % name}, *args)
     length = len(results)
 
     if length == 1:
