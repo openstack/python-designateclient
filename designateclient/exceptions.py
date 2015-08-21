@@ -37,13 +37,27 @@ class NoUniqueMatch(Base):
 class RemoteError(Base):
     def __init__(self, message=None, code=None, type=None, errors=None,
                  request_id=None):
-        super(RemoteError, self).__init__(message)
-
-        self.message = message
+        err_message = self._get_error_message(message, type, errors)
+        self.message = err_message
         self.code = code
         self.type = type
         self.errors = errors
         self.request_id = request_id
+
+        super(RemoteError, self).__init__(err_message)
+
+    def _get_error_message(self, _message, _type, _errors):
+        # Try to get a useful error msg if 'message' has nothing
+        if not _message:
+            if _errors and 'errors' in _errors:
+                err_msg = list()
+                for err in _errors['errors']:
+                    if 'message' in err:
+                        err_msg.append(err['message'])
+                _message = '. '.join(err_msg)
+            elif _type:
+                _message = str(_type)
+        return _message
 
 
 class Unknown(RemoteError):
