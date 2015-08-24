@@ -21,6 +21,7 @@ Contents
    shell-examples
    shell-v2
    contributing
+   functional-tests
 
 Indices and tables
 ==================
