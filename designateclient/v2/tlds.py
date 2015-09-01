@@ -14,6 +14,7 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 from designateclient import client
+from designateclient.v2 import utils as v2_utils
 
 
 class TLDController(client.Controller):
@@ -32,17 +33,17 @@ class TLDController(client.Controller):
 
         return self._get(url, response_key='tlds')
 
-    def get(self, tld_id):
-        url = '/tlds/%s' % tld_id
+    def get(self, tld):
+        tld = v2_utils.resolve_by_name(self.list, tld)
 
-        return self._get(url)
+        return self._get('/tlds/%s' % tld)
 
-    def update(self, tld_id, values):
-        url = '/tlds/%s' % tld_id
+    def update(self, tld, values):
+        tld = v2_utils.resolve_by_name(self.list, tld)
 
-        return self._patch(url, data=values)
+        return self._patch('/tlds/%s' % tld, data=values)
 
-    def delete(self, tld_id):
-        url = '/tlds/%s' % tld_id
+    def delete(self, tld):
+        tld = v2_utils.resolve_by_name(self.list, tld)
 
-        return self._delete(url)
+        return self._delete('/tlds/%s' % tld)
