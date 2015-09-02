@@ -19,6 +19,7 @@ Contents
    bindings
    shell
    shell-examples
+   shell-v2
    contributing
 
 Indices and tables
