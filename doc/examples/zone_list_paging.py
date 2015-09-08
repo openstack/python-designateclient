@@ -15,7 +15,7 @@ auth = generic.Password(
     password=shell.env('OS_PASSWORD'),
     tenant_name=shell.env('OS_TENANT_NAME'))
 
-session = keystone_session.Session(auth=auth)
+session = keystone_session.Session(auth=auth, timeout=10)
 
 client = client.Client(session=session)
 

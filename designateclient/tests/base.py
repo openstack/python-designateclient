@@ -18,7 +18,6 @@ import json as json_
 import os
 
 import fixtures
-from keystoneclient import adapter
 from keystoneclient import session as keystone_session
 from oslotest import base as test
 from requests_mock.contrib import fixture as req_fixture
@@ -26,6 +25,7 @@ import six
 from six.moves.urllib import parse as urlparse
 
 from designateclient import client
+from designateclient.utils import AdapterWithTimeout
 
 _TRUE_VALUES = ('True', 'true', '1', 'yes')
 
@@ -98,7 +98,7 @@ class APITestCase(TestCase):
     def get_client(self, version=None, session=None):
         version = version or self.VERSION
         session = session or keystone_session.Session()
-        adapted = adapter.Adapter(
+        adapted = AdapterWithTimeout(
             session=session, endpoint_override=self.get_base())
         return client.Client(version, session=adapted)
 

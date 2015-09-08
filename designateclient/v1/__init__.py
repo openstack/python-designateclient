@@ -13,7 +13,6 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations
 # under the License.
-from keystoneclient import adapter
 from stevedore import extension
 
 from designateclient import exceptions
@@ -32,7 +31,8 @@ class Client(object):
                  project_domain_id=None, auth_url=None, token=None,
                  endpoint_type='publicURL', region_name=None,
                  service_type='dns', insecure=False, session=None,
-                 cacert=None, all_tenants=None, edit_managed=None):
+                 cacert=None, all_tenants=None, edit_managed=None,
+                 timeout=None):
         """
         :param endpoint: Endpoint URL
         :param token: A token instead of username / password
@@ -62,7 +62,7 @@ class Client(object):
                 user_domain_name=user_domain_name,
                 token=token,
                 insecure=insecure,
-                cacert=cacert
+                cacert=cacert,
             )
 
         # NOTE: all_tenants and edit_managed are pulled from the session for
@@ -82,7 +82,7 @@ class Client(object):
         # an adapter around the session to not modify it's state.
         interface = endpoint_type.rstrip('URL')
 
-        self.session = adapter.Adapter(
+        self.session = utils.AdapterWithTimeout(
             session,
             auth=session.auth,
             endpoint_override=endpoint,
@@ -90,7 +90,8 @@ class Client(object):
             service_type=service_type,
             interface=interface,
             user_agent='python-designateclient-%s' % version.version_info,
-            version='1'
+            version='1',
+            timeout=timeout,
         )
 
         def _load_controller(ext):
