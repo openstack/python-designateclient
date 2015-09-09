@@ -127,7 +127,7 @@ class Client(object):
 
         if response.status_code == 400:
             raise exceptions.BadRequest(**response_payload)
-        elif response.status_code in (401, 403):
+        elif response.status_code in (401, 403, 413):
             raise exceptions.Forbidden(**response_payload)
         elif response.status_code == 404:
             raise exceptions.NotFound(**response_payload)
