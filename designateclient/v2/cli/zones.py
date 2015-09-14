@@ -27,6 +27,11 @@ from designateclient import utils
 LOG = logging.getLogger(__name__)
 
 
+def _format_zone(zone):
+    zone.pop('links', None)
+    zone['masters'] = ", ".join(zone['masters'])
+
+
 class ListZonesCommand(lister.Lister):
     """List zones"""
 
@@ -67,6 +72,7 @@ class ShowZoneCommand(show.ShowOne):
 
         data = client.zones.get(parsed_args.id)
 
+        _format_zone(data)
         return zip(*sorted(six.iteritems(data)))
 
 
@@ -113,6 +119,8 @@ class CreateZoneCommand(show.ShowOne):
 
         data = client.zones.create(
             parsed_args.name, parsed_args.type, **payload)
+
+        _format_zone(data)
         return zip(*sorted(six.iteritems(data)))
 
 
@@ -158,6 +166,7 @@ class SetZoneCommand(show.ShowOne):
             data['masters'] = parsed_args.masters
 
         updated = client.zones.update(parsed_args.id, data)
+        _format_zone(updated)
         return zip(*sorted(six.iteritems(updated)))
 
 

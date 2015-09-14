@@ -26,6 +26,12 @@ from designateclient import utils
 LOG = logging.getLogger(__name__)
 
 
+def _format_recordset(recordset):
+    # Remove unneeded fields for display output formatting
+    recordset['records'] = "\n".join(recordset['records'])
+    recordset.pop('links', None)
+
+
 class ListRecordSetsCommand(lister.Lister):
     """List recordsets"""
 
@@ -43,6 +49,8 @@ class ListRecordSetsCommand(lister.Lister):
 
         cols = self.columns
         data = client.recordsets.list(parsed_args.zone_id)
+
+        map(_format_recordset, data)
         return cols, (utils.get_item_properties(s, cols) for s in data)
 
 
@@ -60,6 +68,8 @@ class ShowRecordSetCommand(show.ShowOne):
     def take_action(self, parsed_args):
         client = self.app.client_manager.dns
         data = client.recordsets.get(parsed_args.zone_id, parsed_args.id)
+
+        _format_recordset(data)
         return zip(*sorted(six.iteritems(data)))
 
 
@@ -90,6 +100,7 @@ class CreateRecordSetCommand(show.ShowOne):
             description=parsed_args.description,
             ttl=parsed_args.ttl)
 
+        _format_recordset(data)
         return zip(*sorted(six.iteritems(data)))
 
 
@@ -139,6 +150,8 @@ class SetRecordSetCommand(show.ShowOne):
             parsed_args.zone_id,
             parsed_args.id,
             data)
+
+        _format_recordset(updated)
 
         return zip(*sorted(six.iteritems(updated)))
 

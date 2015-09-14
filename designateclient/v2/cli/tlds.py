@@ -26,6 +26,11 @@ from designateclient import utils
 LOG = logging.getLogger(__name__)
 
 
+def _format_tld(tld):
+    # Remove unneeded fields for display output formatting
+    tld.pop('links', None)
+
+
 class ListTLDsCommand(lister.Lister):
     """List tlds"""
 
@@ -53,6 +58,7 @@ class ShowTLDCommand(show.ShowOne):
     def take_action(self, parsed_args):
         client = self.app.client_manager.dns
         data = client.tlds.get(parsed_args.id)
+        _format_tld(data)
         return zip(*sorted(six.iteritems(data)))
 
 
@@ -70,6 +76,7 @@ class CreateTLDCommand(show.ShowOne):
     def take_action(self, parsed_args):
         client = self.app.client_manager.dns
         data = client.tlds.create(parsed_args.name, parsed_args.description)
+        _format_tld(data)
         return zip(*sorted(six.iteritems(data)))
 
 
@@ -101,6 +108,7 @@ class SetTLDCommand(show.ShowOne):
         client = self.app.client_manager.dns
 
         data = client.tlds.update(parsed_args.id, data)
+        _format_tld(data)
         return zip(*sorted(six.iteritems(data)))
 
 

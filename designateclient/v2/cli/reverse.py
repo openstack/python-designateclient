@@ -26,6 +26,11 @@ from designateclient import utils
 LOG = logging.getLogger(__name__)
 
 
+def _format_floatingip(fip):
+    # Remove unneeded fields for display output formatting
+    fip.pop('links', None)
+
+
 class ListFloatingIPCommand(lister.Lister):
     """List floatingip ptr records"""
 
@@ -52,6 +57,7 @@ class ShowFloatingIPCommand(show.ShowOne):
     def take_action(self, parsed_args):
         client = self.app.client_manager.dns
         data = client.floatingips.get(parsed_args.floatingip_id)
+        _format_floatingip(data)
         return zip(*sorted(six.iteritems(data)))
 
 
@@ -95,6 +101,7 @@ class SetFloatingIPCommand(show.ShowOne):
             parsed_args.description,
             parsed_args.ttl)
 
+        _format_floatingip(fip)
         return zip(*sorted(six.iteritems(fip)))
 
 
