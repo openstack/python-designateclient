@@ -16,7 +16,10 @@
 
 
 class Base(Exception):
-    pass
+    def __init__(self, message=None):
+        if not message:
+            message = self.__class__.__name__
+        super(Base, self).__init__(message)
 
 
 class UnsupportedVersion(Base):
