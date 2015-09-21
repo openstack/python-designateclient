@@ -26,6 +26,11 @@ from designateclient import utils
 LOG = logging.getLogger(__name__)
 
 
+def _format_blacklist(blacklist):
+    # Remove unneeded fields for display output formatting
+    blacklist.pop('links', None)
+
+
 class ListBlacklistsCommand(lister.Lister):
     """List blacklists"""
 
@@ -52,6 +57,7 @@ class ShowBlacklistCommand(show.ShowOne):
     def take_action(self, parsed_args):
         client = self.app.client_manager.dns
         data = client.blacklists.get(parsed_args.id)
+        _format_blacklist(data)
         return zip(*sorted(six.iteritems(data)))
 
 
@@ -73,6 +79,7 @@ class CreateBlacklistCommand(show.ShowOne):
         data = client.blacklists.create(
             parsed_args.pattern, parsed_args.description)
 
+        _format_blacklist(data)
         return zip(*sorted(six.iteritems(data)))
 
 
@@ -106,6 +113,7 @@ class SetBlacklistCommand(show.ShowOne):
 
         updated = client.blacklists.update(parsed_args.id, data)
 
+        _format_blacklist(updated)
         return zip(*sorted(six.iteritems(updated)))
 
 
