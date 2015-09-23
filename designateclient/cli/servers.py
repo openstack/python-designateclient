@@ -37,7 +37,7 @@ class GetServerCommand(base.GetCommand):
     def get_parser(self, prog_name):
         parser = super(GetServerCommand, self).get_parser(prog_name)
 
-        parser.add_argument('id', help="Server ID")
+        parser.add_argument('id', help="Server ID.")
 
         return parser
 
@@ -51,7 +51,7 @@ class CreateServerCommand(base.CreateCommand):
     def get_parser(self, prog_name):
         parser = super(CreateServerCommand, self).get_parser(prog_name)
 
-        parser.add_argument('--name', help="Server name", required=True)
+        parser.add_argument('--name', help="Server name.", required=True)
 
         return parser
 
@@ -69,8 +69,8 @@ class UpdateServerCommand(base.UpdateCommand):
     def get_parser(self, prog_name):
         parser = super(UpdateServerCommand, self).get_parser(prog_name)
 
-        parser.add_argument('id', help="Server ID")
-        parser.add_argument('--name', help="Server name")
+        parser.add_argument('id', help="Server ID.")
+        parser.add_argument('--name', help="Server name.")
 
         return parser
 
@@ -90,7 +90,7 @@ class DeleteServerCommand(base.DeleteCommand):
     def get_parser(self, prog_name):
         parser = super(DeleteServerCommand, self).get_parser(prog_name)
 
-        parser.add_argument('id', help="Server ID")
+        parser.add_argument('id', help="Server ID.")
 
         return parser
 
