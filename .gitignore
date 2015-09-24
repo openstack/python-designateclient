@@ -22,3 +22,4 @@ doc/build/*
 dist
 designateclient/versioninfo
 .testrepository
+*.log
