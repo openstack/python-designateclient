@@ -47,6 +47,26 @@ def build_option_string(options):
                     if value is not None)
 
 
+def build_flags_string(flags):
+    """Format a string of value-less flags.
+
+    Pass in a dictionary mapping flags to booleans. Those flags set to true
+    are included in the returned string.
+
+    Usage:
+        build_flags_string({
+            '--no-ttl': True,
+            '--no-name': False,
+            '--verbose': True,
+        })
+
+    Returns:
+        '--no-ttl --verbose'
+    """
+    flags = {flag: is_set for flag, is_set in flags.items() if is_set}
+    return " ".join(flags.keys())
+
+
 class ZoneCommands(object):
     """This is a mixin that provides zone commands to DesignateCLI"""
 
@@ -128,7 +148,51 @@ class ZoneTransferCommands(object):
         return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
 
 
-class DesignateCLI(base.CLIClient, ZoneCommands, ZoneTransferCommands):
+class RecordsetCommands(object):
+
+    def recordset_show(self, zone_id, id, *args, **kwargs):
+        cmd = 'recordset show {0} {1}'.format(zone_id, id)
+        return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
+
+    def recordset_list(self, zone_id, *args, **kwargs):
+        cmd = 'recordset list {0}'.format(zone_id)
+        return self.parsed_cmd(cmd, ListModel, *args, **kwargs)
+
+    def recordset_create(self, zone_id, name, records=None, type=None,
+                         description=None, ttl=None, *args, **kwargs):
+        options_str = build_option_string({
+            '--records': records,
+            '--type': type,
+            '--description': description,
+            '--ttl': ttl,
+        })
+        cmd = 'recordset create {0} {1} {2}'.format(zone_id, name, options_str)
+        return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
+
+    def recordset_set(self, zone_id, id, records=None, type=None,
+                      description=None, ttl=None, no_description=False,
+                      no_ttl=False, *args, **kwargs):
+        options_str = build_option_string({
+            '--records': records,
+            '--type': type,
+            '--description': description,
+            '--ttl': ttl,
+        })
+        flags_str = build_flags_string({
+            '--no-description': no_description,
+            '--no-ttl': no_ttl,
+        })
+        cmd = 'recordset set {0} {1} {2} {3}'.format(
+            zone_id, id, flags_str, options_str)
+        return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
+
+    def recordset_delete(self, zone_id, id, *args, **kwargs):
+        cmd = 'recordset delete {0} {1}'.format(zone_id, id)
+        return self.parsed_cmd(cmd, *args, **kwargs)
+
+
+class DesignateCLI(base.CLIClient, ZoneCommands, ZoneTransferCommands,
+                   RecordsetCommands):
 
     # instantiate this once to minimize requests to keystone
     _CLIENTS = None
