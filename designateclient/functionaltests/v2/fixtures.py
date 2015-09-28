@@ -115,3 +115,23 @@ class TLDFixture(BaseFixture):
             client.tld_delete(tld_id)
         except CommandFailed:
             pass
+
+
+class BlacklistFixture(BaseFixture):
+    """See DesignateCLI.zone_blacklist_create for __init__ args"""
+
+    def __init__(self, user='admin', *args, **kwargs):
+        super(BlacklistFixture, self).__init__(user=user, *args, **kwargs)
+
+    def _setUp(self):
+        super(BlacklistFixture, self)._setUp()
+        self.blacklist = self.client.zone_blacklist_create(*self.args,
+                                                           **self.kwargs)
+        self.addCleanup(self.cleanup_blacklist, self.client, self.blacklist.id)
+
+    @classmethod
+    def cleanup_blacklist(cls, client, blacklist_id):
+        try:
+            client.zone_blacklist_delete(blacklist_id)
+        except CommandFailed:
+            pass

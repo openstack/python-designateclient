@@ -31,3 +31,7 @@ def random_zone_name(name='testdomain', tld='com'):
 
 def random_a_recordset_name(zone_name, recordset_name='testrecord'):
     return "{0}{1}.{2}".format(recordset_name, random_digits(), zone_name)
+
+
+def random_blacklist(name='testblacklist'):
+    return '{0}{1}'.format(name, random_digits())
