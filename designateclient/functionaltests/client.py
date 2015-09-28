@@ -191,8 +191,39 @@ class RecordsetCommands(object):
         return self.parsed_cmd(cmd, *args, **kwargs)
 
 
+class TLDCommands(object):
+
+    def tld_list(self, *args, **kwargs):
+        return self.parsed_cmd('tld list', ListModel, *args, **kwargs)
+
+    def tld_show(self, id, *args, **kwargs):
+        return self.parsed_cmd('tld show {0}'.format(id), FieldValueModel,
+                               *args, **kwargs)
+
+    def tld_delete(self, id, *args, **kwargs):
+        return self.parsed_cmd('tld delete {0}'.format(id), *args, **kwargs)
+
+    def tld_create(self, name, description=None, *args, **kwargs):
+        options_str = build_option_string({
+            '--name': name,
+            '--description': description,
+        })
+        cmd = 'tld create {0}'.format(options_str)
+        return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
+
+    def tld_set(self, id, name=None, description=None, no_description=False,
+                *args, **kwargs):
+        options_str = build_option_string({
+            '--name': name,
+            '--description': description,
+        })
+        flags_str = build_flags_string({'--no-description': no_description})
+        cmd = 'tld set {0} {1} {2}'.format(id, options_str, flags_str)
+        return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
+
+
 class DesignateCLI(base.CLIClient, ZoneCommands, ZoneTransferCommands,
-                   RecordsetCommands):
+                   RecordsetCommands, TLDCommands):
 
     # instantiate this once to minimize requests to keystone
     _CLIENTS = None

@@ -21,8 +21,12 @@ def random_digits(n=8):
     return "".join([random.choice(string.digits) for _ in range(n)])
 
 
-def random_zone_name(name='testdomain'):
-    return "{0}{1}.com.".format(name, random_digits())
+def random_tld(name='testtld'):
+    return "{0}{1}".format(name, random_digits())
+
+
+def random_zone_name(name='testdomain', tld='com'):
+    return "{0}{1}.{2}.".format(name, random_digits(), tld)
 
 
 def random_a_recordset_name(zone_name, recordset_name='testrecord'):

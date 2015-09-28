@@ -96,3 +96,22 @@ class RecordsetFixture(BaseFixture):
             client.recordset_delete(zone_id, recordset_id)
         except CommandFailed:
             pass
+
+
+class TLDFixture(BaseFixture):
+    """See DesignateCLI.tld_create for __init__ args"""
+
+    def __init__(self, user='admin', *args, **kwargs):
+        super(TLDFixture, self).__init__(user=user, *args, **kwargs)
+
+    def _setUp(self):
+        super(TLDFixture, self)._setUp()
+        self.tld = self.client.tld_create(*self.args, **self.kwargs)
+        self.addCleanup(self.cleanup_tld, self.client, self.tld.id)
+
+    @classmethod
+    def cleanup_tld(cls, client, tld_id):
+        try:
+            client.tld_delete(tld_id)
+        except CommandFailed:
+            pass
