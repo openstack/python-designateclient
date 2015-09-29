@@ -64,6 +64,18 @@ class TestServers(test_v1.APIV1TestCase, test_v1.CrudMixin):
         self.client.servers.create({"name": "ns1.example.org."})
         self.assertRequestBodyIs(json=values)
 
+    def test_create_with_name_too_long(self):
+        ref = {"id": "89acac79-38e7-497d-807c-a011e1310438",
+               "name": "ns1." + "foo" * 85 + ".org."}
+
+        self.stub_url("POST", parts=[self.RESOURCE], json=ref)
+
+        values = ref.copy()
+        del values["id"]
+
+        self.assertRaises(ValueError, self.client.servers.create,
+                          {"name": "ns1.example.org."})
+
     @patch.object(servers.ServersController, "update")
     def test_update(self, server_update):
         ref = self.new_ref()
