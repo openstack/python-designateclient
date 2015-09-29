@@ -44,7 +44,89 @@ class TestDomain(test_v1.APIV1TestCase, test_v1.CrudMixin):
         values = ref.copy()
         del values["id"]
 
-        self.client.domains.create(values["name"])
+        response = self.client.domains.create(values["name"])
+        self.assertEqual(ref['id'], response['id'])
+
+    def test_create_with_description(self):
+        ref = {"id": "89acac79-38e7-497d-807c-a011e1310438",
+               "name": "domain1.com.",
+               "email": "nsadmin@example.org",
+               "ttl": 60,
+               "description": "fully qualified domain"}
+
+        self.stub_url("POST", parts=[self.RESOURCE], json=ref)
+
+        values = ref.copy()
+        del values["id"]
+
+        response = self.client.domains.create(values["name"])
+        self.assertEqual(ref['id'], response['id'])
+
+    def test_create_with_description_too_long(self):
+        ref = {"id": "89acac79-38e7-497d-807c-a011e1310438",
+               "name": "domain1.com.",
+               "email": "nsadmin@example.org",
+               "ttl": 60,
+               "description": "d" * 161}
+        self.stub_url("POST", parts=[self.RESOURCE], json=ref)
+
+        values = ref.copy()
+        del values["id"]
+
+        self.assertRaises(ValueError, self.client.domains.create,
+                          values["name"])
+
+    def test_create_with_zero_ttl(self):
+        ref = {"id": "89acac79-38e7-497d-807c-a011e1310438",
+               "name": "domain1.com.",
+               "email": "nsadmin@example.org",
+               "ttl": 0}
+        self.stub_url("POST", parts=[self.RESOURCE], json=ref)
+
+        values = ref.copy()
+        del values["id"]
+
+        self.assertRaises(ValueError, self.client.domains.create,
+                          values["name"])
+
+    def test_create_with_negative_ttl(self):
+        ref = {"id": "89acac79-38e7-497d-807c-a011e1310438",
+               "name": "domain1.com.",
+               "email": "nsadmin@example.org",
+               "ttl": -1}
+        self.stub_url("POST", parts=[self.RESOURCE], json=ref)
+
+        values = ref.copy()
+        del values["id"]
+
+        self.assertRaises(ValueError, self.client.domains.create,
+                          values["name"])
+
+    def test_create_with_no_ttl(self):
+        ref = {"id": "89acac79-38e7-497d-807c-a011e1310438",
+               "name": "domain1.com.",
+               "email": "nsadmin@example.org",
+               "ttl": ""}
+        self.stub_url("POST", parts=[self.RESOURCE], json=ref)
+
+        values = ref.copy()
+        del values["id"]
+
+        self.assertRaises(ValueError, self.client.domains.create,
+                          values["name"])
+
+    def test_create_with_name_too_long(self):
+        ref = {"id": "89acac79-38e7-497d-807c-a011e1310438",
+               "name": "domain" + "a" * 255 + ".com.",
+               "email": "nsadmin@example.org",
+               "ttl": 60}
+        self.stub_url("POST", parts=[self.RESOURCE], json=ref)
+
+        values = ref.copy()
+        del values["id"]
+
+        self.assertRaises(ValueError, self.client.domains.create,
+                          values["name"])
 
     def test_list(self):
         items = [
