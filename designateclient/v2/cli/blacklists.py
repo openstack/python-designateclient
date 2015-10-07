@@ -90,8 +90,8 @@ class SetBlacklistCommand(show.ShowOne):
         parser = super(SetBlacklistCommand, self).get_parser(prog_name)
 
         parser.add_argument('id', help="Blacklist ID")
-        parser.add_argument('--pattern', help="Blacklist pattern",
-                            required=True)
+        parser.add_argument('--pattern', help="Blacklist pattern")
+
         description_group = parser.add_mutually_exclusive_group()
         description_group.add_argument('--description', help="Description")
         description_group.add_argument('--no-description', action='store_true')
