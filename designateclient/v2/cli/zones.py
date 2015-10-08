@@ -264,8 +264,7 @@ class CreateTransferRequestCommand(show.ShowOne):
         parser.add_argument('zone_id', help="Zone ID to transfer.",)
         parser.add_argument(
             '--target-project-id',
-            help="Target Project ID to transfer to.",
-            required=True)
+            help="Target Project ID to transfer to.")
         parser.add_argument('--description', help="Description")
 
         return parser
