@@ -112,7 +112,6 @@ class SetRecordSetCommand(show.ShowOne):
 
         parser.add_argument('zone_id', help="Zone ID")
         parser.add_argument('id', help="RecordSet ID")
-        parser.add_argument('--name', help="RecordSet Name")
         parser.add_argument('--records', help="Records", nargs='+')
 
         description_group = parser.add_mutually_exclusive_group()
@@ -127,9 +126,6 @@ class SetRecordSetCommand(show.ShowOne):
 
     def take_action(self, parsed_args):
         data = {}
-
-        if parsed_args.name:
-            data['name'] = parsed_args.name
 
         if parsed_args.no_description:
             data['description'] = None
