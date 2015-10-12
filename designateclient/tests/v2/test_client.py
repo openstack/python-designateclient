@@ -30,3 +30,17 @@ class TestClient(TestCase):
         adapted = adapter.Adapter(session=session)
         client = Client(session=adapted)
         assert client.session
+
+    def test_init_with_session_timeout(self):
+        session = keystone_session.Session()
+        client = Client(
+            session=session,
+            timeout=1)
+        assert client.session.timeout == 1
+
+    def test_init_with_auth(self):
+        session = keystone_session.Session()
+        client = Client(
+            auth='http://127.0.0.1:22/',
+            session=session)
+        assert client.session.auth
