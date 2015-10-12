@@ -37,7 +37,7 @@ class GetDomainCommand(base.GetCommand):
     def get_parser(self, prog_name):
         parser = super(GetDomainCommand, self).get_parser(prog_name)
 
-        parser.add_argument('id', help="Domain ID or name")
+        parser.add_argument('id', help="Domain ID or name.")
 
         return parser
 
@@ -52,10 +52,10 @@ class CreateDomainCommand(base.CreateCommand):
     def get_parser(self, prog_name):
         parser = super(CreateDomainCommand, self).get_parser(prog_name)
 
-        parser.add_argument('--name', help="Domain name", required=True)
-        parser.add_argument('--email', help="Domain email", required=True)
-        parser.add_argument('--ttl', type=int, help="Time to live (seconds)")
-        parser.add_argument('--description', help="Description")
+        parser.add_argument('--name', help="Domain name.", required=True)
+        parser.add_argument('--email', help="Domain email.", required=True)
+        parser.add_argument('--ttl', type=int, help="Time to live (seconds).")
+        parser.add_argument('--description', help="Description.")
 
         return parser
 
@@ -80,12 +80,12 @@ class UpdateDomainCommand(base.UpdateCommand):
     def get_parser(self, prog_name):
         parser = super(UpdateDomainCommand, self).get_parser(prog_name)
 
-        parser.add_argument('id', help="Domain ID or name")
-        parser.add_argument('--name', help="Domain name")
-        parser.add_argument('--email', help="Domain email")
-        parser.add_argument('--ttl', type=int, help="Time to live (seconds)")
+        parser.add_argument('id', help="Domain ID or name.")
+        parser.add_argument('--name', help="Domain name.")
+        parser.add_argument('--email', help="Domain email.")
+        parser.add_argument('--ttl', type=int, help="Time to live (seconds).")
         description_group = parser.add_mutually_exclusive_group()
-        description_group.add_argument('--description', help="Description")
+        description_group.add_argument('--description', help="Description.")
         description_group.add_argument('--no-description', action='store_true')
 
         return parser
@@ -118,7 +118,7 @@ class DeleteDomainCommand(base.DeleteCommand):
     def get_parser(self, prog_name):
         parser = super(DeleteDomainCommand, self).get_parser(prog_name)
 
-        parser.add_argument('id', help="Domain ID or name")
+        parser.add_argument('id', help="Domain ID or name.")
 
         return parser
 
@@ -135,7 +135,7 @@ class ListDomainServersCommand(base.ListCommand):
     def get_parser(self, prog_name):
         parser = super(ListDomainServersCommand, self).get_parser(prog_name)
 
-        parser.add_argument('id', help="Domain ID or name")
+        parser.add_argument('id', help="Domain ID or name.")
 
         return parser
 
