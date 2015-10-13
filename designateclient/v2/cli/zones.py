@@ -115,7 +115,7 @@ class CreateZoneCommand(show.ShowOne):
         else:
             msg = "Type %s is not supported. Please choose between " \
                 "PRIMARY or SECONDARY"
-            raise osc_exc.CommandError(msg)
+            raise osc_exc.CommandError(msg % parsed_args.type)
 
         data = client.zones.create(
             parsed_args.name, parsed_args.type, **payload)
