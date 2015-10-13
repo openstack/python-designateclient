@@ -78,3 +78,21 @@ class TransferRequestFixture(BaseFixture):
             client.zone_transfer_request_delete(transfer_request_id)
         except CommandFailed:
             pass
+
+
+class RecordsetFixture(BaseFixture):
+    """See DesignateCLI.recordset_create for __init__ args"""
+
+    def _setUp(self):
+        super(RecordsetFixture, self)._setUp()
+        self.recordset = self.client.recordset_create(
+            *self.args, **self.kwargs)
+        self.addCleanup(self.cleanup_recordset, self.client,
+                        self.recordset.zone_id, self.recordset.id)
+
+    @classmethod
+    def cleanup_recordset(cls, client, zone_id, recordset_id):
+        try:
+            client.recordset_delete(zone_id, recordset_id)
+        except CommandFailed:
+            pass

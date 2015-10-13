@@ -17,6 +17,13 @@ import random
 import string
 
 
+def random_digits(n=8):
+    return "".join([random.choice(string.digits) for _ in range(n)])
+
+
 def random_zone_name(name='testdomain'):
-    digits = "".join([random.choice(string.digits) for _ in range(8)])
-    return "{0}{1}.com.".format(name, digits)
+    return "{0}{1}.com.".format(name, random_digits())
+
+
+def random_a_recordset_name(zone_name, recordset_name='testrecord'):
+    return "{0}{1}.{2}".format(recordset_name, random_digits(), zone_name)
