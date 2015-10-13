@@ -37,21 +37,21 @@ class TestZone(BaseDesignateTest):
     def test_zone_create_and_show(self):
         zone = self.clients.zone_show(self.zone.id)
         self.assertTrue(hasattr(zone, 'action'))
-        self.assertEqual(zone.created_at, self.zone.created_at)
-        self.assertEqual(zone.description, self.zone.description)
-        self.assertEqual(zone.email, self.zone.email)
-        self.assertEqual(zone.id, self.zone.id)
-        self.assertEqual(zone.masters, self.zone.masters)
-        self.assertEqual(zone.name, self.zone.name)
-        self.assertEqual(zone.pool_id, self.zone.pool_id)
-        self.assertEqual(zone.project_id, self.zone.project_id)
-        self.assertEqual(zone.serial, self.zone.serial)
+        self.assertEqual(self.zone.created_at, zone.created_at)
+        self.assertEqual(self.zone.description, zone.description)
+        self.assertEqual(self.zone.email, zone.email)
+        self.assertEqual(self.zone.id, zone.id)
+        self.assertEqual(self.zone.masters, zone.masters)
+        self.assertEqual(self.zone.name, zone.name)
+        self.assertEqual(self.zone.pool_id, zone.pool_id)
+        self.assertEqual(self.zone.project_id, zone.project_id)
+        self.assertEqual(self.zone.serial, zone.serial)
         self.assertTrue(hasattr(zone, 'status'))
-        self.assertEqual(zone.transferred_at, self.zone.transferred_at)
-        self.assertEqual(zone.ttl, self.zone.ttl)
-        self.assertEqual(zone.type, self.zone.type)
-        self.assertEqual(zone.updated_at, self.zone.updated_at)
-        self.assertEqual(zone.version, self.zone.version)
+        self.assertEqual(self.zone.transferred_at, zone.transferred_at)
+        self.assertEqual(self.zone.ttl, zone.ttl)
+        self.assertEqual(self.zone.type, zone.type)
+        self.assertEqual(self.zone.updated_at, zone.updated_at)
+        self.assertEqual(self.zone.version, zone.version)
 
     def test_zone_delete(self):
         self.clients.zone_delete(self.zone.id)
@@ -64,9 +64,9 @@ class TestZone(BaseDesignateTest):
 
         zone = self.clients.zone_set(self.zone.id, ttl=ttl, email=email,
                                      description=description)
-        self.assertEqual(int(zone.ttl), ttl)
-        self.assertEqual(zone.email, email)
-        self.assertEqual(zone.description, description)
+        self.assertEqual(ttl, int(zone.ttl))
+        self.assertEqual(email, zone.email)
+        self.assertEqual(description, zone.description)
 
     def test_invalid_option_on_zone_create(self):
         cmd = 'zone create %s --invalid "not a valid option"'.format(
@@ -90,11 +90,11 @@ class TestsPassingZoneFlags(BaseDesignateTest):
             type='PRIMARY',
         ))
         zone = fixture.zone
-        self.assertEqual(zone.name, zone_name)
-        self.assertEqual(zone.email, 'primary@example.com')
-        self.assertEqual(zone.description, 'A primary zone')
-        self.assertEqual(zone.ttl, '2345')
-        self.assertEqual(zone.type, 'PRIMARY')
+        self.assertEqual(zone_name, zone.name)
+        self.assertEqual('primary@example.com', zone.email)
+        self.assertEqual('A primary zone', zone.description)
+        self.assertEqual('2345', zone.ttl)
+        self.assertEqual('PRIMARY', zone.type)
 
     def test_zone_create_secondary_with_all_args(self):
         zone_name = random_zone_name()
@@ -105,10 +105,10 @@ class TestsPassingZoneFlags(BaseDesignateTest):
             masters='127.0.0.1',
         ))
         zone = fixture.zone
-        self.assertEqual(zone.name, zone_name)
-        self.assertEqual(zone.description, 'A secondary zone')
-        self.assertEqual(zone.type, 'SECONDARY')
-        self.assertEqual(zone.masters, '127.0.0.1')
+        self.assertEqual(zone_name, zone.name)
+        self.assertEqual('A secondary zone', zone.description)
+        self.assertEqual('SECONDARY', zone.type)
+        self.assertEqual('127.0.0.1', zone.masters)
 
     def test_zone_set_secondary_masters(self):
         fixture = self.useFixture(ZoneFixture(
@@ -118,7 +118,7 @@ class TestsPassingZoneFlags(BaseDesignateTest):
             masters='127.0.0.1',
         ))
         zone = fixture.zone
-        self.assertEqual(zone.masters, '127.0.0.1')
+        self.assertEqual('127.0.0.1', zone.masters)
 
         zone = self.clients.zone_set(zone.id, masters='127.0.0.2')
-        self.assertEqual(zone.masters, '127.0.0.2')
+        self.assertEqual('127.0.0.2', zone.masters)

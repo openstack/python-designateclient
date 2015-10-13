@@ -72,38 +72,38 @@ class TestTimeout(v2.APIV2TestCase, v2.CrudMixin):
         if timeout is None:
             self.assertFalse('timeout' in kw)
         else:
-            self.assertEqual(kw['timeout'], timeout)
+            self.assertEqual(timeout, kw['timeout'])
 
     def test_no_timeout(self):
         session = create_session(timeout=None)
         client = Client(session=session)
-        self.assertEqual(session.timeout, None)
-        self.assertEqual(client.session.timeout, None)
+        self.assertEqual(None, session.timeout)
+        self.assertEqual(None, client.session.timeout)
         self._call_request_and_check_timeout(client, None)
 
     def test_timeout_in_session(self):
         session = create_session(timeout=1)
         client = Client(session=session)
-        self.assertEqual(session.timeout, 1)
-        self.assertEqual(client.session.timeout, None)
+        self.assertEqual(1, session.timeout)
+        self.assertEqual(None, client.session.timeout)
         self._call_request_and_check_timeout(client, 1)
 
     def test_timeout_override_session_timeout(self):
         # The adapter timeout should override the session timeout
         session = create_session(timeout=10)
-        self.assertEqual(session.timeout, 10)
+        self.assertEqual(10, session.timeout)
         client = Client(session=session, timeout=2)
-        self.assertEqual(client.session.timeout, 2)
+        self.assertEqual(2, client.session.timeout)
         self._call_request_and_check_timeout(client, 2)
 
     def test_timeout_update(self):
         session = create_session(timeout=1)
         client = Client(session=session)
-        self.assertEqual(session.timeout, 1)
-        self.assertEqual(client.session.timeout, None)
+        self.assertEqual(1, session.timeout)
+        self.assertEqual(None, client.session.timeout)
         self._call_request_and_check_timeout(client, 1)
 
         session.timeout = 2
-        self.assertEqual(session.timeout, 2)
+        self.assertEqual(2, session.timeout)
 
         self._call_request_and_check_timeout(client, 2)

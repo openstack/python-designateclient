@@ -143,4 +143,4 @@ class APITestCase(TestCase):
         The request must have already been made.
         """
         headers = self.requests.last_request.headers
-        self.assertEqual(headers.get(name), val)
+        self.assertEqual(val, headers.get(name))
