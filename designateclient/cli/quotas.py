@@ -53,6 +53,9 @@ class UpdateQuotaCommand(base.UpdateCommand):
         parser.add_argument('--domain-records',
                             help="Allowed domain records.",
                             type=int)
+        parser.add_argument('--api-export-size',
+                            help="Allowed zone export recordsets.",
+                            type=int)
         return parser
 
     def execute(self, parsed_args):
