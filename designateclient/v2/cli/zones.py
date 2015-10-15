@@ -131,7 +131,6 @@ class SetZoneCommand(show.ShowOne):
         parser = super(SetZoneCommand, self).get_parser(prog_name)
 
         parser.add_argument('id', help="Zone ID")
-        parser.add_argument('--name', help="Zone Name")
         parser.add_argument('--email', help="Zone Email")
         parser.add_argument('--ttl', type=int, help="Time To Live (Seconds)")
         description_group = parser.add_mutually_exclusive_group()
@@ -148,9 +147,6 @@ class SetZoneCommand(show.ShowOne):
         data = {}
 
         # TODO(kiall): API needs updating.. this get is silly
-        if parsed_args.name:
-            data['name'] = parsed_args.name
-
         if parsed_args.email:
             data['email'] = parsed_args.email
 
