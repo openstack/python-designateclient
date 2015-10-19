@@ -129,7 +129,7 @@ class TestZones(v2.APIV2TestCase, v2.CrudMixin):
     def test_task_axfr(self):
         ref = self.new_ref()
 
-        parts = [self.RESOURCE, ref["id"], "tasks", "axfr"]
+        parts = [self.RESOURCE, ref["id"], "tasks", "xfr"]
         self.stub_url("POST", parts=parts)
 
         self.client.zones.axfr(ref["id"])

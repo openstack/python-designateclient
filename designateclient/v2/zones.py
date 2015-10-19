@@ -28,12 +28,13 @@ class ZoneController(client.Controller):
         }
 
         if type_ == "PRIMARY":
-            data["email"] = email
+            if email:
+                data["email"] = email
 
             if ttl is not None:
                 data["ttl"] = ttl
 
-        elif type_ == "SECONDARY":
+        elif type_ == "SECONDARY" and masters:
             data["masters"] = masters
 
         if description is not None:
@@ -75,7 +76,7 @@ class ZoneController(client.Controller):
     def axfr(self, zone):
         zone = v2_utils.resolve_by_name(self.list, zone)
 
-        url = '/zones/%s/tasks/axfr' % zone
+        url = '/zones/%s/tasks/xfr' % zone
 
         self.client.session.post(url)
 
