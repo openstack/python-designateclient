@@ -32,6 +32,7 @@ class Command(CliffCommand):
         self.client = Client(
             region_name=self.app.options.os_region_name,
             service_type=self.app.options.os_service_type,
+            endpoint_type=self.app.options.os_endpoint_type,
             session=self.app.session,
             all_tenants=self.app.options.all_tenants,
             edit_managed=self.app.options.edit_managed,
