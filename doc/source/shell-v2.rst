@@ -28,13 +28,13 @@ We can now try to create a primary zone
 
 .. code-block:: shell-session
 
-    $ openstack zone create --name example.net. --email foo@example.org
+    $ openstack zone create example.net. --email foo@example.org
 
 Create a A type recordset with some records in it.
 
 .. code-block:: shell-session
 
-    $ openstack recordset create example.net --type A --name www --records 10.0.0.1 10.0.0.2
+    $ openstack recordset create example.net --type A www --records 10.0.0.1 10.0.0.2
 
 Set a PTR record for a Floating IP
 
