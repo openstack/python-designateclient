@@ -31,7 +31,9 @@ def make_client(instance):
     cls = oscutils.get_client_class(
         API_NAME, instance._api_version[API_NAME],
         API_VERSIONS)
-    return cls(session=instance.session)
+    kwargs = oscutils.build_kwargs_dict('endpoint_type', instance._interface)
+    return cls(session=instance.session,
+               region_name=instance._region_name, **kwargs)
 
 
 def build_option_parser(parser):
@@ -39,7 +41,7 @@ def build_option_parser(parser):
     parser.add_argument(
         '--os-dns-api-version',
         metavar='<dns-api-version>',
-        default=shell.env('OS_DNS_API_VERSION'),
+        default=shell.env('OS_DNS_API_VERSION', default="2"),
         help='DNS API version, default=' +
              DEFAULT_API_VERSION +
              ' (Env: OS_DNS_API_VERSION)')
