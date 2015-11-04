@@ -56,6 +56,21 @@ class TestTlds(v2.APIV2TestCase, v2.CrudMixin):
         response = self.client.tlds.get(ref["id"])
         self.assertEqual(ref, response)
 
+    def test_get_by_name(self):
+        ref = self.new_ref(name="www")
+
+        self.stub_entity("GET", entity=ref, id=ref["id"])
+        self.stub_url("GET", parts=[self.RESOURCE], json={"tlds": [ref]})
+
+        response = self.client.tlds.get(ref['name'])
+
+        self.assertEqual("GET", self.requests.request_history[0].method)
+        self.assertEqual(
+            "http://127.0.0.1:9001/v2/tlds?name=www",
+            self.requests.request_history[0].url)
+
+        self.assertEqual(ref, response)
+
     def test_list(self):
         items = [
             self.new_ref(),
