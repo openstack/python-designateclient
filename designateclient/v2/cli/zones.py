@@ -40,7 +40,14 @@ class ListZonesCommand(lister.Lister):
     def get_parser(self, prog_name):
         parser = super(ListZonesCommand, self).get_parser(prog_name)
 
+        parser.add_argument('--name', help="Zone Name", required=False)
+        parser.add_argument('--email', help="Zone Email", required=False)
         parser.add_argument('--type', help="Zone Type", required=False)
+        parser.add_argument('--ttl', help="Time To Live (Seconds)",
+                            required=False)
+        parser.add_argument('--description', help="Description",
+                            required=False)
+        parser.add_argument('--status', help="Zone Status", required=False)
 
         return parser
 
@@ -50,6 +57,21 @@ class ListZonesCommand(lister.Lister):
         criterion = {}
         if parsed_args.type is not None:
             criterion["type"] = parsed_args.type
+
+        if parsed_args.name is not None:
+            criterion["name"] = parsed_args.name
+
+        if parsed_args.ttl is not None:
+            criterion["ttl"] = parsed_args.ttl
+
+        if parsed_args.description is not None:
+            criterion["description"] = parsed_args.description
+
+        if parsed_args.email is not None:
+            criterion["email"] = parsed_args.email
+
+        if parsed_args.status is not None:
+            criterion["status"] = parsed_args.status
 
         data = client.zones.list(criterion=criterion)
 
