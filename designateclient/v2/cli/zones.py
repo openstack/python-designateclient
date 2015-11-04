@@ -300,7 +300,7 @@ class ListTransferRequestsCommand(lister.Lister):
 
 
 class ShowTransferRequestCommand(show.ShowOne):
-    """Show zonet transfer details"""
+    """Show zone transfer details"""
 
     def get_parser(self, prog_name):
         parser = super(ShowTransferRequestCommand, self).get_parser(prog_name)
