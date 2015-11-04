@@ -29,7 +29,7 @@ class TestQuota(test_v1.APIV1TestCase, test_v1.CrudMixin):
                  "domain_recordsets": 500}
         quota_get.return_value = QUOTA
         response = self.client.quotas.get("foo")
-        self.assertEqual(response, QUOTA)
+        self.assertEqual(QUOTA, response)
 
     @patch.object(quotas.QuotasController, "update")
     def test_update(self, quota_update):

@@ -121,4 +121,4 @@ class TestClient(test_v1.APIV1TestCase):
             session=session,
             timeout=2,
         )
-        self.assertEqual(client.session.timeout, 2)
+        self.assertEqual(2, client.session.timeout)
