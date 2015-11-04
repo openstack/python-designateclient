@@ -12,23 +12,39 @@ Typically the designate client talks to Keystone (or a Keystone like service) vi
     +------------+--------------------------------------+
     | Field      | Value                                |
     +------------+--------------------------------------+
-    | created_at | 2013-07-09T13:20:23.664811           |
-    | id         | 1af2d561-b802-44d7-8208-46475dcd45f9 |
-    | name       | ns.foo.com.                          |
+    | id         | 3dee78df-c6b8-4fbd-8e89-3186c1a4734f |
+    | created_at | 2015-11-04T08:47:12.000000           |
     | updated_at | None                                 |
+    | name       | ns.foo.com.                          |
     +------------+--------------------------------------+
 
     $ designate --os-endpoint http://127.0.0.1:9001/v1 domain-create --name testing123.net. --email me@mydomain.com
-    +------------+--------------------------------------+
-    | Field      | Value                                |
-    +------------+--------------------------------------+
-    | name       | testing123.net.                      |
-    | created_at | 2013-07-09T13:20:30.826155           |
-    | updated_at | None                                 |
-    | id         | 5c02c519-4928-4a38-bd10-c748c200912f |
-    | ttl        | 3600                                 |
-    | serial     | 1373376030                           |
-    | email      | me@mydomain.com                      |
-    +------------+--------------------------------------+
+    +-------------+--------------------------------------+
+    | Field       | Value                                |
+    +-------------+--------------------------------------+
+    | description | None                                 |
+    | created_at  | 2015-11-04T08:49:53.000000           |
+    | updated_at  | None                                 |
+    | email       | me@mydomain.com                      |
+    | ttl         | 3600                                 |
+    | serial      | 1446626993                           |
+    | id          | f98c3d91-f514-4956-a955-20eefb413a64 |
+    | name        | testing123.net.                      |
+    +-------------+--------------------------------------+
 
-    $ designate --os-endpoint http://127.0.0.1:9001/v1 record-create --name myhost.testing123.net. --type A --data 1.2.3.4 5c02c519-4928-4a38-bd10-c748c200912f
+    $ designate --os-endpoint http://127.0.0.1:9001/v1 record-create --name myhost.testing123.net. --type A --data 1.2.3.4 f98c3d91-f514-4956-a955-20eefb413a64
+    +-------------+--------------------------------------+
+    | Field       | Value                                |
+    +-------------+--------------------------------------+
+    | description | None                                 |
+    | type        | A                                    |
+    | created_at  | 2015-11-04T08:52:41.000000           |
+    | updated_at  | None                                 |
+    | domain_id   | f98c3d91-f514-4956-a955-20eefb413a64 |
+    | priority    | None                                 |
+    | ttl         | None                                 |
+    | data        | 1.2.3.4                              |
+    | id          | b5a74471-8062-4395-be70-968805a0d832 |
+    | name        | myhost.testing123.net.               |
+    +-------------+--------------------------------------+
+

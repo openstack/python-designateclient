@@ -85,10 +85,8 @@ We've already seen the ``domain-create`` and ``record-create`` subcommands, here
 ======================= ====================================================== ===============
 subcommand              Notes                                                  Admin Required
 ======================= ====================================================== ===============
+complete                print bash completion command
 diagnostics-ping        Ping a service on a given host
-diagnostics-sync-all    Sync Everything
-diagnostics-sync-domain Sync a single Domain
-diagnostics-sync-record Sync a single Record
 domain-create           Create Domain
 domain-delete           Delete Domain
 domain-get              Get Domain
@@ -96,6 +94,9 @@ domain-list             List Domains
 domain-servers-list     List Domain Servers
 domain-update           Update Domain
 help                    print detailed help for another command
+quota-get               Get Quota
+quota-reset             Reset Quota
+quota-update            Update Quota
 record-create           Create Record
 record-delete           Delete Record
 record-get              Get Record
@@ -112,80 +113,136 @@ server-delete           Delete Server
 server-get              Get Server
 server-list             List Servers
 server-update           Update Server
+sync-all                Sync Everything
+sync-domain             Sync a single Domain
+sync-record             Sync a single Record
+touch-domain            Touch a single Domain
+
 ======================= ====================================================== ===============
 
 Builtin designate documentation
 -------------------------------
 
 You'll find complete documentation on the shell by running
-``designate --help``::
+``designate --help``:
 
-    usage: designate [--version] [-v] [--log-file LOG_FILE] [-q] [-h] [--debug]
-                     [--os-endpoint OS_ENDPOINT] [--os-auth-url OS_AUTH_URL]
-                     [--os-username OS_USERNAME] [--os-password OS_PASSWORD]
-                     [--os-tenant-id OS_TENANT_ID]
-                     [--os-tenant-name OS_TENANT_NAME] [--os-token OS_TOKEN]
-                     [--os-service-type OS_SERVICE_TYPE]
-                     [--os-region-name OS_REGION_NAME]
-                     [--sudo-tenant-id SUDO_TENANT_ID] [--insecure]
+usage: designate [--version] [-v] [--log-file LOG_FILE] [-q] [-h] [--debug]
+                 [--os-username OS_USERNAME] [--os-user-id OS_USER_ID]
+                 [--os-user-domain-id OS_USER_DOMAIN_ID]
+                 [--os-user-domain-name OS_USER_DOMAIN_NAME]
+                 [--os-password OS_PASSWORD] [--os-tenant-name OS_TENANT_NAME]
+                 [--os-tenant-id OS_TENANT_ID]
+                 [--os-project-name OS_PROJECT_NAME]
+                 [--os-domain-name OS_DOMAIN_NAME]
+                 [--os-domain-id OS_DOMAIN_ID] [--os-project-id OS_PROJECT_ID]
+                 [--os-project-domain-id OS_PROJECT_DOMAIN_ID]
+                 [--os-project-domain-name OS_PROJECT_DOMAIN_NAME]
+                 [--os-auth-url OS_AUTH_URL] [--os-region-name OS_REGION_NAME]
+                 [--os-token OS_TOKEN] [--os-endpoint OS_ENDPOINT]
+                 [--os-endpoint-type OS_ENDPOINT_TYPE]
+                 [--os-service-type OS_SERVICE_TYPE] [--os-cacert OS_CACERT]
+                 [--insecure] [--all-tenants] [--edit-managed]
 
-    Designate Client
+Designate Client
 
-    optional arguments:
-      --version             show program's version number and exit
-      -v, --verbose         Increase verbosity of output. Can be repeated.
-      --log-file LOG_FILE   Specify a file to log output. Disabled by default.
-      -q, --quiet           suppress output except warnings and errors
-      -h, --help            show this help message and exit
-      --debug               show tracebacks on errors
-      --os-endpoint OS_ENDPOINT
-                            Defaults to env[OS_DNS_ENDPOINT]
-      --os-auth-url OS_AUTH_URL
-                            Defaults to env[OS_AUTH_URL]
-      --os-username OS_USERNAME
-                            Defaults to env[OS_USERNAME]
-      --os-password OS_PASSWORD
-                            Defaults to env[OS_PASSWORD]
-      --os-tenant-id OS_TENANT_ID
-                            Defaults to env[OS_TENANT_ID]
-      --os-tenant-name OS_TENANT_NAME
-                            Defaults to env[OS_TENANT_NAME]
-      --os-token OS_TOKEN   Defaults to env[OS_SERVICE_TOKEN]
-      --os-service-type OS_SERVICE_TYPE
-                            Defaults to env[OS_DNS_SERVICE_TYPE], or 'dns'
-      --os-region-name OS_REGION_NAME
-                            Defaults to env[OS_REGION_NAME]
-      --sudo-tenant-id SUDO_TENANT_ID
-                            Defaults to env[DESIGNATE_SUDO_TENANT_ID]
-      --insecure            Explicitly allow 'insecure' SSL requests
+optional arguments:
+  --version             show program's version number and exit
+  -v, --verbose         Increase verbosity of output. Can be repeated.
+  --log-file LOG_FILE   Specify a file to log output. Disabled by default.
+  -q, --quiet           Suppress output except warnings and errors.
+  -h, --help            Show this help message and exit.
+  --debug               Show tracebacks on errors.
+  --os-username OS_USERNAME
+                        Name used for authentication with the OpenStack
+                        Identity service. Defaults to env[OS_USERNAME].
+  --os-user-id OS_USER_ID
+                        User ID used for authentication with the OpenStack
+                        Identity service. Defaults to env[OS_USER_ID].
+  --os-user-domain-id OS_USER_DOMAIN_ID
+                        Defaults to env[OS_USER_DOMAIN_ID].
+  --os-user-domain-name OS_USER_DOMAIN_NAME
+                        Defaults to env[OS_USER_DOMAIN_NAME].
+  --os-password OS_PASSWORD
+                        Password used for authentication with the OpenStack
+                        Identity service. Defaults to env[OS_PASSWORD].
+  --os-tenant-name OS_TENANT_NAME
+                        Tenant to request authorization on. Defaults to
+                        env[OS_TENANT_NAME].
+  --os-tenant-id OS_TENANT_ID
+                        Tenant to request authorization on. Defaults to
+                        env[OS_TENANT_ID].
+  --os-project-name OS_PROJECT_NAME
+                        Project to request authorization on. Defaults to
+                        env[OS_PROJECT_NAME].
+  --os-domain-name OS_DOMAIN_NAME
+                        Project to request authorization on. Defaults to
+                        env[OS_DOMAIN_NAME].
+  --os-domain-id OS_DOMAIN_ID
+                        Defaults to env[OS_DOMAIN_ID].
+  --os-project-id OS_PROJECT_ID
+                        Project to request authorization on. Defaults to
+                        env[OS_PROJECT_ID].
+  --os-project-domain-id OS_PROJECT_DOMAIN_ID
+                        Defaults to env[OS_PROJECT_DOMAIN_ID].
+  --os-project-domain-name OS_PROJECT_DOMAIN_NAME
+                        Defaults to env[OS_PROJECT_DOMAIN_NAME].
+  --os-auth-url OS_AUTH_URL
+                        Specify the Identity endpoint to use for
+                        authentication. Defaults to env[OS_AUTH_URL].
+  --os-region-name OS_REGION_NAME
+                        Specify the region to use. Defaults to
+                        env[OS_REGION_NAME].
+  --os-token OS_TOKEN   Specify an existing token to use instead of retrieving
+                        one via authentication (e.g. with username &
+                        password). Defaults to env[OS_SERVICE_TOKEN].
+  --os-endpoint OS_ENDPOINT
+                        Specify an endpoint to use instead of retrieving one
+                        from the service catalog (via authentication).
+                        Defaults to env[OS_DNS_ENDPOINT].
+  --os-endpoint-type OS_ENDPOINT_TYPE
+                        Defaults to env[OS_ENDPOINT_TYPE].
+  --os-service-type OS_SERVICE_TYPE
+                        Defaults to env[OS_DNS_SERVICE_TYPE], or 'dns'.
+  --os-cacert OS_CACERT
+                        CA certificate bundle file. Defaults to
+                        env[OS_CACERT].
+  --insecure            Explicitly allow 'insecure' SSL requests.
+  --all-tenants         Allows to list all domains from all tenants.
+  --edit-managed        Allows to edit records that are marked as managed.
 
-    Commands:
-      diagnostics-ping  Ping a service on a given host
-      diagnostics-sync-all  Sync Everything
-      diagnostics-sync-domain  Sync a single Domain
-      diagnostics-sync-record  Sync a single Record
-      domain-create  Create Domain
-      domain-delete  Delete Domain
-      domain-get     Get Domain
-      domain-list    List Domains
-      domain-servers-list  List Domain Servers
-      domain-update  Update Domain
-      help           print detailed help for another command
-      record-create  Create Record
-      record-delete  Delete Record
-      record-get     Get Record
-      record-list    List Records
-      record-update  Update Record
-      report-count-all  Get count totals for all tenants, domains and records
-      report-count-domains  Get counts for total domains
-      report-count-records  Get counts for total records
-      report-count-tenants  Get counts for total tenants
-      report-tenant-domains  Get a list of domains for given tenant
-      report-tenants-all  Get list of tenants and domain count for each
-      server-create  Create Server
-      server-delete  Delete Server
-      server-get     Get Server
-      server-list    List Servers
-      server-update  Update Server
+
+Commands:
+  complete       print bash completion command
+  diagnostics-ping  Ping a service on a given host
+  domain-create  Create Domain
+  domain-delete  Delete Domain
+  domain-get     Get Domain
+  domain-list    List Domains
+  domain-servers-list  List Domain Servers
+  domain-update  Update Domain
+  help           print detailed help for another command
+  quota-get      Get Quota
+  quota-reset    Reset Quota
+  quota-update   Update Quota
+  record-create  Create Record
+  record-delete  Delete Record
+  record-get     Get Record
+  record-list    List Records
+  record-update  Update Record
+  report-count-all  Get count totals for all tenants, domains and records
+  report-count-domains  Get counts for total domains
+  report-count-records  Get counts for total records
+  report-count-tenants  Get counts for total tenants
+  report-tenant-domains  Get a list of domains for given tenant
+  report-tenants-all  Get list of tenants and domain count for each
+  server-create  Create Server
+  server-delete  Delete Server
+  server-get     Get Server
+  server-list    List Servers
+  server-update  Update Server
+  sync-all       Sync Everything
+  sync-domain    Sync a single Domain
+  sync-record    Sync a single Record
+  touch-domain   Touch a single Domain
 
 .. _REST API create-domain: https://designate.readthedocs.org/en/latest/rest/domains.html#create-domain
