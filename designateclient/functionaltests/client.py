@@ -222,8 +222,43 @@ class TLDCommands(object):
         return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
 
 
+class BlacklistCommands(object):
+
+    def zone_blacklist_list(self, *args, **kwargs):
+        cmd = 'zone blacklist list'
+        return self.parsed_cmd(cmd, ListModel, *args, **kwargs)
+
+    def zone_blacklist_create(self, pattern, description=None, *args,
+                              **kwargs):
+        options_str = build_option_string({
+            '--pattern': pattern,
+            '--description': description,
+        })
+        cmd = 'zone blacklist create {0}'.format(options_str)
+        return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
+
+    def zone_blacklist_set(self, id, pattern=None, description=None,
+                           no_description=False, *args, **kwargs):
+        options_str = build_option_string({
+            '--pattern': pattern,
+            '--description': description,
+        })
+        flags_str = build_flags_string({'--no_description': no_description})
+        cmd = 'zone blacklist set {0} {1} {2}'.format(id, options_str,
+                                                      flags_str)
+        return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
+
+    def zone_blacklist_show(self, id, *args, **kwargs):
+        cmd = 'zone blacklist show {0}'.format(id)
+        return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
+
+    def zone_blacklist_delete(self, id, *args, **kwargs):
+        cmd = 'zone blacklist delete {0}'.format(id)
+        return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
+
+
 class DesignateCLI(base.CLIClient, ZoneCommands, ZoneTransferCommands,
-                   RecordsetCommands, TLDCommands):
+                   RecordsetCommands, TLDCommands, BlacklistCommands):
 
     # instantiate this once to minimize requests to keystone
     _CLIENTS = None
