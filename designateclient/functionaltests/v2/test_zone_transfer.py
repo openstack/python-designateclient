@@ -28,6 +28,7 @@ class TestZoneTransferRequest(BaseDesignateTest):
 
     def setUp(self):
         super(TestZoneTransferRequest, self).setUp()
+        self.ensure_tld_exists('com')
         fixture = self.useFixture(ZoneFixture(
             name=random_zone_name(),
             email='test@example.com',
@@ -92,6 +93,7 @@ class TestZoneTransferAccept(BaseDesignateTest):
 
     def setUp(self):
         super(TestZoneTransferAccept, self).setUp()
+        self.ensure_tld_exists('com')
         fixture = self.useFixture(ZoneFixture(
             name=random_zone_name(),
             email='test@example.com',

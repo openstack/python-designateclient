@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 from tempest_lib.cli import base
+from tempest_lib.exceptions import CommandFailed
 
 from designateclient.functionaltests import client
 from designateclient.functionaltests import config
@@ -24,3 +25,9 @@ class BaseDesignateTest(base.ClientTestBase):
     def _get_clients(self):
         config.read_config()
         return client.DesignateCLI.as_user('default')
+
+    def ensure_tld_exists(self, tld):
+        try:
+            self.clients.as_user('admin').tld_create(tld)
+        except CommandFailed:
+            pass

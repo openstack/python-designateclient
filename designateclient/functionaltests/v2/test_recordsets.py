@@ -26,6 +26,7 @@ class TestRecordset(BaseDesignateTest):
 
     def setUp(self):
         super(TestRecordset, self).setUp()
+        self.ensure_tld_exists('com')
         self.zone = self.useFixture(ZoneFixture(
             name=random_zone_name(),
             email='test@example.com',

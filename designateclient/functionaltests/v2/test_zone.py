@@ -24,6 +24,7 @@ class TestZone(BaseDesignateTest):
 
     def setUp(self):
         super(TestZone, self).setUp()
+        self.ensure_tld_exists('com')
         self.fixture = self.useFixture(ZoneFixture(
             name=random_zone_name(),
             email='test@example.com',
@@ -79,6 +80,10 @@ class TestZone(BaseDesignateTest):
 
 
 class TestsPassingZoneFlags(BaseDesignateTest):
+
+    def setUp(self):
+        super(TestsPassingZoneFlags, self).setUp()
+        self.ensure_tld_exists('com')
 
     def test_zone_create_primary_with_all_args(self):
         zone_name = random_zone_name()
