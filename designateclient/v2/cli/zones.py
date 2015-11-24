@@ -95,7 +95,7 @@ class ShowZoneCommand(show.ShowOne):
         data = client.zones.get(parsed_args.id)
 
         _format_zone(data)
-        return zip(*sorted(six.iteritems(data)))
+        return six.moves.zip(*sorted(six.iteritems(data)))
 
 
 class CreateZoneCommand(show.ShowOne):
@@ -143,7 +143,7 @@ class CreateZoneCommand(show.ShowOne):
             parsed_args.name, parsed_args.type, **payload)
 
         _format_zone(data)
-        return zip(*sorted(six.iteritems(data)))
+        return six.moves.zip(*sorted(six.iteritems(data)))
 
 
 class SetZoneCommand(show.ShowOne):
@@ -185,7 +185,7 @@ class SetZoneCommand(show.ShowOne):
 
         updated = client.zones.update(parsed_args.id, data)
         _format_zone(updated)
-        return zip(*sorted(six.iteritems(updated)))
+        return six.moves.zip(*sorted(six.iteritems(updated)))
 
 
 class DeleteZoneCommand(command.Command):
@@ -293,7 +293,7 @@ class CreateTransferRequestCommand(show.ShowOne):
         data = client.zone_transfers.create_request(
             parsed_args.zone_id, parsed_args.target_project_id,
             parsed_args.description)
-        return zip(*sorted(six.iteritems(data)))
+        return six.moves.zip(*sorted(six.iteritems(data)))
 
 
 class ListTransferRequestsCommand(lister.Lister):
@@ -332,7 +332,7 @@ class ShowTransferRequestCommand(show.ShowOne):
 
         data = client.zone_transfers.get_request(parsed_args.id)
 
-        return zip(*sorted(six.iteritems(data)))
+        return six.moves.zip(*sorted(six.iteritems(data)))
 
 
 class SetTransferRequestCommand(command.Command):
@@ -359,7 +359,7 @@ class SetTransferRequestCommand(command.Command):
             data['description'] = parsed_args.description
 
         updated = client.zone_transfers.update_request(parsed_args.id, data)
-        return zip(*sorted(six.iteritems(updated)))
+        return six.moves.zip(*sorted(six.iteritems(updated)))
 
 
 class DeleteTransferRequestCommand(command.Command):
@@ -398,7 +398,7 @@ class AcceptTransferRequestCommand(command.Command):
 
         data = client.zone_transfers.accept_request(
             parsed_args.transfer_id, parsed_args.key)
-        return zip(*sorted(six.iteritems(data)))
+        return six.moves.zip(*sorted(six.iteritems(data)))
 
 
 class ShowTransferAcceptCommand(show.ShowOne):
@@ -416,4 +416,4 @@ class ShowTransferAcceptCommand(show.ShowOne):
 
         data = client.zone_transfers.get_accept(parsed_args.id)
 
-        return zip(*sorted(six.iteritems(data)))
+        return six.moves.zip(*sorted(six.iteritems(data)))
