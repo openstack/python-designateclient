@@ -250,7 +250,7 @@ class AbandonZoneCommand(command.Command):
 
         client.zones.abandon(parsed_args.id)
 
-        LOG.info("Z %(zone_id)s abandoned" %
+        LOG.info("Z %(zone_id)s abandoned",
                  {"zone_id": parsed_args.id})
 
 
@@ -268,7 +268,7 @@ class AXFRZoneCommand(command.Command):
 
         client.zones.axfr(parsed_args.id)
 
-        LOG.info("Scheduled AXFR for zone %(zone_id)s" %
+        LOG.info("Scheduled AXFR for zone %(zone_id)s",
                  {"zone_id": parsed_args.id})
 
 
@@ -376,7 +376,7 @@ class DeleteTransferRequestCommand(command.Command):
 
         client.zone_transfers.delete_request(parsed_args.id)
 
-        LOG.info('Zone Transfer %s was deleted' % parsed_args.id)
+        LOG.info('Zone Transfer %s was deleted', parsed_args.id)
 
 
 class AcceptTransferRequestCommand(command.Command):

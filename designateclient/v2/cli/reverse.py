@@ -118,4 +118,4 @@ class UnsetFloatingIPCommand(command.Command):
     def take_action(self, parsed_args):
         client = self.app.client_manager.dns
         client.floatingips.unset(parsed_args.floatingip_id)
-        LOG.info('FloatingIP PTR %s was unset' % parsed_args.floatingip_id)
+        LOG.info('FloatingIP PTR %s was unset', parsed_args.floatingip_id)
