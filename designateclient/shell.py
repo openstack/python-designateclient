@@ -146,7 +146,8 @@ class DesignateShell(App):
                                  'Defaults to env[OS_DNS_ENDPOINT].')
 
         parser.add_argument('--os-endpoint-type',
-                            default=env('OS_ENDPOINT_TYPE'),
+                            default=env('OS_ENDPOINT_TYPE',
+                                        default='publicURL'),
                             help='Defaults to env[OS_ENDPOINT_TYPE].')
 
         parser.add_argument('--os-service-type',
