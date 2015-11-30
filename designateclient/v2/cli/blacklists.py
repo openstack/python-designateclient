@@ -58,7 +58,7 @@ class ShowBlacklistCommand(show.ShowOne):
         client = self.app.client_manager.dns
         data = client.blacklists.get(parsed_args.id)
         _format_blacklist(data)
-        return zip(*sorted(six.iteritems(data)))
+        return six.moves.zip(*sorted(six.iteritems(data)))
 
 
 class CreateBlacklistCommand(show.ShowOne):
@@ -80,7 +80,7 @@ class CreateBlacklistCommand(show.ShowOne):
             parsed_args.pattern, parsed_args.description)
 
         _format_blacklist(data)
-        return zip(*sorted(six.iteritems(data)))
+        return six.moves.zip(*sorted(six.iteritems(data)))
 
 
 class SetBlacklistCommand(show.ShowOne):
@@ -114,7 +114,7 @@ class SetBlacklistCommand(show.ShowOne):
         updated = client.blacklists.update(parsed_args.id, data)
 
         _format_blacklist(updated)
-        return zip(*sorted(six.iteritems(updated)))
+        return six.moves.zip(*sorted(six.iteritems(updated)))
 
 
 class DeleteBlacklistCommand(command.Command):

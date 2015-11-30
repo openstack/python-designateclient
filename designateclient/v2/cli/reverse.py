@@ -58,7 +58,7 @@ class ShowFloatingIPCommand(show.ShowOne):
         client = self.app.client_manager.dns
         data = client.floatingips.get(parsed_args.floatingip_id)
         _format_floatingip(data)
-        return zip(*sorted(six.iteritems(data)))
+        return six.moves.zip(*sorted(six.iteritems(data)))
 
 
 class SetFloatingIPCommand(show.ShowOne):
@@ -102,7 +102,7 @@ class SetFloatingIPCommand(show.ShowOne):
             parsed_args.ttl)
 
         _format_floatingip(fip)
-        return zip(*sorted(six.iteritems(fip)))
+        return six.moves.zip(*sorted(six.iteritems(fip)))
 
 
 class UnsetFloatingIPCommand(command.Command):

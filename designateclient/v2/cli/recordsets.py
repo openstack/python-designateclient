@@ -50,7 +50,7 @@ class ListRecordSetsCommand(lister.Lister):
         cols = self.columns
         data = client.recordsets.list(parsed_args.zone_id)
 
-        map(_format_recordset, data)
+        six.moves.map(_format_recordset, data)
         return cols, (utils.get_item_properties(s, cols) for s in data)
 
 
@@ -70,7 +70,7 @@ class ShowRecordSetCommand(show.ShowOne):
         data = client.recordsets.get(parsed_args.zone_id, parsed_args.id)
 
         _format_recordset(data)
-        return zip(*sorted(six.iteritems(data)))
+        return six.moves.zip(*sorted(six.iteritems(data)))
 
 
 class CreateRecordSetCommand(show.ShowOne):
@@ -101,7 +101,7 @@ class CreateRecordSetCommand(show.ShowOne):
             ttl=parsed_args.ttl)
 
         _format_recordset(data)
-        return zip(*sorted(six.iteritems(data)))
+        return six.moves.zip(*sorted(six.iteritems(data)))
 
 
 class SetRecordSetCommand(show.ShowOne):
@@ -149,7 +149,7 @@ class SetRecordSetCommand(show.ShowOne):
 
         _format_recordset(updated)
 
-        return zip(*sorted(six.iteritems(updated)))
+        return six.moves.zip(*sorted(six.iteritems(updated)))
 
 
 class DeleteRecordSetCommand(command.Command):
