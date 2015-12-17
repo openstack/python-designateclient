@@ -54,7 +54,7 @@ class Command(CliffCommand):
 
             self.error_output(parsed_args, columns, values)
         except ks_exceptions.EndpointNotFound as e:
-            self.app.log.error('No endpoint was found. You must provide a'
+            self.app.log.error('No endpoint was found. You must provide a '
                                'username or user id via --os-username, '
                                '--os-user-id, env[OS_USERNAME] or '
                                'env[OS_USER_ID]')
