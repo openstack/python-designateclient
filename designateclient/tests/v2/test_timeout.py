@@ -77,15 +77,15 @@ class TestTimeout(v2.APIV2TestCase, v2.CrudMixin):
     def test_no_timeout(self):
         session = create_session(timeout=None)
         client = Client(session=session)
-        self.assertEqual(None, session.timeout)
-        self.assertEqual(None, client.session.timeout)
+        self.assertIsNone(session.timeout)
+        self.assertIsNone(client.session.timeout)
         self._call_request_and_check_timeout(client, None)
 
     def test_timeout_in_session(self):
         session = create_session(timeout=1)
         client = Client(session=session)
         self.assertEqual(1, session.timeout)
-        self.assertEqual(None, client.session.timeout)
+        self.assertIsNone(client.session.timeout)
         self._call_request_and_check_timeout(client, 1)
 
     def test_timeout_override_session_timeout(self):
@@ -100,7 +100,7 @@ class TestTimeout(v2.APIV2TestCase, v2.CrudMixin):
         session = create_session(timeout=1)
         client = Client(session=session)
         self.assertEqual(1, session.timeout)
-        self.assertEqual(None, client.session.timeout)
+        self.assertIsNone(client.session.timeout)
         self._call_request_and_check_timeout(client, 1)
 
         session.timeout = 2
