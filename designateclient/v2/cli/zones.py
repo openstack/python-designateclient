@@ -335,7 +335,7 @@ class ShowTransferRequestCommand(show.ShowOne):
         return six.moves.zip(*sorted(six.iteritems(data)))
 
 
-class SetTransferRequestCommand(command.Command):
+class SetTransferRequestCommand(show.ShowOne):
     """Set Transfer"""
 
     def get_parser(self, prog_name):
