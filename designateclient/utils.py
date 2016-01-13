@@ -159,10 +159,10 @@ def get_session(auth_url, endpoint, domain_id, domain_name, project_id,
 def find_resourceid_by_name_or_id(resource_client, name_or_id):
     """Find resource id from its id or name."""
     try:
-        # Try to return a uuid
+        # Try to return an uuid
         return str(uuid.UUID(name_or_id))
     except ValueError:
-        # Not a uuid => asume it is resource name
+        # Not an uuid => assume it is resource name
         pass
 
     resources = resource_client.list()

@@ -93,7 +93,7 @@ class CrudController(Controller):
     @abc.abstractmethod
     def get(self, *args, **kw):
         """
-        Get a resouce
+        Get a resource
         """
 
     @abc.abstractmethod
