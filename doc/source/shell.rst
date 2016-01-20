@@ -34,7 +34,7 @@ can specify the one you want with ``--os-region-name`` (or
 Using the command line tool
 ---------------------------
 
-With enough details now in environment, you can use the designate client to create a domain & populate it with some records:
+With enough details now in the environment, you can use the designate client to create a domain and populate it with some records:
 
 .. code-block:: shell-session
 
