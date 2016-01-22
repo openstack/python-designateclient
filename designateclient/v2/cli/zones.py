@@ -297,7 +297,7 @@ class CreateTransferRequestCommand(show.ShowOne):
 
 
 class ListTransferRequestsCommand(lister.Lister):
-    """List zone transfer requests"""
+    """List Zone Transfer Requests"""
 
     columns = ['id', 'zone_id', 'zone_name', 'project_id',
                'target_project_id', 'status', 'key']
@@ -318,12 +318,12 @@ class ListTransferRequestsCommand(lister.Lister):
 
 
 class ShowTransferRequestCommand(show.ShowOne):
-    """Show zone transfer details"""
+    """Show Zone Transfer Request Details"""
 
     def get_parser(self, prog_name):
         parser = super(ShowTransferRequestCommand, self).get_parser(prog_name)
 
-        parser.add_argument('id', help="Zone Tranfer ID")
+        parser.add_argument('id', help="Zone Tranfer Request ID")
 
         return parser
 
@@ -336,12 +336,12 @@ class ShowTransferRequestCommand(show.ShowOne):
 
 
 class SetTransferRequestCommand(show.ShowOne):
-    """Set Transfer"""
+    """Set a Zone Transfer Request"""
 
     def get_parser(self, prog_name):
         parser = super(SetTransferRequestCommand, self).get_parser(prog_name)
 
-        parser.add_argument('id', help="Zone Transfer ID")
+        parser.add_argument('id', help="Zone Transfer Request ID")
         description_group = parser.add_mutually_exclusive_group()
         description_group.add_argument('--description', help="Description")
         description_group.add_argument('--no-description', action='store_true')
@@ -363,11 +363,12 @@ class SetTransferRequestCommand(show.ShowOne):
 
 
 class DeleteTransferRequestCommand(command.Command):
+    """Delete a Zone Transfer Request"""
     def get_parser(self, prog_name):
         parser = super(DeleteTransferRequestCommand, self).get_parser(
             prog_name)
 
-        parser.add_argument('id', help="Zone Transfer ID")
+        parser.add_argument('id', help="Zone Transfer Request ID")
 
         return parser
 
