@@ -380,7 +380,7 @@ class DeleteTransferRequestCommand(command.Command):
         LOG.info('Zone Transfer %s was deleted', parsed_args.id)
 
 
-class AcceptTransferRequestCommand(command.Command):
+class AcceptTransferRequestCommand(show.ShowOne):
     """Accept a Zone Transfer Request"""
 
     def get_parser(self, prog_name):
