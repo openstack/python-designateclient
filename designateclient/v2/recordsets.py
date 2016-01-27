@@ -16,11 +16,11 @@
 from oslo_utils import uuidutils
 import six
 
-from designateclient import client
+from designateclient.v2.base import V2Controller
 from designateclient.v2 import utils as v2_utils
 
 
-class RecordSetController(client.Controller):
+class RecordSetController(V2Controller):
     def _canonicalize_record_name(self, zone, name):
         zone_info = None
 

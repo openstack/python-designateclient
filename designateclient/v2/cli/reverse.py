@@ -22,6 +22,7 @@ from cliff import show
 import six
 
 from designateclient import utils
+from designateclient.v2.utils import get_all
 
 LOG = logging.getLogger(__name__)
 
@@ -40,7 +41,7 @@ class ListFloatingIPCommand(lister.Lister):
         client = self.app.client_manager.dns
 
         cols = self.columns
-        data = client.floatingips.list()
+        data = get_all(client.floatingips.list)
         return cols, (utils.get_item_properties(s, cols) for s in data)
 
 

@@ -22,6 +22,7 @@ from cliff import show
 import six
 
 from designateclient import utils
+from designateclient.v2.utils import get_all
 
 LOG = logging.getLogger(__name__)
 
@@ -39,7 +40,7 @@ class ListTLDsCommand(lister.Lister):
     def take_action(self, parsed_args):
         client = self.app.client_manager.dns
 
-        data = client.tlds.list()
+        data = get_all(client.tlds.list)
 
         cols = self.columns
         return cols, (utils.get_item_properties(s, cols) for s in data)

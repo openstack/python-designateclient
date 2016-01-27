@@ -13,11 +13,11 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations
 # under the License.
-from designateclient import client
+from designateclient.v2.base import V2Controller
 from designateclient.v2 import utils as v2_utils
 
 
-class ZoneController(client.Controller):
+class ZoneController(V2Controller):
     def create(self, name, type_=None, email=None, description=None, ttl=None,
                masters=None):
         type_ = type_ or "PRIMARY"
@@ -81,7 +81,7 @@ class ZoneController(client.Controller):
         self.client.session.post(url)
 
 
-class ZoneTransfersController(client.Controller):
+class ZoneTransfersController(V2Controller):
     def create_request(self, zone, target_project_id, description=None):
         zone = v2_utils.resolve_by_name(self.client.zones.list, zone)
 

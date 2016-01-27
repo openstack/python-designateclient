@@ -23,6 +23,7 @@ from openstackclient.common import exceptions as osc_exc
 import six
 
 from designateclient import utils
+from designateclient.v2.utils import get_all
 
 LOG = logging.getLogger(__name__)
 
@@ -73,7 +74,7 @@ class ListZonesCommand(lister.Lister):
         if parsed_args.status is not None:
             criterion["status"] = parsed_args.status
 
-        data = client.zones.list(criterion=criterion)
+        data = get_all(client.zones.list, criterion)
 
         cols = self.columns
         return cols, (utils.get_item_properties(s, cols) for s in data)
