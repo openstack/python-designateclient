@@ -51,4 +51,4 @@ class TestReports(test_v1.APIV1TestCase, test_v1.CrudMixin):
         args = mock.MagicMock()
         args.other_tenant_id = "uuid"
         self.client.reports.tenant_domains(args.other_tenant_id)
-        self.client.reports.tenant_domains.called_once_with("uuid")
+        self.client.reports.tenant_domains.assert_called_once_with("uuid")
