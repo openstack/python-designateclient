@@ -21,6 +21,7 @@ from designateclient.v2.limits import LimitController
 from designateclient.v2.nameservers import NameServerController
 from designateclient.v2.recordsets import RecordSetController
 from designateclient.v2.reverse import FloatingIPController
+from designateclient.v2.service_statuses import ServiceStatusesController
 from designateclient.v2.tlds import TLDController
 from designateclient.v2.zones import ZoneController
 from designateclient.v2.zones import ZoneExportsController
@@ -97,6 +98,7 @@ class Client(object):
         self.limits = LimitController(self)
         self.nameservers = NameServerController(self)
         self.recordsets = RecordSetController(self)
+        self.service_statuses = ServiceStatusesController(self)
         self.tlds = TLDController(self)
         self.zones = ZoneController(self)
         self.zone_transfers = ZoneTransfersController(self)
