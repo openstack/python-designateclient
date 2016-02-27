@@ -14,9 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 from __future__ import absolute_import
+from __future__ import print_function
+import sys
+import traceback
 
 import fixtures
 from tempest_lib.exceptions import CommandFailed
+from testtools.runtest import MultipleExceptions
 
 from designateclient.functionaltests.client import DesignateCLI
 
@@ -29,6 +33,20 @@ class BaseFixture(fixtures.Fixture):
         self.args = args
         self.kwargs = kwargs
         self.client = DesignateCLI.as_user(user)
+
+    def setUp(self):
+        # Sometimes, exceptions are raised in _setUp methods on fixtures.
+        # testtools pushes the exception into a MultipleExceptions object along
+        # with an artificial SetupError, which produces bad error messages.
+        # This just logs those stack traces to stderr for easier debugging.
+        try:
+            super(BaseFixture, self).setUp()
+        except MultipleExceptions as e:
+            for i, exc_info in enumerate(e.args):
+                print('--- printing MultipleExceptions traceback {} of {} ---'
+                      .format(i + 1, len(e.args)), file=sys.stderr)
+                traceback.print_exception(*exc_info)
+            raise
 
 
 class ZoneFixture(BaseFixture):
