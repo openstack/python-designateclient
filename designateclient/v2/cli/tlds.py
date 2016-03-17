@@ -35,7 +35,16 @@ def _format_tld(tld):
 class ListTLDsCommand(lister.Lister):
     """List tlds"""
 
-    columns = ['id', 'name']
+    columns = ['id', 'name', 'description']
+
+    def get_parser(self, prog_name):
+        parser = super(ListTLDsCommand, self).get_parser(prog_name)
+
+        parser.add_argument('--name', help="TLD NAME")
+
+        parser.add_argument('--description', help="TLD Description")
+
+        return parser
 
     def take_action(self, parsed_args):
         client = self.app.client_manager.dns

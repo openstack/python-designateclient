@@ -13,11 +13,11 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations
 # under the License.
-from designateclient import client
+from designateclient.v2.base import V2Controller
 from designateclient.v2 import utils as v2_utils
 
 
-class TLDController(client.Controller):
+class TLDController(V2Controller):
     def create(self, name, description=None):
         data = {
             'name': name,
