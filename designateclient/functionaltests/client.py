@@ -148,6 +148,31 @@ class ZoneTransferCommands(object):
         return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
 
 
+class ZoneExportCommands(object):
+    """A mixin for DesignateCLI to add zone export commands"""
+
+    def zone_export_list(self, *args, **kwargs):
+        cmd = 'zone export list'
+        return self.parsed_cmd(cmd, ListModel, *args, **kwargs)
+
+    def zone_export_create(self, zone_id, *args, **kwargs):
+        cmd = 'zone export create {0}'.format(
+            zone_id)
+        return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
+
+    def zone_export_show(self, zone_export_id, *args, **kwargs):
+        cmd = 'zone export show {0}'.format(zone_export_id)
+        return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
+
+    def zone_export_delete(self, zone_export_id, *args, **kwargs):
+        cmd = 'zone export delete {0}'.format(zone_export_id)
+        return self.parsed_cmd(cmd, *args, **kwargs)
+
+    def zone_export_showfile(self, zone_export_id, *args, **kwargs):
+        cmd = 'zone export showfile {0}'.format(zone_export_id)
+        return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
+
+
 class RecordsetCommands(object):
 
     def recordset_show(self, zone_id, id, *args, **kwargs):
@@ -258,7 +283,8 @@ class BlacklistCommands(object):
 
 
 class DesignateCLI(base.CLIClient, ZoneCommands, ZoneTransferCommands,
-                   RecordsetCommands, TLDCommands, BlacklistCommands):
+                   ZoneExportCommands, RecordsetCommands, TLDCommands,
+                   BlacklistCommands):
 
     # instantiate this once to minimize requests to keystone
     _CLIENTS = None

@@ -45,8 +45,23 @@ class FieldValueModel(Model):
 
         """
         table = output_parser.table(out)
+
+        # Because the output_parser handles Values with multiple lines
+        # in additional Field/Value pairs with Field name '', the following
+        # code is necessary to aggregate Values.
+        #
+        # The list of Field/Value pairs is in-order, so we can append Value
+        # continuation to the previously seen Field, with a newline separator.
+        value_lines = []
+        prev_field = None
         for field, value in table['values']:
-            setattr(self, field, value)
+            if field == '':
+                value_lines.append(value)
+                setattr(self, prev_field, '\n'.join(value_lines))
+            else:
+                setattr(self, field, value)
+                prev_field = field
+                value_lines = [value]
 
 
 class ListEntryModel(Model):

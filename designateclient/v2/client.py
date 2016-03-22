@@ -23,6 +23,8 @@ from designateclient.v2.recordsets import RecordSetController
 from designateclient.v2.reverse import FloatingIPController
 from designateclient.v2.tlds import TLDController
 from designateclient.v2.zones import ZoneController
+from designateclient.v2.zones import ZoneExportsController
+from designateclient.v2.zones import ZoneImportsController
 from designateclient.v2.zones import ZoneTransfersController
 from designateclient import version
 
@@ -55,6 +57,7 @@ class DesignateAdapter(adapter.LegacyJsonAdapter):
             response_payload = response.json()
         except ValueError:
             response_payload = {}
+            body = response.text
 
         if response.status_code == 400:
             raise exceptions.BadRequest(**response_payload)
@@ -97,3 +100,5 @@ class Client(object):
         self.tlds = TLDController(self)
         self.zones = ZoneController(self)
         self.zone_transfers = ZoneTransfersController(self)
+        self.zone_exports = ZoneExportsController(self)
+        self.zone_imports = ZoneImportsController(self)

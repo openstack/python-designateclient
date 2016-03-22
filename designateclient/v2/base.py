@@ -26,8 +26,8 @@ class DesignateList(list):
 
 class V2Controller(client.Controller):
 
-    def _get(self, url, response_key=None):
-        resp, body = self.client.session.get(url)
+    def _get(self, url, response_key=None, **kwargs):
+        resp, body = self.client.session.get(url, **kwargs)
 
         if response_key is not None:
             data = DesignateList()

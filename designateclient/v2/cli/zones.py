@@ -33,6 +33,10 @@ def _format_zone(zone):
     zone['masters'] = ", ".join(zone['masters'])
 
 
+def _format_zone_export_record(zone_export_record):
+    zone_export_record.pop('links', None)
+
+
 class ListZonesCommand(lister.Lister):
     """List zones"""
 
@@ -203,38 +207,6 @@ class DeleteZoneCommand(command.Command):
         client = self.app.client_manager.dns
         client.zones.delete(parsed_args.id)
         LOG.info('Zone %s was deleted', parsed_args.id)
-
-
-class ExportZoneCommand(command.Command):
-    """Export a zone."""
-    def get_parser(self, prog_name):
-        parser = super(ExportZoneCommand, self).get_parser(prog_name)
-
-        parser.add_argument('id', help="Zone ID")
-
-        return parser
-
-    def take_action(self, parsed_args):
-        client = self.app.client_manager.dns
-        response, _ = client.zones.export(parsed_args.id)
-        print(response.content)
-
-
-class ImportZoneCommand(command.Command):
-    """Import a zone"""
-    def get_parser(self, prog_name):
-        parser = super(ImportZoneCommand, self).get_parser(prog_name)
-
-        parser.add_argument('--path', help="Path to zone file", required=True)
-
-        return parser
-
-    def take_action(self, parsed_args):
-        client = self.app.client_manager.dns
-
-        with open(parsed_args.path) as contents:
-            client.zones.import_(contents)
-            LOG.info("Imported zone successfully")
 
 
 class AbandonZoneCommand(command.Command):
@@ -419,3 +391,110 @@ class ShowTransferAcceptCommand(show.ShowOne):
         data = client.zone_transfers.get_accept(parsed_args.id)
 
         return six.moves.zip(*sorted(six.iteritems(data)))
+
+
+class ExportZoneCommand(show.ShowOne):
+    """Export a Zone"""
+
+    def get_parser(self, prog_name):
+        parser = super(ExportZoneCommand, self).get_parser(
+            prog_name)
+
+        parser.add_argument('zone_id', help="Zone ID", type=str)
+
+        return parser
+
+    def take_action(self, parsed_args):
+        client = self.app.client_manager.dns
+
+        data = client.zone_exports.create(parsed_args.zone_id)
+        _format_zone_export_record(data)
+
+        LOG.info('Zone Export %s was created', data['id'])
+
+        return six.moves.zip(*sorted(six.iteritems(data)))
+
+
+class ListZoneExportsCommand(lister.Lister):
+    """List Zone Exports"""
+
+    columns = [
+        'id',
+        'zone_id',
+        'created_at',
+        'status',
+    ]
+
+    def get_parser(self, prog_name):
+        parser = super(ListZoneExportsCommand, self).get_parser(
+            prog_name)
+
+        return parser
+
+    def take_action(self, parsed_args):
+        client = self.app.client_manager.dns
+
+        data = client.zone_exports.list()
+
+        cols = self.columns
+        return cols, (utils.get_item_properties(s, cols)
+                      for s in data['exports'])
+
+
+class ShowZoneExportCommand(show.ShowOne):
+    """Show a Zone Export"""
+
+    def get_parser(self, prog_name):
+        parser = super(ShowZoneExportCommand, self).get_parser(
+            prog_name)
+
+        parser.add_argument('zone_export_id', help="Zone Export ID", type=str)
+
+        return parser
+
+    def take_action(self, parsed_args):
+        client = self.app.client_manager.dns
+
+        data = client.zone_exports.get_export_record(
+            parsed_args.zone_export_id)
+        _format_zone_export_record(data)
+
+        return six.moves.zip(*sorted(six.iteritems(data)))
+
+
+class DeleteZoneExportCommand(command.Command):
+    """Delete a Zone Export"""
+
+    def get_parser(self, prog_name):
+        parser = super(DeleteZoneExportCommand, self).get_parser(
+            prog_name)
+
+        parser.add_argument('zone_export_id', help="Zone Export ID", type=str)
+
+        return parser
+
+    def take_action(self, parsed_args):
+        client = self.app.client_manager.dns
+
+        client.zone_exports.delete(parsed_args.zone_export_id)
+
+        LOG.info('Zone Export %s was deleted', parsed_args.zone_export_id)
+
+
+class ShowZoneExportFileCommand(show.ShowOne):
+    """Show the zone file for the Zone Export"""
+
+    def get_parser(self, prog_name):
+        parser = super(ShowZoneExportFileCommand, self).get_parser(
+            prog_name)
+
+        parser.add_argument('zone_export_id', help="Zone Export ID", type=str)
+
+        return parser
+
+    def take_action(self, parsed_args):
+        client = self.app.client_manager.dns
+
+        data = client.zone_exports.get_export(parsed_args.zone_export_id)
+
+        return ['data'], [data]

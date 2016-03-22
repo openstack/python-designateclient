@@ -124,3 +124,27 @@ class ZoneTransfersController(V2Controller):
     def get_accept(self, accept_id):
         url = '/zones/tasks/transfer_accepts/%s' % accept_id
         return self._get(url)
+
+
+class ZoneExportsController(V2Controller):
+    def create(self, zone):
+        zone_id = v2_utils.resolve_by_name(self.client.zones.list, zone)
+
+        return self._post('/zones/%s/tasks/export' % zone_id)
+
+    def get_export_record(self, zone_export_id):
+        return self._get('/zones/tasks/exports/%s' % zone_export_id)
+
+    def list(self):
+        return self._get('/zones/tasks/exports')
+
+    def delete(self, zone_export_id):
+        return self._delete('/zones/tasks/exports/%s' % zone_export_id)
+
+    def get_export(self, zone_export_id):
+        return self._get('/zones/tasks/exports/%s/export' % zone_export_id,
+                         headers={'Accept': 'text/dns'})
+
+
+class ZoneImportsController(V2Controller):
+    pass

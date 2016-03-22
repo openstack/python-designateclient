@@ -98,6 +98,31 @@ class TransferRequestFixture(BaseFixture):
             pass
 
 
+class ExportFixture(BaseFixture):
+    """See DesignateCLI.zone_export_create for __init__ args"""
+
+    def __init__(self, zone, user='default', *args, **kwargs):
+        super(ExportFixture, self).__init__(user, *args, **kwargs)
+        self.zone = zone
+
+    def _setUp(self):
+        super(ExportFixture, self)._setUp()
+        self.zone_export = self.client.zone_export_create(
+            zone_id=self.zone.id,
+            *self.args, **self.kwargs
+        )
+        self.addCleanup(self.cleanup_zone_export, self.client,
+                        self.zone_export.id)
+        self.addCleanup(ZoneFixture.cleanup_zone, self.client, self.zone.id)
+
+    @classmethod
+    def cleanup_zone_export(cls, client, zone_export_id):
+        try:
+            client.zone_export_delete(zone_export_id)
+        except CommandFailed:
+            pass
+
+
 class RecordsetFixture(BaseFixture):
     """See DesignateCLI.recordset_create for __init__ args"""
 
