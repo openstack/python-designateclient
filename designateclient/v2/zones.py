@@ -147,4 +147,15 @@ class ZoneExportsController(V2Controller):
 
 
 class ZoneImportsController(V2Controller):
-    pass
+    def create(self, zone_file_contents):
+        return self._post('/zones/tasks/imports', data=zone_file_contents,
+                          headers={'Content-Type': 'text/dns'})
+
+    def get_import_record(self, zone_import_id):
+        return self._get('/zones/tasks/imports/%s' % zone_import_id)
+
+    def list(self):
+        return self._get('/zones/tasks/imports')
+
+    def delete(self, zone_import_id):
+        return self._delete('/zones/tasks/imports/%s' % zone_import_id)

@@ -37,6 +37,10 @@ def _format_zone_export_record(zone_export_record):
     zone_export_record.pop('links', None)
 
 
+def _format_zone_import_record(zone_import_record):
+    zone_import_record.pop('links', None)
+
+
 class ListZonesCommand(lister.Lister):
     """List zones"""
 
@@ -498,3 +502,96 @@ class ShowZoneExportFileCommand(show.ShowOne):
         data = client.zone_exports.get_export(parsed_args.zone_export_id)
 
         return ['data'], [data]
+
+
+class ImportZoneCommand(show.ShowOne):
+    """Import a Zone from a file on the filesystem"""
+
+    def get_parser(self, prog_name):
+        parser = super(ImportZoneCommand, self).get_parser(
+            prog_name)
+
+        parser.add_argument('zone_file_path',
+                            help="Path to a zone file", type=str)
+
+        return parser
+
+    def take_action(self, parsed_args):
+        client = self.app.client_manager.dns
+
+        with open(parsed_args.zone_file_path, 'r') as f:
+            zone_file_contents = f.read()
+
+        data = client.zone_imports.create(zone_file_contents)
+        _format_zone_import_record(data)
+
+        LOG.info('Zone Import %s was created', data['id'])
+
+        return six.moves.zip(*sorted(six.iteritems(data)))
+
+
+class ListZoneImportsCommand(lister.Lister):
+    """List Zone Imports"""
+
+    columns = [
+        'id',
+        'zone_id',
+        'created_at',
+        'status',
+        'message',
+    ]
+
+    def get_parser(self, prog_name):
+        parser = super(ListZoneImportsCommand, self).get_parser(
+            prog_name)
+
+        return parser
+
+    def take_action(self, parsed_args):
+        client = self.app.client_manager.dns
+
+        data = client.zone_imports.list()
+
+        cols = self.columns
+        return cols, (utils.get_item_properties(s, cols)
+                      for s in data['imports'])
+
+
+class ShowZoneImportCommand(show.ShowOne):
+    """Show a Zone Import"""
+
+    def get_parser(self, prog_name):
+        parser = super(ShowZoneImportCommand, self).get_parser(
+            prog_name)
+
+        parser.add_argument('zone_import_id', help="Zone Import ID", type=str)
+
+        return parser
+
+    def take_action(self, parsed_args):
+        client = self.app.client_manager.dns
+
+        data = client.zone_imports.get_import_record(
+            parsed_args.zone_import_id)
+        _format_zone_import_record(data)
+
+        return six.moves.zip(*sorted(six.iteritems(data)))
+
+
+class DeleteZoneImportCommand(command.Command):
+    """Delete a Zone Import"""
+
+    def get_parser(self, prog_name):
+        parser = super(DeleteZoneImportCommand, self).get_parser(
+            prog_name)
+
+        parser.add_argument('zone_import_id', help="Zone Import ID", type=str)
+
+        return parser
+
+    def take_action(self, parsed_args):
+        client = self.app.client_manager.dns
+
+        client.zone_imports.delete(parsed_args.zone_import_id)
+
+        LOG.info('Zone Import %s was deleted', parsed_args.zone_import_id)
