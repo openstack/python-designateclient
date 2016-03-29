@@ -31,6 +31,7 @@ def _format_recordset(recordset):
     # Remove unneeded fields for display output formatting
     recordset['records'] = "\n".join(recordset['records'])
     recordset.pop('links', None)
+    return recordset
 
 
 class ListRecordSetsCommand(lister.Lister):
@@ -41,6 +42,19 @@ class ListRecordSetsCommand(lister.Lister):
     def get_parser(self, prog_name):
         parser = super(ListRecordSetsCommand, self).get_parser(prog_name)
 
+        parser.add_argument('--name', help="RecordSet Name", required=False)
+        parser.add_argument('--type', help="RecordSet Type", required=False)
+        parser.add_argument('--data', help="RecordSet Record Data",
+                            required=False)
+        parser.add_argument('--ttl', help="Time To Live (Seconds)",
+                            required=False)
+        parser.add_argument('--description', help="Description",
+                            required=False)
+        parser.add_argument('--status', help="RecordSet Status",
+                            required=False)
+        parser.add_argument('--action', help="RecordSet Action",
+                            required=False)
+
         parser.add_argument('zone_id', help="Zone ID")
 
         return parser
@@ -48,11 +62,36 @@ class ListRecordSetsCommand(lister.Lister):
     def take_action(self, parsed_args):
         client = self.app.client_manager.dns
 
+        criterion = {}
+        if parsed_args.type is not None:
+            criterion["type"] = parsed_args.type
+
+        if parsed_args.name is not None:
+            criterion["name"] = parsed_args.name
+
+        if parsed_args.data is not None:
+            criterion["data"] = parsed_args.data
+
+        if parsed_args.ttl is not None:
+            criterion["ttl"] = parsed_args.ttl
+
+        if parsed_args.description is not None:
+            criterion["description"] = parsed_args.description
+
+        if parsed_args.status is not None:
+            criterion["status"] = parsed_args.status
+
+        if parsed_args.action is not None:
+            criterion["action"] = parsed_args.action
+
         cols = self.columns
 
-        data = get_all(client.recordsets.list, args=[parsed_args.zone_id])
+        data = get_all(client.recordsets.list, args=[parsed_args.zone_id],
+                       criterion=criterion)
 
-        six.moves.map(_format_recordset, data)
+        for i, rs in enumerate(data):
+            data[i] = _format_recordset(rs)
+
         return cols, (utils.get_item_properties(s, cols) for s in data)
 
 
