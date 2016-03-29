@@ -13,9 +13,9 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations
 # under the License.
-from designateclient import client
+from designateclient.v2.base import V2Controller
 
 
-class LimitController(client.Controller):
+class LimitController(V2Controller):
     def get(self):
         return self._get('/limits')

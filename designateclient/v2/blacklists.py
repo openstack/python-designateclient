@@ -13,10 +13,10 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations
 # under the License.
-from designateclient import client
+from designateclient.v2.base import V2Controller
 
 
-class BlacklistController(client.Controller):
+class BlacklistController(V2Controller):
     def create(self, pattern, description=None):
         data = {
             'pattern': pattern,
