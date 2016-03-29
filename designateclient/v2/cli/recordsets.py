@@ -36,7 +36,7 @@ def _format_recordset(recordset):
 class ListRecordSetsCommand(lister.Lister):
     """List recordsets"""
 
-    columns = ['id', 'name', 'type', 'records']
+    columns = ['id', 'name', 'type', 'records', 'status', 'action']
 
     def get_parser(self, prog_name):
         parser = super(ListRecordSetsCommand, self).get_parser(prog_name)
