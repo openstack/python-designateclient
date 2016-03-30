@@ -55,8 +55,9 @@ class TestZone(BaseDesignateTest):
         self.assertEqual(self.zone.version, zone.version)
 
     def test_zone_delete(self):
-        self.clients.zone_delete(self.zone.id)
-        self.assertRaises(CommandFailed, self.clients.zone_show, self.zone.id)
+        zone = self.clients.zone_delete(self.zone.id)
+        self.assertEqual(zone.action, 'DELETE')
+        self.assertEqual(zone.status, 'PENDING')
 
     def test_zone_set(self):
         ttl = int(self.zone.ttl) + 123
