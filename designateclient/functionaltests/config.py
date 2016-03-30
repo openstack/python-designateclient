@@ -46,6 +46,11 @@ cfg.CONF.register_opts([
     cfg.StrOpt('admin_tenant_name'),
     cfg.StrOpt('admin_password', secret=True),
     cfg.StrOpt('admin_domain_name'),
+
+    cfg.StrOpt("override_endpoint",
+               help="use this url instead of the url in the service catalog"),
+    cfg.StrOpt("override_token",
+               help="with the override endpoint, pass this token to the api"),
 ], group='identity')
 
 
