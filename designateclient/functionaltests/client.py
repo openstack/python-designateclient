@@ -269,7 +269,7 @@ class BlacklistCommands(object):
             '--pattern': pattern,
             '--description': description,
         })
-        flags_str = build_flags_string({'--no_description': no_description})
+        flags_str = build_flags_string({'--no-description': no_description})
         cmd = 'zone blacklist set {0} {1} {2}'.format(id, options_str,
                                                       flags_str)
         return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
