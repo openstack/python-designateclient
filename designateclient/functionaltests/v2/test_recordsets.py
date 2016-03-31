@@ -69,13 +69,9 @@ class TestRecordset(BaseDesignateTest):
         self.assertEqual(self.recordset.zone_id, self.zone.id)
 
     def test_recordset_delete(self):
-        self.clients.recordset_delete(self.zone.id, self.recordset.id)
-        self.assertRaises(
-            CommandFailed,
-            self.clients.recordset_delete,
-            self.zone.id,
-            self.recordset.id,
-        )
+        rset = self.clients.recordset_delete(self.zone.id, self.recordset.id)
+        self.assertEqual(rset.action, 'DELETE')
+        self.assertEqual(rset.status, 'PENDING')
 
     def test_recordset_set(self):
         rset = self.clients.recordset_set(

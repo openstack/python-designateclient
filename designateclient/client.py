@@ -77,8 +77,11 @@ class Controller(object):
             return body[response_key]
         return body
 
-    def _delete(self, url):
-        resp, body = self.client.session.delete(url)
+    def _delete(self, url, response_key=None, **kwargs):
+        resp, body = self.client.session.delete(url, **kwargs)
+        if response_key is not None:
+            return body[response_key]
+        return body
 
 
 @six.add_metaclass(abc.ABCMeta)

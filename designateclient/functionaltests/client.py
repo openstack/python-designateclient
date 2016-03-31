@@ -79,7 +79,8 @@ class ZoneCommands(object):
                                **kwargs)
 
     def zone_delete(self, id, *args, **kwargs):
-        return self.parsed_cmd('zone delete %s' % id, *args, **kwargs)
+        return self.parsed_cmd('zone delete %s' % id, FieldValueModel, *args,
+                               **kwargs)
 
     def zone_create(self, name, email=None, ttl=None, description=None,
                     type=None, masters=None, *args, **kwargs):
@@ -214,7 +215,7 @@ class RecordsetCommands(object):
 
     def recordset_delete(self, zone_id, id, *args, **kwargs):
         cmd = 'recordset delete {0} {1}'.format(zone_id, id)
-        return self.parsed_cmd(cmd, *args, **kwargs)
+        return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
 
 
 class TLDCommands(object):

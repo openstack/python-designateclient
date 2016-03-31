@@ -16,7 +16,6 @@
 
 import logging
 
-from cliff import command
 from cliff import lister
 from cliff import show
 import six
@@ -193,7 +192,7 @@ class SetRecordSetCommand(show.ShowOne):
         return six.moves.zip(*sorted(six.iteritems(updated)))
 
 
-class DeleteRecordSetCommand(command.Command):
+class DeleteRecordSetCommand(show.ShowOne):
     """Delete recordset"""
 
     def get_parser(self, prog_name):
@@ -206,6 +205,9 @@ class DeleteRecordSetCommand(command.Command):
 
     def take_action(self, parsed_args):
         client = self.app.client_manager.dns
-        client.recordsets.delete(parsed_args.zone_id, parsed_args.id)
+        data = client.recordsets.delete(parsed_args.zone_id, parsed_args.id)
 
         LOG.info('RecordSet %s was deleted', parsed_args.id)
+
+        _format_recordset(data)
+        return six.moves.zip(*sorted(six.iteritems(data)))

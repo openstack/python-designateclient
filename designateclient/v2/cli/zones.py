@@ -193,7 +193,7 @@ class SetZoneCommand(show.ShowOne):
         return six.moves.zip(*sorted(six.iteritems(updated)))
 
 
-class DeleteZoneCommand(command.Command):
+class DeleteZoneCommand(show.ShowOne):
     """Delete zone"""
 
     def get_parser(self, prog_name):
@@ -205,8 +205,11 @@ class DeleteZoneCommand(command.Command):
 
     def take_action(self, parsed_args):
         client = self.app.client_manager.dns
-        client.zones.delete(parsed_args.id)
+        data = client.zones.delete(parsed_args.id)
         LOG.info('Zone %s was deleted', parsed_args.id)
+
+        _format_zone(data)
+        return six.moves.zip(*sorted(six.iteritems(data)))
 
 
 class AbandonZoneCommand(command.Command):
