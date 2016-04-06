@@ -39,7 +39,7 @@ class TestZoneExport(BaseDesignateTest):
 
         zone_exports = self.clients.zone_export_list()
         self.assertGreater(len(zone_exports), 0)
-        self.assertTrue(self._is_export_in_list(zone_export, zone_exports))
+        self.assertTrue(self._is_entity_in_list(zone_export, zone_exports))
 
     def test_create_and_show_zone_export(self):
         zone_export = self.useFixture(ExportFixture(
@@ -60,12 +60,12 @@ class TestZoneExport(BaseDesignateTest):
         )).zone_export
 
         zone_exports = self.clients.zone_export_list()
-        self.assertTrue(self._is_export_in_list(zone_export, zone_exports))
+        self.assertTrue(self._is_entity_in_list(zone_export, zone_exports))
 
         self.clients.zone_export_delete(zone_export.id)
 
         zone_exports = self.clients.zone_export_list()
-        self.assertFalse(self._is_export_in_list(zone_export, zone_exports))
+        self.assertFalse(self._is_entity_in_list(zone_export, zone_exports))
 
     def test_show_export_file(self):
         zone_export = self.useFixture(ExportFixture(
@@ -79,16 +79,3 @@ class TestZoneExport(BaseDesignateTest):
         self.assertIn('SOA', fetched_export.data)
         self.assertIn('NS', fetched_export.data)
         self.assertIn(self.zone.name, fetched_export.data)
-
-    def _is_export_in_list(self, zone_export, zone_export_list):
-        """Determines if the given export exists in the given export list.
-
-        Uses the zone export id for comparison.
-
-        Because the zone export list command displays fewer fields than
-        the show command, an __eq__ method on the FieldValueModel class
-        is insufficient.
-
-        """
-        return any([export_record.id == zone_export.id
-                    for export_record in zone_export_list])

@@ -16,6 +16,7 @@ limitations under the License.
 from __future__ import absolute_import
 from __future__ import print_function
 import sys
+import tempfile
 import traceback
 
 import fixtures
@@ -119,6 +120,38 @@ class ExportFixture(BaseFixture):
     def cleanup_zone_export(cls, client, zone_export_id):
         try:
             client.zone_export_delete(zone_export_id)
+        except CommandFailed:
+            pass
+
+
+class ImportFixture(BaseFixture):
+    """See DesignateCLI.zone_import_create for __init__ args"""
+
+    def __init__(self, zone_file_contents, user='default', *args, **kwargs):
+        super(ImportFixture, self).__init__(user, *args, **kwargs)
+        self.zone_file_contents = zone_file_contents
+
+    def _setUp(self):
+        super(ImportFixture, self)._setUp()
+
+        with tempfile.NamedTemporaryFile() as f:
+            f.write(self.zone_file_contents)
+            f.flush()
+
+            self.zone_import = self.client.zone_import_create(
+                zone_file_path=f.name,
+                *self.args, **self.kwargs
+            )
+
+        self.addCleanup(self.cleanup_zone_import, self.client,
+                        self.zone_import.id)
+        self.addCleanup(ZoneFixture.cleanup_zone, self.client,
+                        self.zone_import.zone_id)
+
+    @classmethod
+    def cleanup_zone_import(cls, client, zone_import_id):
+        try:
+            client.zone_import_delete(zone_import_id)
         except CommandFailed:
             pass
 
