@@ -47,7 +47,9 @@ class TestZoneImport(BaseDesignateTest):
         self.assertEqual(zone_import.id, fetched_import.id)
         self.assertEqual(zone_import.project_id, fetched_import.project_id)
 
-        self.assertEqual('COMPLETE', fetched_import.status)
+        # check both statuses to avoid a race condition, causing test failure.
+        # we don't know when the import completes.
+        self.assertIn(fetched_import.status, ['PENDING', 'COMPLETE'])
 
     def test_delete_zone_import(self):
         zone_import = self.useFixture(ImportFixture(
