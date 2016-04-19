@@ -1,6 +1,6 @@
-======================================
-designate command line tool - examples
-======================================
+====================================
+Designate Command Line Tool Examples
+====================================
 
 Using the client against your dev environment
 ---------------------------------------------
