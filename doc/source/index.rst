@@ -2,12 +2,23 @@
 python-designateclient
 ======================
 
-This is a client for Designate API. There's a :doc:`Python API
-<api>` (the :program:`designateclient` module), and a :doc:`command-line tool
-<shell>` (installed as :program:`designate`).
+python-designateclient provides python bindings and command line tools for both
+Designate v1 and v2 APIs.
 
-You'll need credentials for an OpenStack cloud that is implementing the Designate API ,
-such as HP's `Cloud DNS`_, in order to use the designate client.
+The :doc:`Python API bindings <bindings>` are provided by the
+:program:`designateclient` module.
+
+There are two separate command line interfaces to work with the two API
+versions:
+
+v2: the designate plugin for the :program:`openstack` command line tool.  More information can be
+found on the :doc:`designate v2 command line tool page <shell-v2>`.
+
+v1: the :program:`designate` command line tool.  More information can be found
+on the :doc:`designate v1 command line tool page <shell>`.
+
+You'll need credentials for an OpenStack cloud that implements the Designate
+API in order to use the client.
 
 Contents
 ======================
@@ -17,9 +28,10 @@ Contents
 
    installation
    bindings
+   shell-v2
+   shell-v2-examples
    shell
    shell-examples
-   shell-v2
    contributing
    functional-tests
 

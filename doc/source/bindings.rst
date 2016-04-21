@@ -1,10 +1,10 @@
-===============
-Python Bindings
-===============
+===========================
+Python Bindings - v1 and v2
+===========================
 
-The python-designateclient package comes with python bindings for the Designate
-API. This can be used to interact with the Designate API from any python
-program.
+The python-designateclient package comes with python bindings for both versions
+of the Designate API: v1 and v2. These can be used to interact with the Designate 
+API from any python program.
 
 Introduction - Bindings v2
 ==========================

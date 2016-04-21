@@ -1,6 +1,6 @@
-===========================
-designate command line tool
-===========================
+=========================================================
+Designate Command Line Tool (compatible with v1 API only)
+=========================================================
 
 The python-designateclient package comes with a command line tool (installed as :program:`designate`), this can be used to access a Designate API
 without having to manipulate JSON by hand, it can also produce the output in a variety of formats (JSON, CSV) and allow you to select columns to be
