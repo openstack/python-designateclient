@@ -14,8 +14,8 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
-from keystoneclient import adapter
-from keystoneclient import session as keystone_session
+from keystoneauth1 import adapter
+from keystoneauth1 import session as keystone_session
 
 from designateclient.tests.base import TestCase
 from designateclient.v2.client import Client

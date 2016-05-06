@@ -19,10 +19,10 @@ import os
 import uuid
 
 from debtcollector import removals
-from keystoneclient import adapter
-from keystoneclient.auth.identity import generic
-from keystoneclient.auth import token_endpoint
-from keystoneclient import session as ks_session
+from keystoneauth1 import adapter
+from keystoneauth1.identity import generic
+from keystoneauth1 import session as ks_session
+from keystoneauth1 import token_endpoint
 import pkg_resources
 import six
 

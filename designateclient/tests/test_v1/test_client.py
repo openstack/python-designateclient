@@ -18,7 +18,7 @@ from designateclient.tests import test_v1
 from designateclient import utils
 from designateclient import v1
 
-from keystoneclient import session as keystone_session
+from keystoneauth1 import session as keystone_session
 
 
 class TestClient(test_v1.APIV1TestCase):

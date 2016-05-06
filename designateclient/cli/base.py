@@ -18,7 +18,7 @@ import abc
 from cliff.command import Command as CliffCommand
 from cliff.lister import Lister
 from cliff.show import ShowOne
-from keystoneclient import exceptions as ks_exceptions
+from keystoneauth1 import exceptions as ks_exceptions
 import six
 
 from designateclient import exceptions
