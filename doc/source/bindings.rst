@@ -3,7 +3,7 @@ Python Bindings - v1 and v2
 ===========================
 
 The python-designateclient package comes with python bindings for both versions
-of the Designate API: v1 and v2. These can be used to interact with the Designate 
+of the Designate API: v1 and v2. These can be used to interact with the Designate
 API from any python program.
 
 Introduction - Bindings v2
@@ -17,14 +17,17 @@ To view examples of usage please checkout the *doc/examples* folder, basic usage
    from designateclient.v2 import client
    from designateclient import shell
 
-   from keystoneclient.auth.identity import generic
-   from keystoneclient import session as keystone_session
+   from keystoneauth1.identity import generic
+   from keystoneauth1 import session as keystone_session
+
 
    auth = generic.Password(
     auth_url=shell.env('OS_AUTH_URL'),
     username=shell.env('OS_USERNAME'),
     password=shell.env('OS_PASSWORD'),
-    tenant_name=shell.env('OS_TENANT_NAME'))
+    project_name=shell.env('OS_PROJECT_NAME'),
+    project_domain_id='default',
+    user_domain_id='default')
 
    session = keystone_session.Session(auth=auth)
 
@@ -46,13 +49,15 @@ the bindings.
    from __future__ import print_function
    from designateclient.v1 import Client
 
+
    # Create an instance of the client, providing the necessary credentials
    client = Client(
-       auth_url="https://example.com:5000/v2.0/",
-       username="openstack",
-       password="yadayada",
-       tenant_id="123456789"
-   )
+     auth_url="https://example.com:5000/v3/",
+     username="openstack",
+     password="yadayada",
+     project_name="myproject",
+     project_domain_id='default',
+     user_domain_id='default')
 
    # Fetch a list of the domains this user/tenant has access to
    domains = client.domains.list()
@@ -78,7 +83,10 @@ Designate supports either Keystone authentication, or no authentication at all.
 Keystone Authentication
 -----------------------
 
-Below is a sample of standard authentication with keystone:
+Below is a sample of standard authentication with keystone using keystoneauth
+Sessions. For more information on keystoneauth API, see `Using Sessions`_.
+
+.. _Using Sessions: http://docs.openstack.org/developer/keystoneauth/using-sessions.html
 
 .. code-block:: python
 
@@ -86,13 +94,24 @@ Below is a sample of standard authentication with keystone:
 
    from designateclient.v1 import Client
 
-   # Create an instance of the client, providing the necessary credentials
-   client = Client(
-       auth_url="https://example.com:5000/v2.0/",
-       username="openstack",
-       password="yadayada",
-       tenant_id="123456789"
-   )
+   from keystoneauth1.identity import generic
+   from keystoneauth1 import session as keystone_session
+
+
+   # Create an authentication plugin providing the necessary credentials
+   auth = generic.Password(
+    auth_url="https://example.com:5000/v3/",
+    username="openstack",
+    password="yadayada",
+    project_name="myproject",
+    project_domain_id='default',
+    user_domain_id='default'
+    )
+
+   session = keystone_session.Session(auth=auth)
+
+   # Create an instance of the client, providing a keystoneauth Session
+   client = Client(session=session)
 
 Below is a sample of standard authentication with keystone, but also explicitly
 providing the endpoint to use:
@@ -106,14 +125,26 @@ providing the endpoint to use:
 
    from designateclient.v1 import Client
 
-   # Create an instance of the client, providing the necessary credentials
+   from keystoneauth1.identity import generic
+   from keystoneauth1 import session as keystone_session
+
+
+   # Create an authentication plugin providing the necessary credentials
+   auth = generic.Password(
+    auth_url="https://example.com:5000/v3/",
+    username="openstack",
+    password="yadayada",
+    project_name="myproject",
+    project_domain_id='default',
+    user_domain_id='default')
+
+   session = keystone_session.Session(auth=auth)
+
+   # Create an instance of the client, providing a keystoneauth Session
    client = Client(
-       auth_url="https://example.com:5000/v2.0/",
-       username="openstack",
-       password="yadayada",
-       tenant_id="123456789",
-       endpoint="https://127.0.0.1:9001/v1/"
-   )
+    session=session,
+    endpoint="https://127.0.0.1:9001/v1/")
+
 
 No Authentication
 -----------------
