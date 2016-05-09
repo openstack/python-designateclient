@@ -314,8 +314,8 @@ class DesignateCLI(base.CLIClient, ZoneCommands, ZoneTransferCommands,
     def __init__(self, *args, **kwargs):
         super(DesignateCLI, self).__init__(*args, **kwargs)
         # grab the project id. this is used for zone transfer requests
-        resp = FieldValueModel(self.keystone('token-get'))
-        self.project_id = resp.tenant_id
+        resp = FieldValueModel(self.openstack('token issue'))
+        self.project_id = resp.project_id
 
     @property
     def using_auth_override(self):
