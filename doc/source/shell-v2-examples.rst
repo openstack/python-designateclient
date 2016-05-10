@@ -233,3 +233,169 @@ Delete zone import:
 .. code-block:: shell-session
 
    $ openstack zone import delete 839d8041-1960-4d74-8533-118d52218074
+
+Working with Zone Blacklists
+----------------------------
+Zone blacklist enable you to block any zone pattern from creation.
+
+Create a zone blacklist
+
+.. code-block:: shell-session
+
+   $openstack zone blacklist create --pattern "^example\.com\.$" --description "This is a blacklisted domain."
+   +-------------+--------------------------------------+
+   | Field       | Value                                |
+   +-------------+--------------------------------------+
+   | created_at  | 2016-05-10 00:26:07                  |
+   | description | This is a blacklisted domain.        |
+   | id          | 308ecb82-4952-4476-88b4-9db18fc78e10 |
+   | pattern     | ^example.com.$                     |
+   | updated_at  | None                                 |
+   +-------------+--------------------------------------+
+
+List zone blacklist
+
+.. code-block:: shell-session
+
+   $ openstack zone blacklist list
+
+Show zone blacklist
+
+.. code-block:: shell-session
+
+   $openstack zone blacklist show 308ecb82-4952-4476-88b4-9db18fc78e10
+
+Update zone blacklist
+
+.. code-block:: shell-session
+
+   $openstack zone blacklist set --pattern "^([A-Za-z0-9_\-]+\.)*example\.com\.$" --description "Updated the description" 308ecb82-4952-4476-88b4-9db18fc78e10
+
+Delete a zone blacklist
+
+.. code-block:: shell-session
+
+   $openstack zone blacklist delete 308ecb82-4952-4476-88b4-9db18fc78e10
+
+Working with zone transfer
+--------------------------
+Zone transfer enable you to perform the transfer of zone ownership to another project.
+
+Create a Zone Transfer Request
+
+.. code-block:: shell-session
+
+   $openstack zone transfer request create --target-project-id 9cc52dd7649c4aa99fa9db2fb94dabb8 53cdcf82-9e32-4a00-a90d-32d6ec5db7e9
+   +-------------------+----------------------------------------------------------------------------------------+
+   | Field             | Value                                                                                  |
+   +-------------------+----------------------------------------------------------------------------------------+
+   | created_at        | 2016-05-10 01:39:00                                                                    |
+   | description       | None                                                                                   |
+   | id                | 98ba1d22-c092-4603-891f-8a0ab04f7e57                                                   |
+   | key               | J6JCET2C                                                                               |
+   | links             | {u'self':                                                                              |
+   |                   | u'http://192.168.11.182:9001/v2/zones/tasks/transfer_requests/98ba1d22-c092-4603-891f- |
+   |                   | 8a0ab04f7e57'}                                                                         |
+   | project_id        | 10457ad1fe074f4a89bb1e4c0cd83d40                                                       |
+   | status            | ACTIVE                                                                                 |
+   | target_project_id | 9cc52dd7649c4aa99fa9db2fb94dabb8                                                       |
+   | updated_at        | None                                                                                   |
+   | zone_id           | 53cdcf82-9e32-4a00-a90d-32d6ec5db7e9                                                   |
+   | zone_name         | example.com.                                                                           |
+   +-------------------+----------------------------------------------------------------------------------------+
+
+List Zone Transfer Requests
+
+.. code-block:: shell-session
+
+   $openstack zone transfer request list
+
+Show Zone Transfer Request Details
+
+.. code-block:: shell-session
+
+   $openstack zone transfer request show 98ba1d22-c092-4603-891f-8a0ab04f7e57
+
+Update a Zone Transfer Request
+
+.. code-block:: shell-session
+
+   $openstack zone transfer request set 98ba1d22-c092-4603-891f-8a0ab04f7e57 --description "demo transfer"
+
+Delete a Zone Transfer Request
+
+.. code-block:: shell-session
+
+   $openstack zone transfer request delete 98ba1d22-c092-4603-891f-8a0ab04f7e57
+
+Accept a Zone Transfer Request
+
+.. code-block:: shell-session
+
+   $openstack zone transfer accept request  --transfer-id 98ba1d22-c092-4603-891f-8a0ab04f7e57 --key J6JCET2C
+   +--------------------------+---------------------------------------------------------------------------------+
+   | Field                    | Value                                                                           |
+   +--------------------------+---------------------------------------------------------------------------------+
+   | created_at               | 2016-05-10 05:02:52                                                             |
+   | id                       | a8750f50-d7e6-403a-89d2-e209d62ef60e                                            |
+   | key                      | J6JCET2C                                                                        |
+   | links                    | {u'self':                                                                       |
+   |                          | u'http://192.168.11.182:9001/v2/zones/tasks/transfer_accepts/a8750f50-d7e6      |
+   |                          | -403a-89d2-e209d62ef60e', u'zone':                                              |
+   |                          | u'http://192.168.11.182:9001/v2/zones/53cdcf82-9e32-4a00-a90d-32d6ec5db7e9'}    |
+   | project_id               | 10457ad1fe074f4a89bb1e4c0cd83d40                                                |
+   | status                   | COMPLETE                                                                        |
+   | updated_at               | 2016-05-10 05:02:52                                                             |
+   | zone_id                  | 53cdcf82-9e32-4a00-a90d-32d6ec5db7e9                                            |
+   | zone_transfer_request_id | 98ba1d22-c092-4603-891f-8a0ab04f7e57                                            |
+   +--------------------------+---------------------------------------------------------------------------------+
+
+Show Zone Transfer Accept
+
+.. code-block:: shell-session
+
+   $openstack zone transfer accept show a8750f50-d7e6-403a-89d2-e209d62ef60e
+
+Working with tld
+-----------------
+
+tld enable you to manage top level domains.
+
+Create a TLD
+
+.. code-block:: shell-session
+
+   $openstack tld create --name com --description "demo TLD"
+   +-------------+--------------------------------------+
+   | Field       | Value                                |
+   +-------------+--------------------------------------+
+   | created_at  | 2016-05-10 05:21:40                  |
+   | description | demo TLD                             |
+   | id          | a7bba387-712b-4b42-9368-4508642c6113 |
+   | name        | com                                  |
+   | updated_at  | None                                 |
+   +-------------+--------------------------------------+
+
+List TLDs
+
+.. code-block:: shell-session
+
+   $openstack tld list
+
+Show TLD Details
+
+.. code-block:: shell-session
+
+   $openstack tld show a7bba387-712b-4b42-9368-4508642c6113
+
+Update a TLD
+
+.. code-block:: shell-session
+
+   $openstack tld set a7bba387-712b-4b42-9368-4508642c6113 --name org --description "TLD description"
+
+Delete a TLD
+
+.. code-block:: shell-session
+
+   $openstack tld delete a7bba387-712b-4b42-9368-4508642c6113
