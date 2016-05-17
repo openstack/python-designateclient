@@ -14,8 +14,8 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
-from keystoneclient.auth.identity import generic
-from keystoneclient import session as keystone_session
+from keystoneauth1.identity import generic
+from keystoneauth1 import session as keystone_session
 from mock import Mock
 
 from designateclient.tests import v2

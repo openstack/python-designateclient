@@ -18,7 +18,7 @@ import json as json_
 import os
 
 import fixtures
-from keystoneclient import session as keystone_session
+from keystoneauth1 import session as keystone_session
 from oslotest import base as test
 from requests_mock.contrib import fixture as req_fixture
 import six
