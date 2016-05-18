@@ -1,5 +1,5 @@
 =========================================================
-Openstack Command Line Tool (compatible with v2 API only)
+OpenStack Command Line Tool (compatible with v2 API only)
 =========================================================
 
 The python-designateclient package comes with a plugin for the openstack
@@ -23,7 +23,7 @@ Configuration
 
 :program:`openstack` requires certain information to talk to the REST API.  An
 in-depth explanation is covered in the
-`Openstack Client configuration documentation`_.
+`OpenStack Client configuration documentation`_.
 
 Using the Command Line Tool
 ---------------------------
@@ -141,4 +141,4 @@ You'll find complete documentation on the shell by running:
 
 For a specific command, you can execute: ``openstack subcommand help``
 
-.. _Openstack Client configuration documentation: http://docs.openstack.org/developer/python-openstackclient/configuration.html
+.. _OpenStack Client configuration documentation: http://docs.openstack.org/developer/python-openstackclient/configuration.html
