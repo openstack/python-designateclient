@@ -1,5 +1,5 @@
 ====================================
-Openstack Command Line Tool Examples
+OpenStack Command Line Tool Examples
 ====================================
 
 Because command output would make this document long, much of it will be
