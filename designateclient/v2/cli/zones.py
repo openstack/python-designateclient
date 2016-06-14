@@ -382,6 +382,27 @@ class AcceptTransferRequestCommand(show.ShowOne):
         return six.moves.zip(*sorted(six.iteritems(data)))
 
 
+class ListTransferAcceptsCommand(lister.Lister):
+    """List Zone Transfer Accepts"""
+
+    columns = ['id', 'zone_id', 'project_id',
+               'zone_transfer_request_id', 'status', 'key']
+
+    def get_parser(self, prog_name):
+        parser = super(ListTransferAcceptsCommand, self).get_parser(
+            prog_name)
+
+        return parser
+
+    def take_action(self, parsed_args):
+        client = self.app.client_manager.dns
+
+        data = client.zone_transfers.list_requests()
+
+        cols = self.columns
+        return cols, (utils.get_item_properties(s, cols) for s in data)
+
+
 class ShowTransferAcceptCommand(show.ShowOne):
     """Show Zone Transfer Accept"""
 

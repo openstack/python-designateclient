@@ -125,6 +125,10 @@ class ZoneTransfersController(V2Controller):
         url = '/zones/tasks/transfer_accepts/%s' % accept_id
         return self._get(url)
 
+    def list_accepts(self):
+        url = '/zones/tasks/transfer_accepts'
+        return self._get(url, response_key="transfer_accepts")
+
 
 class ZoneExportsController(V2Controller):
     def create(self, zone):

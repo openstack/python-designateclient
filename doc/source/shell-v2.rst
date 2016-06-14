@@ -118,6 +118,7 @@ zone transfer request show    Show Zone Transfer Request Details
 zone transfer request set     Set a Zone Transfer Request
 zone transfer request delete  Delete a Zone Transfer Request
 zone transfer accept request  Accept a Zone Transfer Request
+zone transfer accept list     List Zone Transfer Accepts
 zone transfer accept show     Show Zone Transfer Accept
 zone abandon                  Abandon a zone
 zone axfr                     AXFR a zone
