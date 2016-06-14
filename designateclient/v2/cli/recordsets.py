@@ -33,6 +33,14 @@ def _format_recordset(recordset):
     return recordset
 
 
+def _has_project_id(data):
+    if len(data) < 1:
+        return False
+    if 'project_id' in data[0]:
+        return True
+    return False
+
+
 class ListRecordSetsCommand(lister.Lister):
     """List recordsets"""
 
@@ -87,6 +95,9 @@ class ListRecordSetsCommand(lister.Lister):
 
         data = get_all(client.recordsets.list, args=[parsed_args.zone_id],
                        criterion=criterion)
+
+        if client.session.all_projects and _has_project_id(data):
+            cols.insert(1, 'project_id')
 
         for i, rs in enumerate(data):
             data[i] = _format_recordset(rs)
