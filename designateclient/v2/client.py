@@ -19,6 +19,7 @@ from designateclient import exceptions
 from designateclient.v2.blacklists import BlacklistController
 from designateclient.v2.limits import LimitController
 from designateclient.v2.nameservers import NameServerController
+from designateclient.v2.pools import PoolController
 from designateclient.v2.recordsets import RecordSetController
 from designateclient.v2.reverse import FloatingIPController
 from designateclient.v2.service_statuses import ServiceStatusesController
@@ -131,3 +132,4 @@ class Client(object):
         self.zone_transfers = ZoneTransfersController(self)
         self.zone_exports = ZoneExportsController(self)
         self.zone_imports = ZoneImportsController(self)
+        self.pools = PoolController(self)
