@@ -356,6 +356,12 @@ Show Zone Transfer Accept
 
    $openstack zone transfer accept show a8750f50-d7e6-403a-89d2-e209d62ef60e
 
+List Zone Transfer Accept
+
+.. code-block:: shell-session
+
+   $openstack zone transfer accept list
+
 Working with tld
 -----------------
 
