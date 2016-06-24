@@ -33,15 +33,8 @@ def make_client(instance):
         API_NAME, instance._api_version[API_NAME],
         API_VERSIONS)
     kwargs = oscutils.build_kwargs_dict('endpoint_type', instance._interface)
-
-    parsed_args = instance.get_configuration()
-
     return cls(session=instance.session,
-               region_name=instance._region_name,
-               all_projects=parsed_args.get('all_projects', False),
-               edit_managed=parsed_args.get('edit_managed', False),
-               sudo_project_id=parsed_args.get('sudo_project_id', None),
-               **kwargs)
+               region_name=instance._region_name, **kwargs)
 
 
 def build_option_parser(parser):
@@ -53,22 +46,5 @@ def build_option_parser(parser):
         help='DNS API version, default=' +
              DEFAULT_API_VERSION +
              ' (Env: OS_DNS_API_VERSION)')
-
-    parser.add_argument(
-        '--all-projects',
-        default=False,
-        action='store_true',
-        help='Show results from all projects. Default=False')
-
-    parser.add_argument(
-        '--edit-managed',
-        default=False,
-        action='store_true',
-        help='Edit resources marked as managed. Default=False')
-
-    parser.add_argument(
-        '--sudo-project-id',
-        default=None,
-        help='Project ID to impersonate for this command. Default=None')
 
     return parser
