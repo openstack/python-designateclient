@@ -19,7 +19,7 @@ import logging
 from cliff import command
 from cliff import lister
 from cliff import show
-from openstackclient.common import exceptions as osc_exc
+from osc_lib import exceptions as osc_exc
 import six
 
 from designateclient import utils
