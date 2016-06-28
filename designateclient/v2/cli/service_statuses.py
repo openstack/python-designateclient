@@ -21,7 +21,9 @@ from cliff import show
 import six
 
 from designateclient import utils
+from designateclient.v2.cli import common
 from designateclient.v2 import utils as v2_utils
+
 
 LOG = logging.getLogger(__name__)
 
@@ -47,10 +49,13 @@ class ListServiceStatusesCommand(lister.Lister):
         parser.add_argument("--service_name", help="Service Name",
                             required=False)
         parser.add_argument("--status", help="Status", required=False)
+        common.add_all_common_options(parser)
+
         return parser
 
     def take_action(self, parsed_args):
         client = self.app.client_manager.dns
+        common.set_all_common_headers(client, parsed_args)
 
         cols = self.columns
 
@@ -77,10 +82,13 @@ class ShowServiceStatusCommand(show.ShowOne):
 
         parser.add_argument('id', help="Service Status ID")
 
+        common.add_all_common_options(parser)
+
         return parser
 
     def take_action(self, parsed_args):
         client = self.app.client_manager.dns
+        common.set_all_common_headers(client, parsed_args)
         data = client.service_statuses.get(parsed_args.id)
 
         _format_status(data)

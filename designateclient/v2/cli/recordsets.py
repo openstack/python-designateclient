@@ -21,7 +21,9 @@ from cliff import show
 import six
 
 from designateclient import utils
+from designateclient.v2.cli import common
 from designateclient.v2.utils import get_all
+
 
 LOG = logging.getLogger(__name__)
 
@@ -31,6 +33,14 @@ def _format_recordset(recordset):
     recordset['records'] = "\n".join(recordset['records'])
     recordset.pop('links', None)
     return recordset
+
+
+def _has_project_id(data):
+    if len(data) < 1:
+        return False
+    if 'project_id' in data[0]:
+        return True
+    return False
 
 
 class ListRecordSetsCommand(lister.Lister):
@@ -56,10 +66,13 @@ class ListRecordSetsCommand(lister.Lister):
 
         parser.add_argument('zone_id', help="Zone ID")
 
+        common.add_all_common_options(parser)
+
         return parser
 
     def take_action(self, parsed_args):
         client = self.app.client_manager.dns
+        common.set_all_common_headers(client, parsed_args)
 
         criterion = {}
         if parsed_args.type is not None:
@@ -88,6 +101,9 @@ class ListRecordSetsCommand(lister.Lister):
         data = get_all(client.recordsets.list, args=[parsed_args.zone_id],
                        criterion=criterion)
 
+        if client.session.all_projects and _has_project_id(data):
+            cols.insert(1, 'project_id')
+
         for i, rs in enumerate(data):
             data[i] = _format_recordset(rs)
 
@@ -103,10 +119,13 @@ class ShowRecordSetCommand(show.ShowOne):
         parser.add_argument('zone_id', help="Zone ID")
         parser.add_argument('id', help="RecordSet ID")
 
+        common.add_all_common_options(parser)
+
         return parser
 
     def take_action(self, parsed_args):
         client = self.app.client_manager.dns
+        common.set_all_common_headers(client, parsed_args)
         data = client.recordsets.get(parsed_args.zone_id, parsed_args.id)
 
         _format_recordset(data)
@@ -127,10 +146,13 @@ class CreateRecordSetCommand(show.ShowOne):
         parser.add_argument('--ttl', type=int, help="Time To Live (Seconds)")
         parser.add_argument('--description', help="Description")
 
+        common.add_all_common_options(parser)
+
         return parser
 
     def take_action(self, parsed_args):
         client = self.app.client_manager.dns
+        common.set_all_common_headers(client, parsed_args)
 
         data = client.recordsets.create(
             parsed_args.zone_id,
@@ -162,6 +184,8 @@ class SetRecordSetCommand(show.ShowOne):
         ttl_group.add_argument('--ttl', type=int, help="TTL")
         ttl_group.add_argument('--no-ttl', action='store_true')
 
+        common.add_all_common_options(parser)
+
         return parser
 
     def take_action(self, parsed_args):
@@ -181,6 +205,7 @@ class SetRecordSetCommand(show.ShowOne):
             data['records'] = parsed_args.records
 
         client = self.app.client_manager.dns
+        common.set_all_common_headers(client, parsed_args)
 
         updated = client.recordsets.update(
             parsed_args.zone_id,
@@ -201,10 +226,13 @@ class DeleteRecordSetCommand(show.ShowOne):
         parser.add_argument('zone_id', help="Zone ID")
         parser.add_argument('id', help="RecordSet ID")
 
+        common.add_all_common_options(parser)
+
         return parser
 
     def take_action(self, parsed_args):
         client = self.app.client_manager.dns
+        common.set_all_common_headers(client, parsed_args)
         data = client.recordsets.delete(parsed_args.zone_id, parsed_args.id)
 
         LOG.info('RecordSet %s was deleted', parsed_args.id)
