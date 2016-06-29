@@ -54,7 +54,8 @@ class ListRecordSetsCommand(lister.Lister):
         parser.add_argument('--action', help="RecordSet Action",
                             required=False)
 
-        parser.add_argument('zone_id', help="Zone ID")
+        parser.add_argument('zone_id', help="Zone ID. To list all"
+                            " recordsets specify 'all'")
 
         return parser
 
@@ -85,8 +86,13 @@ class ListRecordSetsCommand(lister.Lister):
 
         cols = self.columns
 
-        data = get_all(client.recordsets.list, args=[parsed_args.zone_id],
-                       criterion=criterion)
+        if parsed_args.zone_id == 'all':
+            data = get_all(client.recordsets.list_all_zones,
+                           criterion=criterion)
+            cols.insert(2, 'zone_name')
+        else:
+            data = get_all(client.recordsets.list, args=[parsed_args.zone_id],
+                           criterion=criterion)
 
         for i, rs in enumerate(data):
             data[i] = _format_recordset(rs)

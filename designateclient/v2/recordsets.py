@@ -74,6 +74,12 @@ class RecordSetController(V2Controller):
 
         return self._get(url, response_key='recordsets')
 
+    def list_all_zones(self, criterion=None, marker=None, limit=None):
+
+        url = self.build_url('/recordsets', criterion, marker, limit)
+
+        return self._get(url, response_key='recordsets')
+
     def get(self, zone, recordset):
         zone = v2_utils.resolve_by_name(self.client.zones.list, zone)
         recordset = v2_utils.resolve_by_name(self.list, recordset, zone)

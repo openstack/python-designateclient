@@ -96,6 +96,7 @@ zone set                      Set zone properties
 zone delete                   Delete zone
 recordset create              Create new recordset
 recordset list                List recordsets
+recordset list all            List all recordsets in all zones
 recordset show                Show recordset details
 recordset set                 Set recordset properties
 recordset delete              Delete recordset
