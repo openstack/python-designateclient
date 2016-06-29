@@ -13,6 +13,7 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations
 # under the License.
+from debtcollector import removals
 from stevedore import extension
 
 from designateclient import exceptions
@@ -20,6 +21,15 @@ from designateclient import utils
 from designateclient import version
 
 
+@removals.removed_class(
+    'designateclient.v1.Client',
+    replacement='designateclient.v2.client.Client',
+    message='Designate v1 API is being retired, and the v1 Client class will '
+    'stop functioning. Please update code to the '
+    'designateclient.v2.client.Client class. The API is deprecated',
+    version='2.2.0',
+    removal_version='?',
+    stacklevel=3)
 class Client(object):
     """Client for the Designate v1 API"""
 

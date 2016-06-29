@@ -14,6 +14,7 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 import abc
+import warnings
 
 from cliff.command import Command as CliffCommand
 from cliff.lister import Lister
@@ -29,6 +30,17 @@ from designateclient.v1 import Client
 @six.add_metaclass(abc.ABCMeta)
 class Command(CliffCommand):
     def run(self, parsed_args):
+
+        warnings.simplefilter('once', category=DeprecationWarning)
+        warnings.warn(
+            'The "designate" CLI is being deprecated in favour of the '
+            '"openstack" CLI plugin. All designate API v2 commands are '
+            'implemented there. When the v1 API is removed this CLI will '
+            'stop functioning',
+            DeprecationWarning)
+        warnings.resetwarnings()
+        warnings.simplefilter('ignore', category=DeprecationWarning)
+
         self.client = Client(
             region_name=self.app.options.os_region_name,
             service_type=self.app.options.os_service_type,
@@ -37,7 +49,7 @@ class Command(CliffCommand):
             all_tenants=self.app.options.all_tenants,
             edit_managed=self.app.options.edit_managed,
             endpoint=self.app.options.os_endpoint)
-
+        warnings.resetwarnings()
         try:
             return super(Command, self).run(parsed_args)
         except exceptions.RemoteError as e:
