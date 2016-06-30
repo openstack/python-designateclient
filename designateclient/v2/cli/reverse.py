@@ -16,9 +16,7 @@
 
 import logging
 
-from cliff import command
-from cliff import lister
-from cliff import show
+from osc_lib.command import command
 import six
 
 from designateclient import utils
@@ -34,7 +32,7 @@ def _format_floatingip(fip):
     fip.pop('links', None)
 
 
-class ListFloatingIPCommand(lister.Lister):
+class ListFloatingIPCommand(command.Lister):
     """List floatingip ptr records"""
 
     columns = ['id', 'ptrdname', 'description', 'ttl']
@@ -48,7 +46,7 @@ class ListFloatingIPCommand(lister.Lister):
         return cols, (utils.get_item_properties(s, cols) for s in data)
 
 
-class ShowFloatingIPCommand(show.ShowOne):
+class ShowFloatingIPCommand(command.ShowOne):
     """Show floatingip ptr record details"""
 
     def get_parser(self, prog_name):
@@ -68,7 +66,7 @@ class ShowFloatingIPCommand(show.ShowOne):
         return six.moves.zip(*sorted(six.iteritems(data)))
 
 
-class SetFloatingIPCommand(show.ShowOne):
+class SetFloatingIPCommand(command.ShowOne):
     """Set floatingip ptr record"""
 
     def get_parser(self, prog_name):

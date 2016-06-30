@@ -16,8 +16,7 @@
 
 import logging
 
-from cliff import lister
-from cliff import show
+from osc_lib.command import command
 import six
 
 from designateclient import utils
@@ -36,7 +35,7 @@ def _format_status(status):
     return status
 
 
-class ListServiceStatusesCommand(lister.Lister):
+class ListServiceStatusesCommand(command.Lister):
     """List service statuses"""
 
     columns = ['id', 'hostname', 'service_name', 'status', 'stats',
@@ -74,7 +73,7 @@ class ListServiceStatusesCommand(lister.Lister):
         return cols, (utils.get_item_properties(s, cols) for s in data)
 
 
-class ShowServiceStatusCommand(show.ShowOne):
+class ShowServiceStatusCommand(command.ShowOne):
     """Show service status details"""
 
     def get_parser(self, prog_name):

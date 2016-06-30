@@ -16,9 +16,7 @@
 
 import logging
 
-from cliff import command
-from cliff import lister
-from cliff import show
+from osc_lib.command import command
 from osc_lib import exceptions as osc_exc
 import six
 
@@ -43,7 +41,7 @@ def _format_zone_import_record(zone_import_record):
     zone_import_record.pop('links', None)
 
 
-class ListZonesCommand(lister.Lister):
+class ListZonesCommand(command.Lister):
     """List zones"""
 
     columns = ['id', 'name', 'type', 'serial', 'status', 'action']
@@ -99,7 +97,7 @@ class ListZonesCommand(lister.Lister):
         return cols, (utils.get_item_properties(s, cols) for s in data)
 
 
-class ShowZoneCommand(show.ShowOne):
+class ShowZoneCommand(command.ShowOne):
     """Show zone details"""
 
     def get_parser(self, prog_name):
@@ -121,7 +119,7 @@ class ShowZoneCommand(show.ShowOne):
         return six.moves.zip(*sorted(six.iteritems(data)))
 
 
-class CreateZoneCommand(show.ShowOne):
+class CreateZoneCommand(command.ShowOne):
     """Create new zone"""
 
     def get_parser(self, prog_name):
@@ -172,7 +170,7 @@ class CreateZoneCommand(show.ShowOne):
         return six.moves.zip(*sorted(six.iteritems(data)))
 
 
-class SetZoneCommand(show.ShowOne):
+class SetZoneCommand(command.ShowOne):
     """Set zone properties"""
 
     def get_parser(self, prog_name):
@@ -217,7 +215,7 @@ class SetZoneCommand(show.ShowOne):
         return six.moves.zip(*sorted(six.iteritems(updated)))
 
 
-class DeleteZoneCommand(show.ShowOne):
+class DeleteZoneCommand(command.ShowOne):
     """Delete zone"""
 
     def get_parser(self, prog_name):
@@ -282,7 +280,7 @@ class AXFRZoneCommand(command.Command):
                  {"zone_id": parsed_args.id})
 
 
-class CreateTransferRequestCommand(show.ShowOne):
+class CreateTransferRequestCommand(command.ShowOne):
     """Create new zone transfer request"""
 
     def get_parser(self, prog_name):
@@ -309,7 +307,7 @@ class CreateTransferRequestCommand(show.ShowOne):
         return six.moves.zip(*sorted(six.iteritems(data)))
 
 
-class ListTransferRequestsCommand(lister.Lister):
+class ListTransferRequestsCommand(command.Lister):
     """List Zone Transfer Requests"""
 
     columns = ['id', 'zone_id', 'zone_name', 'project_id',
@@ -333,7 +331,7 @@ class ListTransferRequestsCommand(lister.Lister):
         return cols, (utils.get_item_properties(s, cols) for s in data)
 
 
-class ShowTransferRequestCommand(show.ShowOne):
+class ShowTransferRequestCommand(command.ShowOne):
     """Show Zone Transfer Request Details"""
 
     def get_parser(self, prog_name):
@@ -354,7 +352,7 @@ class ShowTransferRequestCommand(show.ShowOne):
         return six.moves.zip(*sorted(six.iteritems(data)))
 
 
-class SetTransferRequestCommand(show.ShowOne):
+class SetTransferRequestCommand(command.ShowOne):
     """Set a Zone Transfer Request"""
 
     def get_parser(self, prog_name):
@@ -405,7 +403,7 @@ class DeleteTransferRequestCommand(command.Command):
         LOG.info('Zone Transfer %s was deleted', parsed_args.id)
 
 
-class AcceptTransferRequestCommand(show.ShowOne):
+class AcceptTransferRequestCommand(command.ShowOne):
     """Accept a Zone Transfer Request"""
 
     def get_parser(self, prog_name):
@@ -430,7 +428,7 @@ class AcceptTransferRequestCommand(show.ShowOne):
         return six.moves.zip(*sorted(six.iteritems(data)))
 
 
-class ListTransferAcceptsCommand(lister.Lister):
+class ListTransferAcceptsCommand(command.Lister):
     """List Zone Transfer Accepts"""
 
     columns = ['id', 'zone_id', 'project_id',
@@ -454,7 +452,7 @@ class ListTransferAcceptsCommand(lister.Lister):
         return cols, (utils.get_item_properties(s, cols) for s in data)
 
 
-class ShowTransferAcceptCommand(show.ShowOne):
+class ShowTransferAcceptCommand(command.ShowOne):
     """Show Zone Transfer Accept"""
 
     def get_parser(self, prog_name):
@@ -475,7 +473,7 @@ class ShowTransferAcceptCommand(show.ShowOne):
         return six.moves.zip(*sorted(six.iteritems(data)))
 
 
-class ExportZoneCommand(show.ShowOne):
+class ExportZoneCommand(command.ShowOne):
     """Export a Zone"""
 
     def get_parser(self, prog_name):
@@ -500,7 +498,7 @@ class ExportZoneCommand(show.ShowOne):
         return six.moves.zip(*sorted(six.iteritems(data)))
 
 
-class ListZoneExportsCommand(lister.Lister):
+class ListZoneExportsCommand(command.Lister):
     """List Zone Exports"""
 
     columns = [
@@ -529,7 +527,7 @@ class ListZoneExportsCommand(lister.Lister):
                       for s in data['exports'])
 
 
-class ShowZoneExportCommand(show.ShowOne):
+class ShowZoneExportCommand(command.ShowOne):
     """Show a Zone Export"""
 
     def get_parser(self, prog_name):
@@ -575,7 +573,7 @@ class DeleteZoneExportCommand(command.Command):
         LOG.info('Zone Export %s was deleted', parsed_args.zone_export_id)
 
 
-class ShowZoneExportFileCommand(show.ShowOne):
+class ShowZoneExportFileCommand(command.ShowOne):
     """Show the zone file for the Zone Export"""
 
     def get_parser(self, prog_name):
@@ -597,7 +595,7 @@ class ShowZoneExportFileCommand(show.ShowOne):
         return ['data'], [data]
 
 
-class ImportZoneCommand(show.ShowOne):
+class ImportZoneCommand(command.ShowOne):
     """Import a Zone from a file on the filesystem"""
 
     def get_parser(self, prog_name):
@@ -626,7 +624,7 @@ class ImportZoneCommand(show.ShowOne):
         return six.moves.zip(*sorted(six.iteritems(data)))
 
 
-class ListZoneImportsCommand(lister.Lister):
+class ListZoneImportsCommand(command.Lister):
     """List Zone Imports"""
 
     columns = [
@@ -656,7 +654,7 @@ class ListZoneImportsCommand(lister.Lister):
                       for s in data['imports'])
 
 
-class ShowZoneImportCommand(show.ShowOne):
+class ShowZoneImportCommand(command.ShowOne):
     """Show a Zone Import"""
 
     def get_parser(self, prog_name):

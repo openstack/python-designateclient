@@ -16,9 +16,7 @@
 
 import logging
 
-from cliff import command
-from cliff import lister
-from cliff import show
+from osc_lib.command import command
 import six
 
 from designateclient import utils
@@ -34,7 +32,7 @@ def _format_blacklist(blacklist):
     blacklist.pop('links', None)
 
 
-class ListBlacklistsCommand(lister.Lister):
+class ListBlacklistsCommand(command.Lister):
     """List blacklists"""
 
     columns = ['id', 'pattern', 'description']
@@ -55,7 +53,7 @@ class ListBlacklistsCommand(lister.Lister):
         return cols, (utils.get_item_properties(s, cols) for s in data)
 
 
-class ShowBlacklistCommand(show.ShowOne):
+class ShowBlacklistCommand(command.ShowOne):
     """Show blacklist details"""
 
     def get_parser(self, prog_name):
@@ -75,7 +73,7 @@ class ShowBlacklistCommand(show.ShowOne):
         return six.moves.zip(*sorted(six.iteritems(data)))
 
 
-class CreateBlacklistCommand(show.ShowOne):
+class CreateBlacklistCommand(command.ShowOne):
     """Create new blacklist"""
 
     def get_parser(self, prog_name):
@@ -100,7 +98,7 @@ class CreateBlacklistCommand(show.ShowOne):
         return six.moves.zip(*sorted(six.iteritems(data)))
 
 
-class SetBlacklistCommand(show.ShowOne):
+class SetBlacklistCommand(command.ShowOne):
     """Set blacklist properties"""
 
     def get_parser(self, prog_name):
