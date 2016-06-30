@@ -22,7 +22,9 @@ from cliff import show
 import six
 
 from designateclient import utils
+from designateclient.v2.cli import common
 from designateclient.v2.utils import get_all
+
 
 LOG = logging.getLogger(__name__)
 
@@ -37,8 +39,16 @@ class ListBlacklistsCommand(lister.Lister):
 
     columns = ['id', 'pattern', 'description']
 
+    def get_parser(self, prog_name):
+        parser = super(ListBlacklistsCommand, self).get_parser(prog_name)
+
+        common.add_all_common_options(parser)
+
+        return parser
+
     def take_action(self, parsed_args):
         client = self.app.client_manager.dns
+        common.set_all_common_headers(client, parsed_args)
 
         cols = self.columns
         data = get_all(client.blacklists.list)
@@ -53,10 +63,13 @@ class ShowBlacklistCommand(show.ShowOne):
 
         parser.add_argument('id', help="Blacklist ID")
 
+        common.add_all_common_options(parser)
+
         return parser
 
     def take_action(self, parsed_args):
         client = self.app.client_manager.dns
+        common.set_all_common_headers(client, parsed_args)
         data = client.blacklists.get(parsed_args.id)
         _format_blacklist(data)
         return six.moves.zip(*sorted(six.iteritems(data)))
@@ -72,10 +85,13 @@ class CreateBlacklistCommand(show.ShowOne):
                             required=True)
         parser.add_argument('--description', help="Description")
 
+        common.add_all_common_options(parser)
+
         return parser
 
     def take_action(self, parsed_args):
         client = self.app.client_manager.dns
+        common.set_all_common_headers(client, parsed_args)
 
         data = client.blacklists.create(
             parsed_args.pattern, parsed_args.description)
@@ -97,6 +113,8 @@ class SetBlacklistCommand(show.ShowOne):
         description_group.add_argument('--description', help="Description")
         description_group.add_argument('--no-description', action='store_true')
 
+        common.add_all_common_options(parser)
+
         return parser
 
     def take_action(self, parsed_args):
@@ -111,6 +129,7 @@ class SetBlacklistCommand(show.ShowOne):
             data['description'] = parsed_args.description
 
         client = self.app.client_manager.dns
+        common.set_all_common_headers(client, parsed_args)
 
         updated = client.blacklists.update(parsed_args.id, data)
 
@@ -126,10 +145,13 @@ class DeleteBlacklistCommand(command.Command):
 
         parser.add_argument('id', help="Blacklist ID")
 
+        common.add_all_common_options(parser)
+
         return parser
 
     def take_action(self, parsed_args):
         client = self.app.client_manager.dns
+        common.set_all_common_headers(client, parsed_args)
         client.blacklists.delete(parsed_args.id)
 
         LOG.info('Blacklist %s was deleted', parsed_args.id)

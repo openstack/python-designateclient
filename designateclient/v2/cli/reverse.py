@@ -22,7 +22,9 @@ from cliff import show
 import six
 
 from designateclient import utils
+from designateclient.v2.cli import common
 from designateclient.v2.utils import get_all
+
 
 LOG = logging.getLogger(__name__)
 
@@ -39,6 +41,7 @@ class ListFloatingIPCommand(lister.Lister):
 
     def take_action(self, parsed_args):
         client = self.app.client_manager.dns
+        common.set_all_common_headers(client, parsed_args)
 
         cols = self.columns
         data = get_all(client.floatingips.list)
@@ -53,10 +56,13 @@ class ShowFloatingIPCommand(show.ShowOne):
 
         parser.add_argument('floatingip_id', help="Floating IP ID")
 
+        common.add_all_common_options(parser)
+
         return parser
 
     def take_action(self, parsed_args):
         client = self.app.client_manager.dns
+        common.set_all_common_headers(client, parsed_args)
         data = client.floatingips.get(parsed_args.floatingip_id)
         _format_floatingip(data)
         return six.moves.zip(*sorted(six.iteritems(data)))
@@ -79,6 +85,8 @@ class SetFloatingIPCommand(show.ShowOne):
         ttl_group.add_argument('--ttl', type=int, help="TTL")
         ttl_group.add_argument('--no-ttl', action='store_true')
 
+        common.add_all_common_options(parser)
+
         return parser
 
     def take_action(self, parsed_args):
@@ -95,6 +103,7 @@ class SetFloatingIPCommand(show.ShowOne):
             data['ttl'] = parsed_args.ttl
 
         client = self.app.client_manager.dns
+        common.set_all_common_headers(client, parsed_args)
 
         fip = client.floatingips.set(
             parsed_args.floatingip_id,
@@ -114,9 +123,12 @@ class UnsetFloatingIPCommand(command.Command):
 
         parser.add_argument('floatingip_id', help="Floating IP ID")
 
+        common.add_all_common_options(parser)
+
         return parser
 
     def take_action(self, parsed_args):
         client = self.app.client_manager.dns
+        common.set_all_common_headers(client, parsed_args)
         client.floatingips.unset(parsed_args.floatingip_id)
         LOG.info('FloatingIP PTR %s was unset', parsed_args.floatingip_id)

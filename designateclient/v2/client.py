@@ -41,6 +41,9 @@ class DesignateAdapter(adapter.LegacyJsonAdapter):
     """
     def __init__(self, *args, **kwargs):
         self.timeout = kwargs.pop('timeout', None)
+        self.all_projects = kwargs.pop('all_projects', False)
+        self.edit_managed = kwargs.pop('edit_managed', False)
+        self.sudo_project_id = kwargs.pop('sudo_project_id', None)
         super(self.__class__, self).__init__(*args, **kwargs)
 
     def request(self, *args, **kwargs):
@@ -49,7 +52,27 @@ class DesignateAdapter(adapter.LegacyJsonAdapter):
         if self.timeout is not None:
             kwargs.setdefault('timeout', self.timeout)
 
-        kwargs.setdefault('headers', {}).setdefault(
+        kwargs.setdefault('headers', {})
+
+        if self.all_projects:
+            kwargs['headers'].setdefault(
+                'X-Auth-All-Projects',
+                self.all_projects
+            )
+
+        if self.edit_managed:
+            kwargs['headers'].setdefault(
+                'X-Designate-Edit-Managed-Records',
+                self.edit_managed
+            )
+
+        if self.sudo_project_id is not None:
+            kwargs['headers'].setdefault(
+                'X-Auth-Sudo-Project-ID',
+                self.sudo_project_id
+            )
+
+        kwargs['headers'].setdefault(
             'Content-Type', 'application/json')
 
         response, body = super(self.__class__, self).request(*args, **kwargs)
@@ -78,7 +101,8 @@ class Client(object):
     def __init__(self, region_name=None, endpoint_type='publicURL',
                  extensions=None, service_type='dns', service_name=None,
                  http_log_debug=False, session=None, auth=None, timeout=None,
-                 endpoint_override=None):
+                 endpoint_override=None, all_projects=False,
+                 edit_managed=False, sudo_project_id=None):
         if session is None:
             raise ValueError("A session instance is required")
 
@@ -91,7 +115,10 @@ class Client(object):
             user_agent='python-designateclient-%s' % version.version_info,
             version=('2'),
             endpoint_override=endpoint_override,
-            timeout=timeout
+            timeout=timeout,
+            all_projects=all_projects,
+            edit_managed=edit_managed,
+            sudo_project_id=sudo_project_id
         )
 
         self.blacklists = BlacklistController(self)

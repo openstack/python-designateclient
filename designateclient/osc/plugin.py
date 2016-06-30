@@ -33,6 +33,7 @@ def make_client(instance):
         API_NAME, instance._api_version[API_NAME],
         API_VERSIONS)
     kwargs = oscutils.build_kwargs_dict('endpoint_type', instance._interface)
+
     return cls(session=instance.session,
                region_name=instance._region_name, **kwargs)
 
