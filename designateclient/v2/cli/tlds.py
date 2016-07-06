@@ -16,9 +16,7 @@
 
 import logging
 
-from cliff import command
-from cliff import lister
-from cliff import show
+from osc_lib.command import command
 import six
 
 from designateclient import utils
@@ -34,7 +32,7 @@ def _format_tld(tld):
     tld.pop('links', None)
 
 
-class ListTLDsCommand(lister.Lister):
+class ListTLDsCommand(command.Lister):
     """List tlds"""
 
     columns = ['id', 'name', 'description']
@@ -60,7 +58,7 @@ class ListTLDsCommand(lister.Lister):
         return cols, (utils.get_item_properties(s, cols) for s in data)
 
 
-class ShowTLDCommand(show.ShowOne):
+class ShowTLDCommand(command.ShowOne):
     """Show tld details"""
 
     def get_parser(self, prog_name):
@@ -80,7 +78,7 @@ class ShowTLDCommand(show.ShowOne):
         return six.moves.zip(*sorted(six.iteritems(data)))
 
 
-class CreateTLDCommand(show.ShowOne):
+class CreateTLDCommand(command.ShowOne):
     """Create new tld"""
 
     def get_parser(self, prog_name):
@@ -101,7 +99,7 @@ class CreateTLDCommand(show.ShowOne):
         return six.moves.zip(*sorted(six.iteritems(data)))
 
 
-class SetTLDCommand(show.ShowOne):
+class SetTLDCommand(command.ShowOne):
     """Set tld properties"""
 
     def get_parser(self, prog_name):

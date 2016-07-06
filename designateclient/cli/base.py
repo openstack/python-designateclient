@@ -16,10 +16,8 @@
 import abc
 import warnings
 
-from cliff.command import Command as CliffCommand
-from cliff.lister import Lister
-from cliff.show import ShowOne
 from keystoneauth1 import exceptions as ks_exceptions
+from osc_lib.command import command
 import six
 
 from designateclient import exceptions
@@ -28,7 +26,7 @@ from designateclient.v1 import Client
 
 
 @six.add_metaclass(abc.ABCMeta)
-class Command(CliffCommand):
+class Command(command.Command):
     def run(self, parsed_args):
 
         warnings.simplefilter('once', category=DeprecationWarning)
@@ -109,7 +107,7 @@ class Command(CliffCommand):
         return utils.find_resourceid_by_name_or_id(resource_client, name_or_id)
 
 
-class ListCommand(Command, Lister):
+class ListCommand(Command, command.Lister):
     columns = None
 
     def post_execute(self, results):
@@ -121,21 +119,21 @@ class ListCommand(Command, Lister):
             return [], ()
 
 
-class GetCommand(Command, ShowOne):
+class GetCommand(Command, command.ShowOne):
     def post_execute(self, results):
         return list(six.iterkeys(results)), list(six.itervalues(results))
 
 
-class CreateCommand(Command, ShowOne):
+class CreateCommand(Command, command.ShowOne):
     def post_execute(self, results):
         return list(six.iterkeys(results)), list(six.itervalues(results))
 
 
-class UpdateCommand(Command, ShowOne):
+class UpdateCommand(Command, command.ShowOne):
     def post_execute(self, results):
         return list(six.iterkeys(results)), list(six.itervalues(results))
 
 
-class DeleteCommand(Command, ShowOne):
+class DeleteCommand(Command, command.ShowOne):
     def post_execute(self, results):
         return [], []

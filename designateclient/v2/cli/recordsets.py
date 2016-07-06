@@ -16,8 +16,7 @@
 
 import logging
 
-from cliff import lister
-from cliff import show
+from osc_lib.command import command
 import six
 
 from designateclient import utils
@@ -43,7 +42,7 @@ def _has_project_id(data):
     return False
 
 
-class ListRecordSetsCommand(lister.Lister):
+class ListRecordSetsCommand(command.Lister):
     """List recordsets"""
 
     columns = ['id', 'name', 'type', 'records', 'status', 'action']
@@ -116,7 +115,7 @@ class ListRecordSetsCommand(lister.Lister):
         return cols, (utils.get_item_properties(s, cols) for s in data)
 
 
-class ShowRecordSetCommand(show.ShowOne):
+class ShowRecordSetCommand(command.ShowOne):
     """Show recordset details"""
 
     def get_parser(self, prog_name):
@@ -138,7 +137,7 @@ class ShowRecordSetCommand(show.ShowOne):
         return six.moves.zip(*sorted(six.iteritems(data)))
 
 
-class CreateRecordSetCommand(show.ShowOne):
+class CreateRecordSetCommand(command.ShowOne):
     """Create new recordset"""
 
     def get_parser(self, prog_name):
@@ -172,7 +171,7 @@ class CreateRecordSetCommand(show.ShowOne):
         return six.moves.zip(*sorted(six.iteritems(data)))
 
 
-class SetRecordSetCommand(show.ShowOne):
+class SetRecordSetCommand(command.ShowOne):
     """Set recordset properties"""
 
     def get_parser(self, prog_name):
@@ -223,7 +222,7 @@ class SetRecordSetCommand(show.ShowOne):
         return six.moves.zip(*sorted(six.iteritems(updated)))
 
 
-class DeleteRecordSetCommand(show.ShowOne):
+class DeleteRecordSetCommand(command.ShowOne):
     """Delete recordset"""
 
     def get_parser(self, prog_name):
