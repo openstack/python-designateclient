@@ -1,0 +1,8 @@
+---
+features:
+  - added openstack dns quota command +
+    list + set + reset sub commands
+
+    All sub commands can be scoped to a project using --project-id
+    If the --project-id does not match the current project id
+    it will set X-Auth-All-Projects:True
