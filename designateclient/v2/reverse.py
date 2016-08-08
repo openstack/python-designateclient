@@ -31,8 +31,8 @@ class FloatingIPController(V2Controller):
         url = '/reverse/floatingips/%s' % floatingip_id
         return self._patch(url, data=data)
 
-    def list(self):
-        url = '/reverse/floatingips'
+    def list(self, criterion=None):
+        url = self.build_url('/reverse/floatingips', criterion)
 
         return self._get(url, response_key='floatingips')
 
