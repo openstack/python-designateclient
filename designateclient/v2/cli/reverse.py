@@ -52,7 +52,8 @@ class ShowFloatingIPCommand(command.ShowOne):
     def get_parser(self, prog_name):
         parser = super(ShowFloatingIPCommand, self).get_parser(prog_name)
 
-        parser.add_argument('floatingip_id', help="Floating IP ID")
+        parser.add_argument('floatingip_id', help="Floating IP ID in format "
+                            "region:floatingip_id")
 
         common.add_all_common_options(parser)
 
@@ -72,7 +73,8 @@ class SetFloatingIPCommand(command.ShowOne):
     def get_parser(self, prog_name):
         parser = super(SetFloatingIPCommand, self).get_parser(prog_name)
 
-        parser.add_argument('floatingip_id', help="Floating IP ID")
+        parser.add_argument('floatingip_id', help="Floating IP ID in format "
+                            "region:floatingip_id")
         parser.add_argument('ptrdname', help="PTRD Name")
 
         description_group = parser.add_mutually_exclusive_group()
@@ -119,7 +121,8 @@ class UnsetFloatingIPCommand(command.Command):
     def get_parser(self, prog_name):
         parser = super(UnsetFloatingIPCommand, self).get_parser(prog_name)
 
-        parser.add_argument('floatingip_id', help="Floating IP ID")
+        parser.add_argument('floatingip_id', help="Floating IP ID in format "
+                            "region:floatingip_id")
 
         common.add_all_common_options(parser)
 
