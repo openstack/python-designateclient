@@ -37,6 +37,13 @@ class ListFloatingIPCommand(command.Lister):
 
     columns = ['id', 'ptrdname', 'description', 'ttl']
 
+    def get_parser(self, prog_name):
+        parser = super(ListFloatingIPCommand, self).get_parser(prog_name)
+
+        common.add_all_common_options(parser)
+
+        return parser
+
     def take_action(self, parsed_args):
         client = self.app.client_manager.dns
         common.set_all_common_headers(client, parsed_args)
