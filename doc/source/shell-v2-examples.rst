@@ -117,6 +117,23 @@ Working with PTR Records
 ------------------------
 Reverse DNS for Neutron Floating IPs can be managed with the "ptr" subcommand.
 
+Create a PTR record:
+
+.. code-block:: shell-session
+
+   $ openstack ptr record set RegionOne:5c02c519-4928-4a38-bd10-c748c200912f ftp.example.com.
+   +-------------+------------------------------------------------+
+   | Field       | Value                                          |
+   +-------------+------------------------------------------------+
+   | action      | CREATE                                         |
+   | address     | 172.24.4.11                                    |
+   | description | None                                           |
+   | id          | RegionOne:5c02c519-4928-4a38-bd10-c748c200912f |
+   | ptrdname    | ftp.example.com.                               |
+   | status      | PENDING                                        |
+   | ttl         | 3600                                           |
+   +-------------+------------------------------------------------+
+
 List all PTR records:
 
 .. code-block:: shell-session
@@ -128,12 +145,6 @@ Show a PTR record:
 .. code-block:: shell-session
 
    $ openstack ptr record show RegionOne:5c02c519-4928-4a38-bd10-c748c200912f
-
-Create a PTR record:
-
-.. code-block:: shell-session
-
-   $ openstack ptr record set RegionOne:5c02c519-4928-4a38-bd10-c748c200912f mail.example.com.
 
 Delete a PTR record:
 
