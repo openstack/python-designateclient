@@ -19,6 +19,7 @@ import logging
 from cliff import command
 from cliff import lister
 from cliff import show
+from openstackclient.common import exceptions as osc_exc
 import six
 
 from designateclient import utils
@@ -141,6 +142,9 @@ class CreateRecordSetCommand(show.ShowOne):
             description=parsed_args.description,
             ttl=parsed_args.ttl)
 
+        if data['code'] == 413:
+            msg = "Quota limit reached for recordset creation"
+            raise osc_exc.CommandError(msg)
         _format_recordset(data)
         return six.moves.zip(*sorted(six.iteritems(data)))
 

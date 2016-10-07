@@ -143,6 +143,9 @@ class CreateZoneCommand(show.ShowOne):
         data = client.zones.create(
             parsed_args.name, parsed_args.type, **payload)
 
+        if data['code'] == 413:
+            msg = "Quota limit reached for domain creation"
+            raise osc_exc.CommandError(msg)
         _format_zone(data)
         return six.moves.zip(*sorted(six.iteritems(data)))
 
