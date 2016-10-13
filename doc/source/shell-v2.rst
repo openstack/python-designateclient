@@ -121,7 +121,7 @@ zone transfer request delete  Delete a Zone Transfer Request
 zone transfer accept request  Accept a Zone Transfer Request
 zone transfer accept list     List Zone Transfer Accepts
 zone transfer accept show     Show Zone Transfer Accept
-zone abandon                  Abandon a zone
+zone abandon                  Abandon a zone                                         Yes
 zone axfr                     AXFR a zone
 zone blacklist create         Create new blacklist                                   Yes
 zone blacklist list           List blacklists                                        Yes
