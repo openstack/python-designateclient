@@ -14,6 +14,8 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
+"""OpenStackClient plugin for DNS service."""
+
 from osc_lib import utils as oscutils
 
 from designateclient import shell
