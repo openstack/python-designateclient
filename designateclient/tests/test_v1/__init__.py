@@ -46,7 +46,7 @@ class CrudMixin(object):
     def assertList(self, expected, actual):
         self.assertEqual(len(expected), len(actual))
         for i in expected:
-            self.assertTrue(i in actual)
+            self.assertIn(i, actual)
 
 
 class APIV1TestCase(base.APITestCase):
