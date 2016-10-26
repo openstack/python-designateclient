@@ -58,7 +58,7 @@ class DesignateAdapter(adapter.LegacyJsonAdapter):
         if self.all_projects:
             kwargs['headers'].setdefault(
                 'X-Auth-All-Projects',
-                self.all_projects
+                str(self.all_projects)
             )
 
         if self.edit_managed:
