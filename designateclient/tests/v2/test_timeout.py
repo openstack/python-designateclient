@@ -70,7 +70,7 @@ class TestTimeout(v2.APIV2TestCase, v2.CrudMixin):
         self.assertTrue(self.mock_send_request.called)
         kw = self.mock_send_request.call_args[1]
         if timeout is None:
-            self.assertFalse('timeout' in kw)
+            self.assertNotIn('timeout', kw)
         else:
             self.assertEqual(timeout, kw['timeout'])
 
