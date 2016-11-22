@@ -15,7 +15,7 @@ limitations under the License.
 """
 import unittest
 
-from tempest_lib.exceptions import CommandFailed
+from tempest.lib.exceptions import CommandFailed
 
 from designateclient.functionaltests.base import BaseDesignateTest
 from designateclient.functionaltests.client import DesignateCLI

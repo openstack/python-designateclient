@@ -16,7 +16,7 @@ limitations under the License.
 import logging
 import os
 
-from tempest_lib.cli import base
+from tempest.lib.cli import base
 
 from designateclient.functionaltests.config import cfg
 from designateclient.functionaltests.models import FieldValueModel
