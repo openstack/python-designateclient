@@ -20,7 +20,7 @@ import tempfile
 import traceback
 
 import fixtures
-from tempest_lib.exceptions import CommandFailed
+from tempest.lib.exceptions import CommandFailed
 from testtools.runtest import MultipleExceptions
 
 from designateclient.functionaltests.client import DesignateCLI

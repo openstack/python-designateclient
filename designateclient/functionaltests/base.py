@@ -13,8 +13,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 """
-from tempest_lib.cli import base
-from tempest_lib.exceptions import CommandFailed
+from tempest.lib.cli import base
+from tempest.lib.exceptions import CommandFailed
 
 from designateclient.functionaltests import client
 from designateclient.functionaltests import config
