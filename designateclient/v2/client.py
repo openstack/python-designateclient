@@ -64,7 +64,7 @@ class DesignateAdapter(adapter.LegacyJsonAdapter):
         if self.edit_managed:
             kwargs['headers'].setdefault(
                 'X-Designate-Edit-Managed-Records',
-                self.edit_managed
+                str(self.edit_managed)
             )
 
         if self.sudo_project_id is not None:
