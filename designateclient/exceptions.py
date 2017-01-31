@@ -78,3 +78,7 @@ class Conflict(RemoteError):
 
 class NotFound(RemoteError):
     pass
+
+
+class OverQuota(RemoteError):
+    pass

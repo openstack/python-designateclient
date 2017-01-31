@@ -93,6 +93,8 @@ class DesignateAdapter(adapter.LegacyJsonAdapter):
             raise exceptions.NotFound(**response_payload)
         elif response.status_code == 409:
             raise exceptions.Conflict(**response_payload)
+        elif response.status_code == 413:
+            raise exceptions.OverQuota(**response_payload)
         elif response.status_code >= 500:
             raise exceptions.Unknown(**response_payload)
         return response, body
