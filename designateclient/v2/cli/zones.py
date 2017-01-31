@@ -31,6 +31,10 @@ LOG = logging.getLogger(__name__)
 def _format_zone(zone):
     zone.pop('links', None)
     zone['masters'] = ", ".join(zone['masters'])
+    attrib = ''
+    for attr in zone['attributes']:
+        attrib += "%s:%s\n" % (attr, zone['attributes'][attr])
+    zone['attributes'] = attrib
 
 
 def _format_zone_export_record(zone_export_record):
@@ -131,6 +135,7 @@ class CreateZoneCommand(command.ShowOne):
         parser.add_argument('--ttl', type=int, help="Time To Live (Seconds)")
         parser.add_argument('--description', help="Description")
         parser.add_argument('--masters', help="Zone Masters", nargs='+')
+        parser.add_argument('--attributes', help="Zone Attributes", nargs='+')
 
         common.add_all_common_options(parser)
 
@@ -144,6 +149,17 @@ class CreateZoneCommand(command.ShowOne):
 
         if parsed_args.description:
             payload["description"] = parsed_args.description
+
+        if parsed_args.attributes:
+            payload["attributes"] = {}
+            for attr in parsed_args.attributes:
+                try:
+                    k, v = attr.split(':')
+                    payload["attributes"][k] = v
+                except ValueError:
+                    msg = "Attribute '%s' is in an incorrect format. "\
+                          "Attributes are <key>:<value> formated"
+                    raise osc_exc.CommandError(msg % attr)
 
         if parsed_args.type == 'PRIMARY':
             # email is just for PRIMARY.

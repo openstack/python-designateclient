@@ -19,7 +19,7 @@ from designateclient.v2 import utils as v2_utils
 
 class ZoneController(V2Controller):
     def create(self, name, type_=None, email=None, description=None, ttl=None,
-               masters=None):
+               masters=None, attributes=None):
         type_ = type_ or "PRIMARY"
 
         data = {
@@ -39,6 +39,9 @@ class ZoneController(V2Controller):
 
         if description is not None:
             data["description"] = description
+
+        if attributes is not None:
+            data["attributes"] = attributes
 
         return self._post('/zones', data=data)
 
