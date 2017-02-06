@@ -17,10 +17,11 @@ test_designateclient
 Tests for `designateclient` module.
 """
 
+import designateclient
 from designateclient.tests import base
 
 
-class DummyTestCase(base.TestCase):
+class ClientTestCase(base.TestCase):
 
-    def test_dummy(self):
-        pass
+    def test_module_version(self):
+        self.assertTrue(hasattr(designateclient, '__version__'))
