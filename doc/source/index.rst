@@ -29,7 +29,6 @@ Contents
    installation
    bindings
    shell-v2
-   shell-v2-examples
    shell
    shell-examples
    contributing
