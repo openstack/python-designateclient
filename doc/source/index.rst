@@ -33,6 +33,7 @@ Contents
    shell-examples
    contributing
    functional-tests
+   api/autoindex
 
 Indices and tables
 ==================

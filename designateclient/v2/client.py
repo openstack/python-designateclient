@@ -33,12 +33,13 @@ from designateclient import version
 
 
 class DesignateAdapter(adapter.LegacyJsonAdapter):
-    """
-    Adapter around LegacyJsonAdapter.
+    """Adapter around LegacyJsonAdapter.
+
     The user can pass a timeout keyword that will apply only to
     the Designate Client, in order:
-        - timeout keyword passed to request()
-        - timeout attribute on keystone session
+
+    - timeout keyword passed to ``request()``
+    - timeout attribute on keystone session
     """
     def __init__(self, *args, **kwargs):
         self.timeout = kwargs.pop('timeout', None)

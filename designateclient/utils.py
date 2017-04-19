@@ -179,11 +179,13 @@ def find_resourceid_by_name_or_id(resource_client, name_or_id):
 
 class AdapterWithTimeout(adapter.Adapter):
     """adapter.Adapter wraps around a Session.
+
     The user can pass a timeout keyword that will apply only to
     the Designate Client, in order:
-        - timeout keyword passed to request()
-        - timeout keyword passed to AdapterWithTimeout()
-        - timeout attribute on keystone session
+
+    - timeout keyword passed to ``request()``
+    - timeout keyword passed to ``AdapterWithTimeout()``
+    - timeout attribute on keystone session
     """
     def __init__(self, *args, **kw):
         self.timeout = kw.pop('timeout', None)

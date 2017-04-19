@@ -29,7 +29,7 @@ class ServersController(client.CrudController):
         """
         Retrieve a list of servers
 
-        :returns: A list of :class:`Server`s
+        :returns: A list of :class:`Server`
         """
         response = self.client.get('/servers')
 

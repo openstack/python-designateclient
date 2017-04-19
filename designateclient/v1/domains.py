@@ -29,7 +29,7 @@ class DomainsController(client.CrudController):
         """
         Retrieve a list of domains
 
-        :returns: A list of :class:`Domain`s
+        :returns: A list of :class:`Domain`
         """
         response = self.client.get('/domains')
 
@@ -85,7 +85,7 @@ class DomainsController(client.CrudController):
         Retrieve the list of nameservers for a domain
 
         :param domain_id: Domain Identifier
-        :returns: A list of :class:`Server`s
+        :returns: A list of :class:`Server`
         """
         response = self.client.get('/domains/%s/servers' % domain_id)
 

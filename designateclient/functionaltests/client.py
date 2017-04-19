@@ -32,7 +32,8 @@ def build_option_string(options):
     This will quote the values, in case spaces are included.
     Any values that are None are excluded entirely.
 
-    Usage:
+    Usage::
+
         build_option_string({
             "--email": "me@example.com",
             "--name": "example.com."
@@ -40,7 +41,8 @@ def build_option_string(options):
 
         })
 
-    Returns:
+    Returns::
+
         "--email 'me@example.com' --name 'example.com.'
     """
     return " ".join("{0} '{1}'".format(flag, value)
@@ -54,14 +56,16 @@ def build_flags_string(flags):
     Pass in a dictionary mapping flags to booleans. Those flags set to true
     are included in the returned string.
 
-    Usage:
+    Usage::
+
         build_flags_string({
             '--no-ttl': True,
             '--no-name': False,
             '--verbose': True,
         })
 
-    Returns:
+    Returns::
+
         '--no-ttl --verbose'
     """
     flags = {flag: is_set for flag, is_set in flags.items() if is_set}

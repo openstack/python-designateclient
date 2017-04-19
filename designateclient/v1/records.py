@@ -31,7 +31,7 @@ class RecordsController(client.CrudController):
         Retrieve a list of records
 
         :param domain: :class:`Domain` or Domain Identifier
-        :returns: A list of :class:`Record`s
+        :returns: A list of :class:`Record`
         """
         domain_id = domain.id if isinstance(domain, Domain) else domain
 
