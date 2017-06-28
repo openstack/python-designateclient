@@ -25,6 +25,7 @@ API in order to use the client.
 
    install/index
    user/index
+   cli/index
    contributor/index
    reference/index
 
