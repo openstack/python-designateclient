@@ -17,7 +17,7 @@ etc/*.conf
 etc/*.ini
 AUTHORS
 ChangeLog
-doc/source/api/*
+doc/source/reference/api/*
 doc/build/*
 dist
 designateclient/versioninfo
