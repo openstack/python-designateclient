@@ -2,6 +2,8 @@
 Designate Command Line Tool (compatible with v1 API only)
 =========================================================
 
+.. warning:: This page refers to command that use the V1 API, which is currently disabled, and will be removed in a future release
+
 The python-designateclient package comes with a command line tool (installed as :program:`designate`), this can be used to access a Designate API
 without having to manipulate JSON by hand, it can also produce the output in a variety of formats (JSON, CSV) and allow you to select columns to be
 displayed.
@@ -38,34 +40,32 @@ With enough details now in the environment, you can use the designate client to 
 
 .. code-block:: shell-session
 
-   $ designate domain-create --name doctestdomain.eu. --email admin@doctestdomain.eu
+   $ designate domain-create --name example.com. --email admin@example.com
    +-------------+--------------------------------------+
    | Field       | Value                                |
    +-------------+--------------------------------------+
    | description | None                                 |
    | created_at  | 2013-09-19T11:45:25.295355           |
    | updated_at  | None                                 |
-   | email       | admin@doctestdomain.eu               |
+   | email       | admin@example.com                    |
    | ttl         | 3600                                 |
    | serial      | 1379591125                           |
    | id          | eacbe2a5-95f1-4a9f-89f5-b9c58009b163 |
-   | name        | doctestdomain.eu.                    |
+   | name        | example.com.                         |
    +-------------+--------------------------------------+
-
-You can see more details on the arguments domain-create accepts at the `REST API create-domain`_.
 
 Now that the domain has been created, we can start adding records.
 
-You'll note that the name (www.doctestdomain.eu) has a trailing ``.``, as per the DNS standard, we didn't set a TTL and we had to specify the parent
+You'll note that the name (www.example.com) has a trailing ``.``, as per the DNS standard, we didn't set a TTL and we had to specify the parent
 zone/domain by domain_id ``eacbe2a5-95f1-4a9f-89f5-b9c58009b163``.
 
 .. code-block:: shell-session
 
-  $  designate record-create eacbe2a5-95f1-4a9f-89f5-b9c58009b163 --name www.doctestdomain.eu. --type A --data 1.2.3.4
+  $  designate record-create eacbe2a5-95f1-4a9f-89f5-b9c58009b163 --name www.example.com. --type A --data 1.2.3.4
   +-------------+--------------------------------------+
   | Field       | Value                                |
   +-------------+--------------------------------------+
-  | name        | www.doctestdomain.eu.                |
+  | name        | www.example.com.                     |
   | data        | 1.2.3.4                              |
   | created_at  | 2013-09-19T13:44:42.295428           |
   | updated_at  | None                                 |
@@ -244,5 +244,3 @@ Commands:
   sync-domain    Sync a single Domain
   sync-record    Sync a single Record
   touch-domain   Touch a single Domain
-
-.. _REST API create-domain: https://designate.readthedocs.org/en/latest/rest/domains.html#create-domain
