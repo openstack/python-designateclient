@@ -7,7 +7,7 @@ Code is hosted `on GitHub`_. Submit bugs to the Designate Client project on
 
 .. _on GitHub: https://github.com/openstack/python-designateclient
 .. _Launchpad: https://launchpad.net/python-designateclient
-.. _Gerrit: http://docs.openstack.org/infra/manual/developers.html#development-workflow
+.. _Gerrit: https://docs.openstack.org/infra/manual/developers.html#development-workflow
 
 Here's a quick summary:
 

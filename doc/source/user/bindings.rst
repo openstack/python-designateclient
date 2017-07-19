@@ -88,7 +88,7 @@ Keystone Authentication
 Below is a sample of standard authentication with keystone using keystoneauth
 Sessions. For more information on keystoneauth API, see `Using Sessions`_.
 
-.. _Using Sessions: http://docs.openstack.org/developer/keystoneauth/using-sessions.html
+.. _Using Sessions: https://docs.openstack.org/keystoneauth/latest/using-sessions.html
 
 .. code-block:: python
 

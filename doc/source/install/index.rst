@@ -41,5 +41,5 @@ step.  You can find out more about `Development Mode`_
     pip install -r requirements.txt -r test-requirements.txt
     python setup.py develop
 
-.. _Development Mode: http://pythonhosted.org/setuptools/setuptools.html#development-mode
+.. _Development Mode: https://setuptools.readthedocs.io/en/latest/setuptools.html#development-mode
 .. _PyPI: https://pypi.python.org/pypi/python-designateclient/
