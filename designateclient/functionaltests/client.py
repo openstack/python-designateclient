@@ -273,8 +273,44 @@ class TLDCommands(object):
         return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
 
 
-class BlacklistCommands(object):
+class TSIGKeyCommands(object):
+    def tsigkey_list(self, *args, **kwargs):
+        return self.parsed_cmd('tsigkey list', ListModel, *args, **kwargs)
 
+    def tsigkey_show(self, id, *args, **kwargs):
+        return self.parsed_cmd('tsigkey show {0}'.format(id), FieldValueModel,
+                               *args, **kwargs)
+
+    def tsigkey_delete(self, id, *args, **kwargs):
+        return self.parsed_cmd('tsigkey delete {0}'.format(id), *args,
+                               **kwargs)
+
+    def tsigkey_create(self, name, algorithm, secret, scope, resource_id,
+                       *args, **kwargs):
+        options_str = build_option_string({
+            '--name': name,
+            '--algorithm': algorithm,
+            '--secret': secret,
+            '--scope': scope,
+            '--resource-id': resource_id,
+        })
+        cmd = 'tsigkey create {0}'.format(options_str)
+        return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
+
+    def tsigkey_set(self, id, name=None, algorithm=None, secret=None,
+                    scope=None,
+                    *args, **kwargs):
+        options_str = build_option_string({
+            '--name': name,
+            '--algorithm': algorithm,
+            '--secret': secret,
+            '--scope': scope,
+        })
+        cmd = 'tsigkey set {0} {1}'.format(id, options_str)
+        return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
+
+
+class BlacklistCommands(object):
     def zone_blacklist_list(self, *args, **kwargs):
         cmd = 'zone blacklist list'
         return self.parsed_cmd(cmd, ListModel, *args, **kwargs)

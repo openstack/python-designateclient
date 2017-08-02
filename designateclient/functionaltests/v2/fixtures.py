@@ -193,6 +193,25 @@ class TLDFixture(BaseFixture):
             pass
 
 
+class TSIGKeyFixture(BaseFixture):
+    """See DesignateCLI.tsigkey_create for __init__ args"""
+
+    def __init__(self, user='admin', *args, **kwargs):
+        super(TSIGKeyFixture, self).__init__(user=user, *args, **kwargs)
+
+    def _setUp(self):
+        super(TSIGKeyFixture, self)._setUp()
+        self.tsigkey = self.client.tsigkey_create(*self.args, **self.kwargs)
+        self.addCleanup(self.cleanup_tsigkey(self.client, self.tsigkey.id))
+
+    @classmethod
+    def cleanup_tsigkey(cls, client, tsigkey_id):
+        try:
+            client.tsigkey_delete(tsigkey_id)
+        except CommandFailed:
+            pass
+
+
 class BlacklistFixture(BaseFixture):
     """See DesignateCLI.zone_blacklist_create for __init__ args"""
 

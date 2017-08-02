@@ -25,6 +25,7 @@ from designateclient.v2.recordsets import RecordSetController
 from designateclient.v2.reverse import FloatingIPController
 from designateclient.v2.service_statuses import ServiceStatusesController
 from designateclient.v2.tlds import TLDController
+from designateclient.v2.tsigkeys import TSIGKeysController
 from designateclient.v2.zones import ZoneController
 from designateclient.v2.zones import ZoneExportsController
 from designateclient.v2.zones import ZoneImportsController
@@ -138,3 +139,4 @@ class Client(object):
         self.zone_imports = ZoneImportsController(self)
         self.pools = PoolController(self)
         self.quotas = QuotasController(self)
+        self.tsigkeys = TSIGKeysController(self)

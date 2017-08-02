@@ -25,6 +25,14 @@ def random_tld(name='testtld'):
     return "{0}{1}".format(name, random_digits())
 
 
+def random_tsigkey_name(name='testtsig'):
+    return "{0}{1}".format(name, random_digits())
+
+
+def random_tsigkey_secret(name='test-secret'):
+    return "{0}-{1}".format(name, random_digits(254 - len(name)))
+
+
 def random_zone_name(name='testdomain', tld='com'):
     return "{0}{1}.{2}.".format(name, random_digits(), tld)
 
