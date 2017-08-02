@@ -572,4 +572,4 @@ Delete a TLD
 
    $ openstack tld delete a7bba387-712b-4b42-9368-4508642c6113
 
-.. _OpenStack Client configuration documentation: http://docs.openstack.org/developer/python-openstackclient/configuration.html
+.. _OpenStack Client configuration documentation: https://docs.openstack.org/python-openstackclient/latest/configuration/index.html
