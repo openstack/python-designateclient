@@ -36,7 +36,7 @@ class NoUniqueMatch(Base):
 
 class RemoteError(Base):
     def __init__(self, message=None, code=None, type=None, errors=None,
-                 request_id=None):
+                 request_id=None, **ignore):
         err_message = self._get_error_message(message, type, errors)
         self.message = err_message
         self.code = code
