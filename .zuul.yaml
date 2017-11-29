@@ -1,0 +1,4 @@
+- project:
+    name: openstack/python-designateclient
+    templates:
+      - designate-devstack-jobs
