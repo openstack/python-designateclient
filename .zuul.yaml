@@ -2,3 +2,11 @@
     name: openstack/python-designateclient
     templates:
       - designate-devstack-jobs
+    check:
+      jobs:
+        - requirements-check:
+            voting: false
+    gate:
+      jobs:
+        - requirements-check:
+            voting: false
