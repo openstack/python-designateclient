@@ -14,6 +14,7 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
+import argparse
 import logging
 
 from osc_lib.command import command
@@ -140,13 +141,22 @@ class ShowRecordSetCommand(command.ShowOne):
 class CreateRecordSetCommand(command.ShowOne):
     """Create new recordset"""
 
+    log = logging.getLogger('deprecated')
+
     def get_parser(self, prog_name):
         parser = super(CreateRecordSetCommand, self).get_parser(prog_name)
 
         parser.add_argument('zone_id', help="Zone ID")
         parser.add_argument('name', help="RecordSet Name")
-        parser.add_argument('--records', help="RecordSet Records",
-                            nargs='+', required=True)
+        req_group = parser.add_mutually_exclusive_group(required=True)
+        req_group.add_argument(
+            '--records',
+            help=argparse.SUPPRESS,
+            nargs='+')
+        req_group.add_argument(
+            '--record',
+            help="RecordSet Record, repeat if necessary",
+            action='append')
         parser.add_argument('--type', help="RecordSet Type", required=True)
         parser.add_argument('--ttl', type=int, help="Time To Live (Seconds)")
         parser.add_argument('--description', help="Description")
@@ -159,11 +169,15 @@ class CreateRecordSetCommand(command.ShowOne):
         client = self.app.client_manager.dns
         common.set_all_common_headers(client, parsed_args)
 
+        all_records = parsed_args.record or parsed_args.records
+        if parsed_args.records:
+            self.log.warning(
+                "Option --records is deprecated, use --record instead.")
         data = client.recordsets.create(
             parsed_args.zone_id,
             parsed_args.name,
             parsed_args.type,
-            parsed_args.records,
+            all_records,
             description=parsed_args.description,
             ttl=parsed_args.ttl)
 
