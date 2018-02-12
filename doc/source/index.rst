@@ -17,6 +17,13 @@ found on the :ref:`designate v2 command line tool page <shell-v2>`.
 v1: the :program:`designate` command line tool.  More information can be found
 on the :ref:`designate v1 command line tool page <shell>`.
 
+.. warning::
+
+    The V1 API was removed in Queens, and cannot be re-enabled.
+    The :program:`designate` command line tool will no longer function on
+    installs newer than Queens.
+
+
 You'll need credentials for an OpenStack cloud that implements the Designate
 API in order to use the client.
 
