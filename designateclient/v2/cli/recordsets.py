@@ -193,7 +193,15 @@ class SetRecordSetCommand(command.ShowOne):
 
         parser.add_argument('zone_id', help="Zone ID")
         parser.add_argument('id', help="RecordSet ID")
-        parser.add_argument('--records', help="Records", nargs='+')
+        req_group = parser.add_mutually_exclusive_group()
+        req_group.add_argument(
+            '--records',
+            help=argparse.SUPPRESS,
+            nargs='+')
+        req_group.add_argument(
+            '--record',
+            help="RecordSet Record, repeat if necessary",
+            action='append')
 
         description_group = parser.add_mutually_exclusive_group()
         description_group.add_argument('--description', help="Description")
@@ -220,8 +228,13 @@ class SetRecordSetCommand(command.ShowOne):
         elif parsed_args.ttl:
             data['ttl'] = parsed_args.ttl
 
+        all_records = parsed_args.record or parsed_args.records
         if parsed_args.records:
-            data['records'] = parsed_args.records
+            self.log.warning(
+                "Option --records is deprecated, use --record instead.")
+
+        if all_records:
+            data['records'] = all_records
 
         client = self.app.client_manager.dns
         common.set_all_common_headers(client, parsed_args)
