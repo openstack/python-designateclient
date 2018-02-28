@@ -67,7 +67,11 @@ class Command(command.Command):
             self.app.log.error('No endpoint was found. You must provide a '
                                'username or user id via --os-username, '
                                '--os-user-id, env[OS_USERNAME] or '
-                               'env[OS_USER_ID]')
+                               'env[OS_USER_ID]. You may also be using a '
+                               'cloud that does not have the V1 API enabled. '
+                               'If your cloud does not have the V1 DNS API '
+                               'use the openstack CLI to interact with the '
+                               'DNS Service.')
 
             return 1
 
