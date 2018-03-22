@@ -1,3 +1,9 @@
 - project:
     templates:
       - designate-devstack-jobs
+    check:
+      jobs:
+        - openstack-tox-lower-constraints
+    gate:
+      jobs:
+        - openstack-tox-lower-constraints
