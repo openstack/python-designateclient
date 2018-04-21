@@ -11,11 +11,11 @@ Python bindings to the Designate API
 =====================================
 
 .. image:: https://img.shields.io/pypi/v/python-designateclient.svg
-    :target: https://pypi.python.org/pypi/python-designateclient/
+    :target: https://pypi.org/project/python-designateclient/
     :alt: Latest Version
 
 .. image:: https://img.shields.io/pypi/dm/python-designateclient.svg
-    :target: https://pypi.python.org/pypi/python-designateclient/
+    :target: https://pypi.org/project/python-designateclient/
     :alt: Downloads
 
 This is a client library for Designate built on the Designate API. It
@@ -35,7 +35,7 @@ See release notes and more at `<https://docs.openstack.org/python-designateclien
 * `Source`_
 * `How to Contribute`_
 
-.. _PyPi: https://pypi.python.org/pypi/python-designateclient
+.. _PyPi: https://pypi.org/project/python-designateclient
 .. _Online Documentation: https://docs.openstack.org/python-designateclient/latest/
 .. _Bugs: https://bugs.launchpad.net/python-designateclient
 .. _Source: https://git.openstack.org/cgit/openstack/python-designateclient
