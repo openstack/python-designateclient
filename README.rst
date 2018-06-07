@@ -14,10 +14,6 @@ Python bindings to the Designate API
     :target: https://pypi.org/project/python-designateclient/
     :alt: Latest Version
 
-.. image:: https://img.shields.io/pypi/dm/python-designateclient.svg
-    :target: https://pypi.org/project/python-designateclient/
-    :alt: Downloads
-
 This is a client library for Designate built on the Designate API. It
 provides a Python API (the ``designateclient`` module) and a command-line tool
 (``designate``).
