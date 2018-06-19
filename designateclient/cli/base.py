@@ -121,17 +121,17 @@ class ListCommand(Command, command.Lister):
 
 class GetCommand(Command, command.ShowOne):
     def post_execute(self, results):
-        return list(six.iterkeys(results)), list(six.itervalues(results))
+        return results.keys(), results.values()
 
 
 class CreateCommand(Command, command.ShowOne):
     def post_execute(self, results):
-        return list(six.iterkeys(results)), list(six.itervalues(results))
+        return results.keys(), results.values()
 
 
 class UpdateCommand(Command, command.ShowOne):
     def post_execute(self, results):
-        return list(six.iterkeys(results)), list(six.itervalues(results))
+        return results.keys(), results.values()
 
 
 class DeleteCommand(Command, command.ShowOne):
