@@ -64,7 +64,7 @@ class ListQuotasCommand(show.ShowOne):
 
 
 class SetQuotasCommand(show.ShowOne):
-    """Set blacklist properties"""
+    """Set quotas"""
 
     def _build_options_list(self):
             return itertools.chain(DNS_QUOTAS.items())
@@ -108,7 +108,7 @@ class SetQuotasCommand(show.ShowOne):
 
 
 class ResetQuotasCommand(command.Command):
-    """Delete blacklist"""
+    """Reset quotas"""
 
     def get_parser(self, prog_name):
         parser = super(ResetQuotasCommand, self).get_parser(prog_name)
