@@ -21,6 +21,6 @@ doc/source/reference/api/*
 doc/build/*
 dist
 designateclient/versioninfo
-.testrepository
+.stestr/
 *.log
 .idea/
