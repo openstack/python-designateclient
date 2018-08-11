@@ -70,8 +70,6 @@ class ListZonesCommand(command.Lister):
         client = self.app.client_manager.dns
         common.set_all_common_headers(client, parsed_args)
 
-        common.set_all_common_headers(client, parsed_args)
-
         criterion = {}
         if parsed_args.type is not None:
             criterion["type"] = parsed_args.type
