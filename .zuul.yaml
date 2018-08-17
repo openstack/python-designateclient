@@ -2,7 +2,7 @@
     templates:
       - designate-devstack-jobs
       - openstack-python-jobs
-      - publish-openstack-sphinx-docs
+      - publish-openstack-docs-pti
       - check-requirements
       - openstackclient-plugin-jobs
       - openstack-python35-jobs
