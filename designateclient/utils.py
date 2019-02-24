@@ -14,9 +14,10 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
-import json
 import os
 import uuid
+
+from oslo_serialization import jsonutils
 
 from debtcollector import removals
 from keystoneauth1 import adapter
@@ -51,7 +52,7 @@ def load_schema(version, name, package=None):
     schema_string = resource_string('schemas', version, '%s.json' % name,
                                     package=package)
 
-    return json.loads(schema_string.decode('utf-8'))
+    return jsonutils.loads(schema_string)
 
 
 def get_item_properties(item, fields, mixed_case_fields=[], formatters={}):

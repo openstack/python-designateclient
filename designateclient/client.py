@@ -13,12 +13,14 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations
 # under the License.
+
 import abc
-import json
 
 import six
 from six.moves.urllib import parse
 from stevedore import extension
+
+from oslo_serialization import jsonutils
 
 from designateclient import exceptions
 
@@ -48,7 +50,7 @@ class Controller(object):
         content_type = headers.get('Content-Type') if headers else None
 
         if 'data' in kwargs and content_type in {None, 'application/json'}:
-            kwargs['data'] = json.dumps(kwargs['data'])
+            kwargs['data'] = jsonutils.dumps(kwargs['data'])
 
     def _post(self, url, response_key=None, **kwargs):
         self._serialize(kwargs)

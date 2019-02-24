@@ -12,11 +12,12 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations
 # under the License.
-import json as json_
+
 import os
 
 import fixtures
 from keystoneauth1 import session as keystone_session
+from oslo_serialization import jsonutils
 from oslotest import base as test
 from requests_mock.contrib import fixture as req_fixture
 import six
@@ -81,7 +82,7 @@ class APITestCase(TestCase):
         base_url = self.get_base(base_url)
 
         if json:
-            kwargs['text'] = json_.dumps(json)
+            kwargs['text'] = jsonutils.dumps(json)
             headers = kwargs.setdefault('headers', {})
             headers['Content-Type'] = 'application/json'
 
@@ -103,7 +104,7 @@ class APITestCase(TestCase):
     def assertRequestBodyIs(self, body=None, json=None):
         last_request_body = self.requests.last_request.body
         if json:
-            val = json_.loads(last_request_body)
+            val = jsonutils.loads(last_request_body)
             self.assertEqual(json, val)
         elif body:
             self.assertEqual(body, last_request_body)

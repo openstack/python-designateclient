@@ -14,7 +14,7 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
-import json
+from oslo_serialization import jsonutils
 
 from designateclient import client
 from designateclient import utils
@@ -53,7 +53,7 @@ class ServersController(client.CrudController):
         :param server: A :class:`Server` to create
         :returns: :class:`Server`
         """
-        response = self.client.post('/servers', data=json.dumps(server))
+        response = self.client.post('/servers', data=jsonutils.dumps(server))
 
         return Server(response.json())
 
@@ -65,7 +65,7 @@ class ServersController(client.CrudController):
         :returns: :class:`Server`
         """
         response = self.client.put('/servers/%s' % server.id,
-                                   data=json.dumps(server.changes))
+                                   data=jsonutils.dumps(server.changes))
 
         return Server(response.json())
 

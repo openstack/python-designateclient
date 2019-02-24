@@ -13,7 +13,8 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations
 # under the License.
-import json
+
+from oslo_serialization import jsonutils
 
 from designateclient import client
 
@@ -29,7 +30,7 @@ class QuotasController(client.Controller):
 
     def update(self, tenant_id, values):
         response = self.client.put('/quotas/%s' % tenant_id,
-                                   data=json.dumps(values))
+                                   data=jsonutils.dumps(values))
         return response.json()
 
     def reset(self, tenant_id):
