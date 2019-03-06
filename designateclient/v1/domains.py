@@ -13,7 +13,8 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations
 # under the License.
-import json
+
+from oslo_serialization import jsonutils
 
 from designateclient import client
 from designateclient import utils
@@ -53,7 +54,7 @@ class DomainsController(client.CrudController):
         :param domain: A :class:`Domain` to create
         :returns: :class:`Domain`
         """
-        response = self.client.post('/domains', data=json.dumps(domain))
+        response = self.client.post('/domains', data=jsonutils.dumps(domain))
 
         return Domain(response.json())
 
@@ -65,7 +66,7 @@ class DomainsController(client.CrudController):
         :returns: :class:`Domain`
         """
         response = self.client.put('/domains/%s' % domain.id,
-                                   data=json.dumps(domain.changes))
+                                   data=jsonutils.dumps(domain.changes))
 
         return Domain(response.json())
 

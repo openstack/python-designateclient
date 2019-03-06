@@ -14,7 +14,7 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
-import json
+from oslo_serialization import jsonutils
 
 from designateclient import client
 from designateclient import utils
@@ -74,7 +74,7 @@ class RecordsController(client.CrudController):
             'domain_id': domain_id
         }
 
-        response = self.client.post(uri, data=json.dumps(record))
+        response = self.client.post(uri, data=jsonutils.dumps(record))
 
         return Record(response.json())
 
@@ -93,7 +93,7 @@ class RecordsController(client.CrudController):
             'record_id': record.id
         }
 
-        response = self.client.put(uri, data=json.dumps(record.changes))
+        response = self.client.put(uri, data=jsonutils.dumps(record.changes))
 
         return Record(response.json())
 
