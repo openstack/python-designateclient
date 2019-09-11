@@ -30,4 +30,3 @@ Branch, work, & submit:
   git rebase -i
   # submit
   git-review
-

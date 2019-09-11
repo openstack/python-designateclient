@@ -1,0 +1,5 @@
+---
+upgrade:
+  - |
+    Removed V1 API support from the client, as it was permanently
+    removed in the Queens release of Designate.

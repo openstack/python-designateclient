@@ -14,45 +14,16 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
-import os
 import uuid
-
-from oslo_serialization import jsonutils
 
 from debtcollector import removals
 from keystoneauth1 import adapter
 from keystoneauth1.identity import generic
 from keystoneauth1 import session as ks_session
 from keystoneauth1 import token_endpoint
-import pkg_resources
 import six
 
 from designateclient import exceptions
-
-
-def resource_string(*args, **kwargs):
-    if len(args) == 0:
-        raise ValueError()
-
-    package = kwargs.pop('package', None)
-
-    if not package:
-        package = 'designateclient'
-
-    resource_path = os.path.join('resources', *args)
-
-    if not pkg_resources.resource_exists(package, resource_path):
-        raise exceptions.ResourceNotFound('Could not find the requested '
-                                          'resource: %s' % resource_path)
-
-    return pkg_resources.resource_string(package, resource_path)
-
-
-def load_schema(version, name, package=None):
-    schema_string = resource_string('schemas', version, '%s.json' % name,
-                                    package=package)
-
-    return jsonutils.loads(schema_string)
 
 
 def get_item_properties(item, fields, mixed_case_fields=[], formatters={}):

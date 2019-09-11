@@ -16,9 +16,9 @@
 
 """OpenStackClient plugin for DNS service."""
 
-from osc_lib import utils as oscutils
+import os
 
-from designateclient import shell
+from osc_lib import utils as oscutils
 
 
 DEFAULT_API_VERSION = '2'
@@ -45,7 +45,7 @@ def build_option_parser(parser):
     parser.add_argument(
         '--os-dns-api-version',
         metavar='<dns-api-version>',
-        default=shell.env('OS_DNS_API_VERSION', default="2"),
+        default=os.environ.get('OS_DNS_API_VERSION', '2'),
         help='DNS API version, default=' +
              DEFAULT_API_VERSION +
              ' (Env: OS_DNS_API_VERSION)')
