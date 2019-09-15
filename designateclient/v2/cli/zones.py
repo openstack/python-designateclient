@@ -91,7 +91,7 @@ class ListZonesCommand(command.Lister):
 
         data = get_all(client.zones.list, criterion)
 
-        cols = self.columns
+        cols = list(self.columns)
 
         if client.session.all_projects:
             cols.insert(1, 'project_id')
