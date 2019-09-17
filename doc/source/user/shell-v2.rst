@@ -1,8 +1,8 @@
 .. _shell-v2:
 
-===========================
-OpenStack CLI (v2 API only)
-===========================
+=============
+OpenStack CLI
+=============
 
 The python-designateclient package comes with a plugin for the openstack
 command line tool (installed as :program:`openstack`).  This can be used to
