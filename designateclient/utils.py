@@ -16,11 +16,7 @@
 
 import uuid
 
-from debtcollector import removals
 from keystoneauth1 import adapter
-from keystoneauth1.identity import generic
-from keystoneauth1 import session as ks_session
-from keystoneauth1 import token_endpoint
 import six
 
 from designateclient import exceptions
@@ -71,61 +67,6 @@ def get_columns(data):
     six.moves.map(lambda item: six.moves.map(_seen,
                   list(six.iterkeys(item))), data)
     return list(columns)
-
-
-@removals.removed_kwarg('all_tenants', removal_version='1.3.0')
-@removals.removed_kwarg('edit_managed', removal_version='1.3.0')
-def get_session(auth_url, endpoint, domain_id, domain_name, project_id,
-                project_name, project_domain_name, project_domain_id, username,
-                user_id, password, user_domain_id, user_domain_name, token,
-                insecure, cacert, all_tenants=False, edit_managed=False):
-    # NOTE: all_tenants and edit_managed are here for backwards compat
-    #       reasons, do not add additional modifiers here.
-
-    session = ks_session.Session()
-
-    # Build + Attach Authentication Plugin
-    auth_args = {
-        'auth_url': auth_url,
-        'domain_id': domain_id,
-        'domain_name': domain_name,
-        'project_id': project_id,
-        'project_name': project_name,
-        'project_domain_name': project_domain_name,
-        'project_domain_id': project_domain_id,
-    }
-
-    if token and endpoint:
-        session.auth = token_endpoint.Token(endpoint, token)
-
-    elif token:
-        auth_args.update({
-            'token': token
-        })
-        session.auth = generic.Token(**auth_args)
-
-    else:
-        auth_args.update({
-            'username': username,
-            'user_id': user_id,
-            'password': password,
-            'user_domain_id': user_domain_id,
-            'user_domain_name': user_domain_name,
-        })
-        session.auth = generic.Password(**auth_args)
-
-    # SSL/TLS Server Cert Verification
-    if insecure is True:
-        session.verify = False
-    else:
-        session.verify = cacert
-
-    # NOTE: all_tenants and edit_managed are here for backwards compat
-    #       reasons, do not add additional modifiers here.
-    session.all_tenants = all_tenants
-    session.edit_managed = edit_managed
-
-    return session
 
 
 def find_resourceid_by_name_or_id(resource_client, name_or_id):
