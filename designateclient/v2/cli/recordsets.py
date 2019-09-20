@@ -97,7 +97,7 @@ class ListRecordSetsCommand(command.Lister):
         if parsed_args.action is not None:
             criterion["action"] = parsed_args.action
 
-        cols = self.columns
+        cols = list(self.columns)
 
         if parsed_args.zone_id == 'all':
             data = get_all(client.recordsets.list_all_zones,
