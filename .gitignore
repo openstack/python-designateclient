@@ -22,5 +22,6 @@ doc/build/*
 dist
 designateclient/versioninfo
 .stestr/
+.testrepository/
 *.log
 .idea/
