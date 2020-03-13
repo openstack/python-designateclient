@@ -1,0 +1,6 @@
+---
+upgrade:
+  - |
+    Python 2.7 support has been dropped. The last release of python-designateclient
+    to support Python 2.7 is 3.1. The minimum version of Python now supported
+    is Python 3.6.
