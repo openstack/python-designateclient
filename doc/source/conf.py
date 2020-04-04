@@ -12,7 +12,6 @@ extensions = ['sphinx.ext.autodoc', 'sphinx.ext.viewcode', 'openstackdocstheme']
 repository_name = 'openstack/python-designateclient'
 bug_project = 'python-designateclient'
 bug_tag = ''
-html_last_updated_fmt = '%Y-%m-%d %H:%M'
 html_theme = 'openstackdocs'
 
 # Add any paths that contain templates here, relative to this directory.
