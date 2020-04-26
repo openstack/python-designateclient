@@ -29,6 +29,7 @@ from designateclient.v2.tsigkeys import TSIGKeysController
 from designateclient.v2.zones import ZoneController
 from designateclient.v2.zones import ZoneExportsController
 from designateclient.v2.zones import ZoneImportsController
+from designateclient.v2.zones import ZoneShareController
 from designateclient.v2.zones import ZoneTransfersController
 from designateclient import version
 from oslo_utils import importutils
@@ -151,6 +152,7 @@ class Client(object):
         self.zone_transfers = ZoneTransfersController(self)
         self.zone_exports = ZoneExportsController(self)
         self.zone_imports = ZoneImportsController(self)
+        self.zone_share = ZoneShareController(self)
         self.pools = PoolController(self)
         self.quotas = QuotasController(self)
         self.tsigkeys = TSIGKeysController(self)

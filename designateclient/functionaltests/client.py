@@ -348,9 +348,28 @@ class BlacklistCommands(object):
         return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
 
 
+class SharedZoneCommands(object):
+
+    def shared_zone_show(self, zone_id, shared_zone_id, *args, **kwargs):
+        cmd = 'zone share show {0} {1}'.format(zone_id, shared_zone_id)
+        return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
+
+    def shared_zone_list(self, zone_id, *args, **kwargs):
+        cmd = 'zone share list {0}'.format(zone_id)
+        return self.parsed_cmd(cmd, ListModel, *args, **kwargs)
+
+    def share_zone(self, zone_id, target_project_id, *args, **kwargs):
+        cmd = 'zone share create {0} {1}'.format(zone_id, target_project_id)
+        return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
+
+    def unshare_zone(self, zone_id, shared_zone_id, *args, **kwargs):
+        cmd = 'zone share delete {0} {1}'.format(zone_id, shared_zone_id)
+        return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
+
+
 class DesignateCLI(base.CLIClient, ZoneCommands, ZoneTransferCommands,
                    ZoneExportCommands, ZoneImportCommands, RecordsetCommands,
-                   TLDCommands, BlacklistCommands):
+                   TLDCommands, BlacklistCommands, SharedZoneCommands):
 
     # instantiate this once to minimize requests to keystone
     _CLIENTS = None

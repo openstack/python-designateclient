@@ -241,6 +241,10 @@ class DeleteZoneCommand(command.ShowOne):
 
         parser.add_argument('id', help="Zone ID")
 
+        parser.add_argument('--delete-shares', default=False,
+                            action='store_true',
+                            help='Delete existing zone shares. Default: False')
+
         common.add_all_common_options(parser)
         common.add_hard_delete_option(parser)
 
@@ -250,7 +254,13 @@ class DeleteZoneCommand(command.ShowOne):
         client = self.app.client_manager.dns
         common.set_all_common_headers(client, parsed_args)
 
-        data = client.zones.delete(parsed_args.id)
+        delete_shares = False
+        if (hasattr(parsed_args, 'delete_shares') and
+                parsed_args.delete_shares is not None and
+                isinstance(parsed_args.delete_shares, bool)):
+            delete_shares = parsed_args.delete_shares
+
+        data = client.zones.delete(parsed_args.id, delete_shares=delete_shares)
         LOG.info('Zone %s was deleted', parsed_args.id)
 
         _format_zone(data)
@@ -724,3 +734,124 @@ class DeleteZoneImportCommand(command.Command):
         client.zone_imports.delete(parsed_args.zone_import_id)
 
         LOG.info('Zone Import %s was deleted', parsed_args.zone_import_id)
+
+
+class ShareZoneCommand(command.ShowOne):
+    """Share a Zone"""
+
+    def get_parser(self, prog_name):
+        parser = super(ShareZoneCommand, self).get_parser(
+            prog_name)
+
+        common.add_all_common_options(parser)
+
+        parser.add_argument('zone', help='The zone name or ID to share.')
+        parser.add_argument('target_project_id',
+                            help='Target project ID to share the zone with.')
+
+        return parser
+
+    def take_action(self, parsed_args):
+        client = self.app.client_manager.dns
+        common.set_all_common_headers(client, parsed_args)
+
+        data = client.zone_share.create(
+            parsed_args.zone,
+            parsed_args.target_project_id
+        )
+
+        LOG.info('Zone %s was shared', data['id'])
+
+        data.pop('links', None)
+
+        return self.dict2columns(data)
+
+
+class ListSharedZonesCommand(command.Lister):
+    """List Zone Shares"""
+
+    columns = [
+        'id',
+        'zone_id',
+        'target_project_id',
+    ]
+
+    def get_parser(self, prog_name):
+        parser = super(ListSharedZonesCommand, self).get_parser(
+            prog_name)
+
+        common.add_all_common_options(parser)
+
+        parser.add_argument('zone', help='The zone name or ID to share.')
+
+        parser.add_argument('--target-project-id',
+                            help='The target project ID to filter on.',
+                            required=False)
+        return parser
+
+    def take_action(self, parsed_args):
+        client = self.app.client_manager.dns
+        common.set_all_common_headers(client, parsed_args)
+
+        criterion = {}
+        if parsed_args.target_project_id is not None:
+            criterion['target_project_id'] = parsed_args.target_project_id
+
+        data = get_all(client.zone_share.list, criterion=criterion,
+                       args=[parsed_args.zone])
+
+        cols = list(self.columns)
+
+        if client.session.all_projects:
+            cols.insert(1, 'project_id')
+
+        return cols, (utils.get_item_properties(s, cols) for s in data)
+
+
+class ShowSharedZoneCommand(command.ShowOne):
+    """Show Zone Share Details"""
+
+    def get_parser(self, prog_name):
+        parser = super(ShowSharedZoneCommand, self).get_parser(prog_name)
+
+        parser.add_argument('zone', help='The zone name or ID to share.')
+        parser.add_argument('shared_zone_id',
+                            help='The zone share ID to show.')
+
+        common.add_all_common_options(parser)
+
+        return parser
+
+    def take_action(self, parsed_args):
+        client = self.app.client_manager.dns
+        common.set_all_common_headers(client, parsed_args)
+
+        data = client.zone_share.get(parsed_args.zone,
+                                     parsed_args.shared_zone_id)
+        data.pop('links', None)
+
+        return self.dict2columns(data)
+
+
+class DeleteSharedZoneCommand(command.Command):
+    """Delete a Zone Share"""
+
+    def get_parser(self, prog_name):
+        parser = super(DeleteSharedZoneCommand, self).get_parser(
+            prog_name)
+
+        parser.add_argument('zone', help='The zone name or ID to share.')
+        parser.add_argument('shared_zone_id',
+                            help='The zone share ID to delete.')
+
+        common.add_all_common_options(parser)
+
+        return parser
+
+    def take_action(self, parsed_args):
+        client = self.app.client_manager.dns
+        common.set_all_common_headers(client, parsed_args)
+
+        client.zone_share.delete(parsed_args.zone, parsed_args.shared_zone_id)
+
+        LOG.info('Shared Zone %s was deleted', parsed_args.shared_zone_id)

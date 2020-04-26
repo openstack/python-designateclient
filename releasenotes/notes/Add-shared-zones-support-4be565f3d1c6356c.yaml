@@ -1,0 +1,6 @@
+---
+features:
+  - Adds zone share commands to support sharing zones with additional projects.
+  - Adds a ``--delete-shares`` option to zone delete to delete existing zone
+    shares along with the zone. Without this option, you cannot delete a zone
+    that has been shared with other projects.

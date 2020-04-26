@@ -62,12 +62,18 @@ class ZoneController(V2Controller):
 
         return self._patch(url, data=values)
 
-    def delete(self, zone):
+    def delete(self, zone, delete_shares=False):
         zone = v2_utils.resolve_by_name(self.list, zone)
 
         url = self.build_url('/zones/%s' % zone)
 
-        return self._delete(url)
+        if delete_shares:
+            headers = {'X-Designate-Delete-Shares': 'true'}
+            _resp, body = self.client.session.delete(url, headers=headers)
+        else:
+            _resp, body = self.client.session.delete(url)
+
+        return body
 
     def abandon(self, zone):
         zone = v2_utils.resolve_by_name(self.list, zone)
@@ -166,3 +172,29 @@ class ZoneImportsController(V2Controller):
 
     def delete(self, zone_import_id):
         return self._delete('/zones/tasks/imports/%s' % zone_import_id)
+
+
+class ZoneShareController(V2Controller):
+    def create(self, zone, target_project_id):
+        zone_id = v2_utils.resolve_by_name(self.client.zones.list, zone)
+
+        data = {"target_project_id": target_project_id}
+
+        return self._post(f'/zones/{zone_id}/shares', data=data)
+
+    def list(self, zone, criterion=None, marker=None, limit=None):
+        zone_id = v2_utils.resolve_by_name(self.client.zones.list, zone)
+        url = self.build_url(f'/zones/{zone_id}/shares',
+                             criterion, marker, limit)
+
+        return self._get(url, response_key='shared_zones')
+
+    def delete(self, zone, shared_zone_id):
+        zone_id = v2_utils.resolve_by_name(self.client.zones.list, zone)
+
+        return self._delete(f'/zones/{zone_id}/shares/{shared_zone_id}')
+
+    def get(self, zone, shared_zone_id):
+        zone_id = v2_utils.resolve_by_name(self.client.zones.list, zone)
+
+        return self._get(f'/zones/{zone_id}/shares/{shared_zone_id}')

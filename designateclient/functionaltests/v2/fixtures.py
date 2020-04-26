@@ -228,3 +228,25 @@ class BlacklistFixture(BaseFixture):
             client.zone_blacklist_delete(blacklist_id)
         except CommandFailed:
             pass
+
+
+class SharedZoneFixture(BaseFixture):
+    """See DesignateCLI.recordset_create for __init__ args"""
+
+    def __init__(self, zone, *args, **kwargs):
+        super(SharedZoneFixture, self).__init__(*args, **kwargs)
+        self.zone = zone
+
+    def _setUp(self):
+        super(SharedZoneFixture, self)._setUp()
+        self.zone_share = self.client.zone_share(zone_id=self.zone.id,
+                                                 *self.args, **self.kwargs)
+        self.addCleanup(self.cleanup_shared_zone, self.client, self.zone.id,
+                        self.zone_share.id)
+
+    @classmethod
+    def cleanup_shared_zone(cls, client, zone_id, shared_zone_id):
+        try:
+            client.unshare_zone(zone_id, shared_zone_id)
+        except CommandFailed:
+            pass
