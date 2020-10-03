@@ -46,8 +46,8 @@ def build_option_parser(parser):
         '--os-dns-api-version',
         metavar='<dns-api-version>',
         default=os.environ.get('OS_DNS_API_VERSION', '2'),
-        help='DNS API version, default=' +
-             DEFAULT_API_VERSION +
-             ' (Env: OS_DNS_API_VERSION)')
+        help=('DNS API version, default=' +
+              DEFAULT_API_VERSION +
+              ' (Env: OS_DNS_API_VERSION)'))
 
     return parser
