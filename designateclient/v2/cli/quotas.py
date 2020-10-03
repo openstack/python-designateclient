@@ -67,7 +67,7 @@ class SetQuotasCommand(show.ShowOne):
     """Set quotas"""
 
     def _build_options_list(self):
-            return itertools.chain(DNS_QUOTAS.items())
+        return itertools.chain(DNS_QUOTAS.items())
 
     def get_parser(self, prog_name):
         parser = super(SetQuotasCommand, self).get_parser(prog_name)

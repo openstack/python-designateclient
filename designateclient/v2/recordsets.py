@@ -26,8 +26,8 @@ class RecordSetController(V2Controller):
 
         # If we get a zone name we'll need to get the ID of it before POST.
         if isinstance(zone, six.string_types) and not \
-                uuidutils.is_uuid_like(zone):
-                zone_info = self.client.zones.get(zone)
+           uuidutils.is_uuid_like(zone):
+            zone_info = self.client.zones.get(zone)
         elif isinstance(zone, dict):
             zone_info = zone
 
