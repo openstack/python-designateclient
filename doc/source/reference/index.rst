@@ -3,5 +3,6 @@
 ==================================
 
 .. toctree::
+   :maxdepth: 4
 
-   api/autoindex
+   api/modules

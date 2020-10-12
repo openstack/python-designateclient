@@ -6,13 +6,26 @@
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['sphinx.ext.autodoc', 'sphinx.ext.viewcode', 'openstackdocstheme']
+extensions = [
+    'sphinx.ext.autodoc',
+    'sphinx.ext.viewcode',
+    'sphinxcontrib.apidoc',
+    'openstackdocstheme']
 
 # openstackdocstheme options
 openstackdocs_repo_name = 'openstack/python-designateclient'
 openstackdocs_bug_project = 'python-designateclient'
 openstackdocs_bug_tag = ''
 html_theme = 'openstackdocs'
+
+apidoc_module_dir = '../../designateclient'
+apidoc_output_dir = 'reference/api'
+apidoc_excluded_paths = [ 'tests/*', 'functionaltests/*' ]
+apidoc_separate_modules = True
+
+autodoc_exclude_modules = [
+  'designateclient.tests.*',
+  'designateclient.functionaltests.*']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
