@@ -10,7 +10,8 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.viewcode',
     'sphinxcontrib.apidoc',
-    'openstackdocstheme']
+    'openstackdocstheme',
+    'cliff.sphinxext']
 
 # openstackdocstheme options
 openstackdocs_repo_name = 'openstack/python-designateclient'
