@@ -153,6 +153,10 @@ class ZoneTransferCommands(object):
         cmd = 'zone transfer accept show {0}'.format(id)
         return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
 
+    def zone_transfer_accept_list(self, *args, **kwargs):
+        cmd = 'zone transfer accept list'
+        return self.parsed_cmd(cmd, ListModel, *args, **kwargs)
+
 
 class ZoneExportCommands(object):
     """A mixin for DesignateCLI to add zone export commands"""
