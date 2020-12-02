@@ -55,7 +55,10 @@ class ListZonesCommand(command.Lister):
 
         parser.add_argument('--name', help="Zone Name", required=False)
         parser.add_argument('--email', help="Zone Email", required=False)
-        parser.add_argument('--type', help="Zone Type", required=False)
+        parser.add_argument('--type', help="Zone Type",
+                            choices=["PRIMARY", "SECONDARY"],
+                            default="PRIMARY",
+                            required=False)
         parser.add_argument('--ttl', help="Time To Live (Seconds)",
                             required=False)
         parser.add_argument('--description', help="Description",
@@ -129,7 +132,9 @@ class CreateZoneCommand(command.ShowOne):
 
         parser.add_argument('name', help="Zone Name")
         parser.add_argument('--email', help="Zone Email")
-        parser.add_argument('--type', help="Zone Type", default='PRIMARY')
+        parser.add_argument('--type', help="Zone Type",
+                            choices=["PRIMARY", "SECONDARY"],
+                            default='PRIMARY')
         parser.add_argument('--ttl', type=int, help="Time To Live (Seconds)")
         parser.add_argument('--description', help="Description")
         parser.add_argument('--masters', help="Zone Masters", nargs='+')
