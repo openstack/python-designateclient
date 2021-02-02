@@ -31,6 +31,9 @@ from designateclient.v2.zones import ZoneExportsController
 from designateclient.v2.zones import ZoneImportsController
 from designateclient.v2.zones import ZoneTransfersController
 from designateclient import version
+from oslo_utils import importutils
+
+osprofiler_web = importutils.try_import("osprofiler.web")
 
 
 class DesignateAdapter(adapter.LegacyJsonAdapter):
@@ -77,6 +80,9 @@ class DesignateAdapter(adapter.LegacyJsonAdapter):
 
         kwargs['headers'].setdefault(
             'Content-Type', 'application/json')
+
+        if osprofiler_web:
+            kwargs['headers'].update(osprofiler_web.get_trace_id_headers())
 
         response, body = super(self.__class__, self).request(*args, **kwargs)
 

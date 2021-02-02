@@ -41,6 +41,7 @@ oslo.log==3.36.0
 oslo.serialization==2.18.0
 oslo.utils==3.33.0
 oslotest==3.2.0
+osprofiler==3.4.0
 paramiko==2.0.0
 pbr==2.0.0
 prettytable==0.7.2
