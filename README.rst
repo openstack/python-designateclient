@@ -28,11 +28,15 @@ See release notes and more at `<https://docs.openstack.org/python-designateclien
 * `PyPi`_ - package installation
 * `Online Documentation`_
 * `Bugs`_ - issue tracking
+* `Blueprints`_ - feature specifications
 * `Source`_
 * `How to Contribute`_
+* `Release Notes`_
 
 .. _PyPi: https://pypi.org/project/python-designateclient
 .. _Online Documentation: https://docs.openstack.org/python-designateclient/latest/
 .. _Bugs: https://bugs.launchpad.net/python-designateclient
+.. _Blueprints: https://blueprints.launchpad.net/python-designateclient
 .. _Source: https://git.openstack.org/cgit/openstack/python-designateclient
 .. _How to Contribute: https://docs.openstack.org/infra/manual/developers.html
+.. _Release Notes: https://docs.openstack.org/releasenotes/python-designateclient
