@@ -109,6 +109,11 @@ class TestZoneTransferAccept(BaseDesignateTest):
         ))
         self.transfer_request = fixture.transfer_request
 
+    def test_zone_transfer_accept_list(self):
+        self.useFixture(TransferRequestFixture(self.zone))
+        list_transfer_accepts = self.clients.zone_transfer_accept_list()
+        self.assertGreater(len(list_transfer_accepts), 0)
+
     def test_zone_transfer_accept_request(self):
         self.target_client.zone_transfer_accept_request(
             id=self.transfer_request.id,
