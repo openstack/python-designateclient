@@ -7,7 +7,7 @@ cmd2==0.8.0
 coverage==4.0
 cryptography==3.1
 debtcollector==1.2.0
-decorator==3.4.0
+decorator==4.4.1
 deprecation==1.0
 dogpile.cache==0.6.2
 dulwich==0.15.0
@@ -23,7 +23,6 @@ jsonpointer==1.13
 jsonschema==2.6.0
 keystoneauth1==3.4.0
 linecache2==1.0.0
-mccabe==0.2.1
 monotonic==0.6
 mox3==0.20.0
 msgpack-python==0.4.0
@@ -45,11 +44,9 @@ oslo.utils==3.33.0
 oslotest==3.2.0
 paramiko==2.0.0
 pbr==2.0.0
-pep8==1.5.7
 prettytable==0.7.2
 pyasn1==0.1.8
 pycparser==2.18
-pyflakes==0.8.1
 pyinotify==0.9.6
 pyparsing==2.1.0
 pyperclip==1.5.27
