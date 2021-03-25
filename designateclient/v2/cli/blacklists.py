@@ -17,7 +17,6 @@
 import logging
 
 from osc_lib.command import command
-import six
 
 from designateclient import utils
 from designateclient.v2.cli import common
@@ -70,7 +69,7 @@ class ShowBlacklistCommand(command.ShowOne):
         common.set_all_common_headers(client, parsed_args)
         data = client.blacklists.get(parsed_args.id)
         _format_blacklist(data)
-        return six.moves.zip(*sorted(six.iteritems(data)))
+        return zip(*sorted(data.items()))
 
 
 class CreateBlacklistCommand(command.ShowOne):
@@ -95,7 +94,7 @@ class CreateBlacklistCommand(command.ShowOne):
             parsed_args.pattern, parsed_args.description)
 
         _format_blacklist(data)
-        return six.moves.zip(*sorted(six.iteritems(data)))
+        return zip(*sorted(data.items()))
 
 
 class SetBlacklistCommand(command.ShowOne):
@@ -132,7 +131,7 @@ class SetBlacklistCommand(command.ShowOne):
         updated = client.blacklists.update(parsed_args.id, data)
 
         _format_blacklist(updated)
-        return six.moves.zip(*sorted(six.iteritems(updated)))
+        return zip(*sorted(updated.items()))
 
 
 class DeleteBlacklistCommand(command.Command):

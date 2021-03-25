@@ -16,17 +16,15 @@
 
 import abc
 
-import six
-from six.moves.urllib import parse
 from stevedore import extension
+from urllib import parse
 
 from oslo_serialization import jsonutils
 
 from designateclient import exceptions
 
 
-@six.add_metaclass(abc.ABCMeta)
-class Controller(object):
+class Controller(object, metaclass=abc.ABCMeta):
 
     def __init__(self, client):
         self.client = client
@@ -89,8 +87,7 @@ class Controller(object):
         return body
 
 
-@six.add_metaclass(abc.ABCMeta)
-class CrudController(Controller):
+class CrudController(Controller, metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def list(self, *args, **kw):
@@ -132,6 +129,6 @@ def Client(version, *args, **kwargs):  # noqa
     versions = get_versions()
     if version not in versions:
         msg = 'Version %s is not supported, use one of (%s)' % (
-            version, list(six.iterkeys(versions)))
+            version, list(versions.keys()))
         raise exceptions.UnsupportedVersion(msg)
     return versions[version](*args, **kwargs)

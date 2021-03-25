@@ -17,7 +17,6 @@
 import logging
 
 from osc_lib.command import command
-import six
 
 from designateclient import utils
 from designateclient.v2.cli import common
@@ -91,4 +90,4 @@ class ShowServiceStatusCommand(command.ShowOne):
         data = client.service_statuses.get(parsed_args.id)
 
         _format_status(data)
-        return six.moves.zip(*sorted(six.iteritems(data)))
+        return zip(*sorted(data.items()))

@@ -20,8 +20,7 @@ from keystoneauth1 import session as keystone_session
 from oslo_serialization import jsonutils
 from oslotest import base as test
 from requests_mock.contrib import fixture as req_fixture
-import six
-from six.moves.urllib import parse as urlparse
+from urllib import parse as urlparse
 
 from designateclient import client
 from designateclient.utils import AdapterWithTimeout
@@ -132,7 +131,7 @@ class APITestCase(TestCase):
         parts = urlparse.urlparse(self.requests.last_request.url)
         qs = urlparse.parse_qs(parts.query, keep_blank_values=True)
 
-        for k, v in six.iteritems(kwargs):
+        for k, v in kwargs.items():
             self.assertIn(k, qs)
             self.assertIn(v, qs[k])
 

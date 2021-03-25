@@ -17,7 +17,6 @@
 import logging
 
 from osc_lib.command import command
-import six
 
 from designateclient import utils
 from designateclient.v2.cli import common
@@ -83,7 +82,7 @@ class ShowTSIGKeyCommand(command.ShowOne):
         common.set_all_common_headers(client, parsed_args)
         data = client.tsigkeys.get(parsed_args.id)
         _format_tsigkey(data)
-        return six.moves.zip(*sorted(six.iteritems(data)))
+        return zip(*sorted(data.items()))
 
 
 class CreateTSIGKeyCommand(command.ShowOne):
@@ -111,7 +110,7 @@ class CreateTSIGKeyCommand(command.ShowOne):
                                       parsed_args.secret, parsed_args.scope,
                                       parsed_args.resource_id)
         _format_tsigkey(data)
-        return six.moves.zip(*sorted(six.iteritems(data)))
+        return zip(*sorted(data.items()))
 
 
 class SetTSIGKeyCommand(command.ShowOne):
@@ -147,7 +146,7 @@ class SetTSIGKeyCommand(command.ShowOne):
 
         data = client.tsigkeys.update(parsed_args.id, data)
         _format_tsigkey(data)
-        return six.moves.zip(*sorted(six.iteritems(data)))
+        return zip(*sorted(data.items()))
 
 
 class DeleteTSIGKeyCommand(command.Command):

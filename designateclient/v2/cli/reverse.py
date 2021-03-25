@@ -17,7 +17,6 @@
 import logging
 
 from osc_lib.command import command
-import six
 
 from designateclient import utils
 from designateclient.v2.cli import common
@@ -71,7 +70,7 @@ class ShowFloatingIPCommand(command.ShowOne):
         common.set_all_common_headers(client, parsed_args)
         data = client.floatingips.get(parsed_args.floatingip_id)
         _format_floatingip(data)
-        return six.moves.zip(*sorted(six.iteritems(data)))
+        return zip(*sorted(data.items()))
 
 
 class SetFloatingIPCommand(command.ShowOne):
@@ -119,7 +118,7 @@ class SetFloatingIPCommand(command.ShowOne):
             parsed_args.ttl)
 
         _format_floatingip(fip)
-        return six.moves.zip(*sorted(six.iteritems(fip)))
+        return zip(*sorted(fip.items()))
 
 
 class UnsetFloatingIPCommand(command.Command):

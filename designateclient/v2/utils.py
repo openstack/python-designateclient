@@ -15,10 +15,8 @@
 # under the License.
 
 from oslo_utils import uuidutils
-from six import iteritems
-from six import iterkeys
-from six.moves.urllib.parse import parse_qs
-from six.moves.urllib.parse import urlparse
+from urllib.parse import parse_qs
+from urllib.parse import urlparse
 
 from designateclient import exceptions
 
@@ -51,7 +49,7 @@ def parse_query_from_url(url):
     :return: dict
     """
     values = parse_qs(urlparse(url)[4])
-    return {k: values[k][0] for k in iterkeys(values)}
+    return {k: values[k][0] for k in values.keys()}
 
 
 def get_all(function, criterion=None, args=None):
@@ -70,7 +68,7 @@ def get_all(function, criterion=None, args=None):
     returned_data = data
     while True:
         if data.next_page:
-            for k, v in iteritems(data.next_link_criterion):
+            for k, v in data.next_link_criterion.items():
                 criterion[k] = v
             data = function(*args, criterion=criterion)
             returned_data.extend(data)
