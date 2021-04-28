@@ -18,7 +18,6 @@ import argparse
 import logging
 
 from osc_lib.command import command
-import six
 
 from designateclient import utils
 from designateclient.v2.cli import common
@@ -135,7 +134,7 @@ class ShowRecordSetCommand(command.ShowOne):
         data = client.recordsets.get(parsed_args.zone_id, parsed_args.id)
 
         _format_recordset(data)
-        return six.moves.zip(*sorted(six.iteritems(data)))
+        return zip(*sorted(data.items()))
 
 
 class CreateRecordSetCommand(command.ShowOne):
@@ -182,7 +181,7 @@ class CreateRecordSetCommand(command.ShowOne):
             ttl=parsed_args.ttl)
 
         _format_recordset(data)
-        return six.moves.zip(*sorted(six.iteritems(data)))
+        return zip(*sorted(data.items()))
 
 
 class SetRecordSetCommand(command.ShowOne):
@@ -246,7 +245,7 @@ class SetRecordSetCommand(command.ShowOne):
 
         _format_recordset(updated)
 
-        return six.moves.zip(*sorted(six.iteritems(updated)))
+        return zip(*sorted(updated.items()))
 
 
 class DeleteRecordSetCommand(command.ShowOne):
@@ -270,4 +269,4 @@ class DeleteRecordSetCommand(command.ShowOne):
         LOG.info('RecordSet %s was deleted', parsed_args.id)
 
         _format_recordset(data)
-        return six.moves.zip(*sorted(six.iteritems(data)))
+        return zip(*sorted(data.items()))

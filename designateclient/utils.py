@@ -17,7 +17,6 @@
 import uuid
 
 from keystoneauth1 import adapter
-import six
 
 from designateclient import exceptions
 
@@ -64,8 +63,7 @@ def get_columns(data):
     def _seen(col):
         columns.add(str(col))
 
-    six.moves.map(lambda item: six.moves.map(_seen,
-                  list(six.iterkeys(item))), data)
+    map(lambda item: map(_seen, list(item.keys())), data)
     return list(columns)
 
 

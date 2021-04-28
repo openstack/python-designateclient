@@ -13,7 +13,6 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations
 # under the License.
-import six
 
 
 def add_all_projects_option(parser):
@@ -71,5 +70,5 @@ def set_all_common_headers(client, parsed_args):
         set_edit_managed(client, parsed_args.edit_managed)
 
     if parsed_args.sudo_project_id is not None and \
-            isinstance(parsed_args.sudo_project_id, six.string_types):
+            isinstance(parsed_args.sudo_project_id, str):
         set_sudo_project_id(client, parsed_args.sudo_project_id)

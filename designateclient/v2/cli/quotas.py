@@ -18,7 +18,6 @@ import logging
 
 from cliff import command
 from cliff import show
-import six
 
 from designateclient.v2.cli import common
 
@@ -60,7 +59,7 @@ class ListQuotasCommand(show.ShowOne):
             common.set_all_projects(client, True)
 
         data = client.quotas.list(proj_id)
-        return six.moves.zip(*sorted(six.iteritems(data)))
+        return zip(*sorted(data.items()))
 
 
 class SetQuotasCommand(show.ShowOne):
@@ -104,7 +103,7 @@ class SetQuotasCommand(show.ShowOne):
 
         updated = client.quotas.update(proj_id, quotas)
 
-        return six.moves.zip(*sorted(six.iteritems(updated)))
+        return zip(*sorted(updated.items()))
 
 
 class ResetQuotasCommand(command.Command):

@@ -17,7 +17,6 @@
 import logging
 
 from osc_lib.command import command
-import six
 
 from designateclient import utils
 from designateclient.v2.cli import common
@@ -75,7 +74,7 @@ class ShowTLDCommand(command.ShowOne):
         common.set_all_common_headers(client, parsed_args)
         data = client.tlds.get(parsed_args.id)
         _format_tld(data)
-        return six.moves.zip(*sorted(six.iteritems(data)))
+        return zip(*sorted(data.items()))
 
 
 class CreateTLDCommand(command.ShowOne):
@@ -96,7 +95,7 @@ class CreateTLDCommand(command.ShowOne):
         common.set_all_common_headers(client, parsed_args)
         data = client.tlds.create(parsed_args.name, parsed_args.description)
         _format_tld(data)
-        return six.moves.zip(*sorted(six.iteritems(data)))
+        return zip(*sorted(data.items()))
 
 
 class SetTLDCommand(command.ShowOne):
@@ -131,7 +130,7 @@ class SetTLDCommand(command.ShowOne):
 
         data = client.tlds.update(parsed_args.id, data)
         _format_tld(data)
-        return six.moves.zip(*sorted(six.iteritems(data)))
+        return zip(*sorted(data.items()))
 
 
 class DeleteTLDCommand(command.Command):

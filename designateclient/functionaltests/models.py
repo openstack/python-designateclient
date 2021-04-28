@@ -13,7 +13,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 """
-import six
 from tempest.lib.cli import output_parser
 
 
@@ -67,7 +66,7 @@ class FieldValueModel(Model):
 class ListEntryModel(Model):
 
     def __init__(self, fields, values):
-        for k, v in six.moves.zip(fields, values):
+        for k, v in zip(fields, values):
             setattr(self, k, v)
 
 

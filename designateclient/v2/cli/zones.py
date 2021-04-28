@@ -18,7 +18,6 @@ import logging
 
 from osc_lib.command import command
 from osc_lib import exceptions as osc_exc
-import six
 
 from designateclient import utils
 from designateclient.v2.cli import common
@@ -121,7 +120,7 @@ class ShowZoneCommand(command.ShowOne):
         data = client.zones.get(parsed_args.id)
 
         _format_zone(data)
-        return six.moves.zip(*sorted(six.iteritems(data)))
+        return zip(*sorted(data.items()))
 
 
 class CreateZoneCommand(command.ShowOne):
@@ -186,7 +185,7 @@ class CreateZoneCommand(command.ShowOne):
             parsed_args.name, parsed_args.type, **payload)
 
         _format_zone(data)
-        return six.moves.zip(*sorted(six.iteritems(data)))
+        return zip(*sorted(data.items()))
 
 
 class SetZoneCommand(command.ShowOne):
@@ -231,7 +230,7 @@ class SetZoneCommand(command.ShowOne):
 
         updated = client.zones.update(parsed_args.id, data)
         _format_zone(updated)
-        return six.moves.zip(*sorted(six.iteritems(updated)))
+        return zip(*sorted(updated.items()))
 
 
 class DeleteZoneCommand(command.ShowOne):
@@ -254,7 +253,7 @@ class DeleteZoneCommand(command.ShowOne):
         LOG.info('Zone %s was deleted', parsed_args.id)
 
         _format_zone(data)
-        return six.moves.zip(*sorted(six.iteritems(data)))
+        return zip(*sorted(data.items()))
 
 
 class AbandonZoneCommand(command.Command):
@@ -323,7 +322,7 @@ class CreateTransferRequestCommand(command.ShowOne):
         data = client.zone_transfers.create_request(
             parsed_args.zone_id, parsed_args.target_project_id,
             parsed_args.description)
-        return six.moves.zip(*sorted(six.iteritems(data)))
+        return zip(*sorted(data.items()))
 
 
 class ListTransferRequestsCommand(command.Lister):
@@ -368,7 +367,7 @@ class ShowTransferRequestCommand(command.ShowOne):
 
         data = client.zone_transfers.get_request(parsed_args.id)
 
-        return six.moves.zip(*sorted(six.iteritems(data)))
+        return zip(*sorted(data.items()))
 
 
 class SetTransferRequestCommand(command.ShowOne):
@@ -398,7 +397,7 @@ class SetTransferRequestCommand(command.ShowOne):
             data['description'] = parsed_args.description
 
         updated = client.zone_transfers.update_request(parsed_args.id, data)
-        return six.moves.zip(*sorted(six.iteritems(updated)))
+        return zip(*sorted(updated.items()))
 
 
 class DeleteTransferRequestCommand(command.Command):
@@ -444,7 +443,7 @@ class AcceptTransferRequestCommand(command.ShowOne):
 
         data = client.zone_transfers.accept_request(
             parsed_args.transfer_id, parsed_args.key)
-        return six.moves.zip(*sorted(six.iteritems(data)))
+        return zip(*sorted(data.items()))
 
 
 class ListTransferAcceptsCommand(command.Lister):
@@ -489,7 +488,7 @@ class ShowTransferAcceptCommand(command.ShowOne):
 
         data = client.zone_transfers.get_accept(parsed_args.id)
 
-        return six.moves.zip(*sorted(six.iteritems(data)))
+        return zip(*sorted(data.items()))
 
 
 class ExportZoneCommand(command.ShowOne):
@@ -514,7 +513,7 @@ class ExportZoneCommand(command.ShowOne):
 
         LOG.info('Zone Export %s was created', data['id'])
 
-        return six.moves.zip(*sorted(six.iteritems(data)))
+        return zip(*sorted(data.items()))
 
 
 class ListZoneExportsCommand(command.Lister):
@@ -567,7 +566,7 @@ class ShowZoneExportCommand(command.ShowOne):
             parsed_args.zone_export_id)
         _format_zone_export_record(data)
 
-        return six.moves.zip(*sorted(six.iteritems(data)))
+        return zip(*sorted(data.items()))
 
 
 class DeleteZoneExportCommand(command.Command):
@@ -640,7 +639,7 @@ class ImportZoneCommand(command.ShowOne):
 
         LOG.info('Zone Import %s was created', data['id'])
 
-        return six.moves.zip(*sorted(six.iteritems(data)))
+        return zip(*sorted(data.items()))
 
 
 class ListZoneImportsCommand(command.Lister):
@@ -694,7 +693,7 @@ class ShowZoneImportCommand(command.ShowOne):
             parsed_args.zone_import_id)
         _format_zone_import_record(data)
 
-        return six.moves.zip(*sorted(six.iteritems(data)))
+        return zip(*sorted(data.items()))
 
 
 class DeleteZoneImportCommand(command.Command):
