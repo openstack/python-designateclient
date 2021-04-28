@@ -280,6 +280,29 @@ class DeleteZoneCommand(command.ShowOne):
         return zip(*sorted(data.items()))
 
 
+class ListZoneNameserversCommand(command.Lister):
+    """List Zone Nameservers"""
+
+    columns = ['hostname', 'priority']
+
+    def get_parser(self, prog_name):
+        parser = super().get_parser(prog_name)
+
+        parser.add_argument('id', help='Zone ID or Name')
+        common.add_all_common_options(parser)
+
+        return parser
+
+    def take_action(self, parsed_args):
+        client = self.app.client_manager.dns
+        common.set_all_common_headers(client, parsed_args)
+
+        data = client.zones.nameservers(parsed_args.id)
+
+        cols = self.columns
+        return cols, (utils.get_item_properties(s, cols) for s in data)
+
+
 class AbandonZoneCommand(command.Command):
     """Abandon a zone"""
     def get_parser(self, prog_name):

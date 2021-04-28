@@ -55,6 +55,12 @@ class ZoneController(V2Controller):
 
         return self._get(f'/zones/{zone}')
 
+    def nameservers(self, zone):
+        zone = v2_utils.resolve_by_name(self.list, zone)
+
+        return self._get('/zones/%s/nameservers' % zone,
+                         response_key='nameservers')
+
     def update(self, zone, values):
         zone = v2_utils.resolve_by_name(self.list, zone)
 
