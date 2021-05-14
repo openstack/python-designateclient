@@ -44,7 +44,6 @@ def add_sudo_project_id_option(parser):
 
 def add_all_common_options(parser):
     add_all_projects_option(parser)
-    add_edit_managed_option(parser)
     add_sudo_project_id_option(parser)
 
 
@@ -66,7 +65,8 @@ def set_all_common_headers(client, parsed_args):
             isinstance(parsed_args.all_projects, bool):
         set_all_projects(client, parsed_args.all_projects)
 
-    if parsed_args.edit_managed is not None and \
+    if hasattr(parsed_args, 'edit_managed') and \
+            parsed_args.edit_managed is not None and \
             isinstance(parsed_args.edit_managed, bool):
         set_edit_managed(client, parsed_args.edit_managed)
 
