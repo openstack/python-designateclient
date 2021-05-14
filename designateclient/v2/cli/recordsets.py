@@ -211,6 +211,7 @@ class SetRecordSetCommand(command.ShowOne):
         ttl_group.add_argument('--no-ttl', action='store_true')
 
         common.add_all_common_options(parser)
+        common.add_edit_managed_option(parser)
 
         return parser
 
@@ -258,6 +259,7 @@ class DeleteRecordSetCommand(command.ShowOne):
         parser.add_argument('id', help="RecordSet ID")
 
         common.add_all_common_options(parser)
+        common.add_edit_managed_option(parser)
 
         return parser
 
