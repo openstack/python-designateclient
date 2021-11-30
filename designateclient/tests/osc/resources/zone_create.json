@@ -1,0 +1,22 @@
+{
+  "id": "6f106adb-0896-4114-b34f-4ac8dfee9465",
+  "pool_id": "794ccc2c-d751-44fe-b57f-8894c9f5c842",
+  "project_id": "15a6ae43e4dd498383e127e5f2521301",
+  "name": "internal.example.org.",
+  "email": "fake@example.org",
+  "description": null,
+  "ttl": 3600,
+  "serial": 1638747953,
+  "status": "PENDING",
+  "action": "CREATE",
+  "version": 1,
+  "attributes": {},
+  "type": "PRIMARY",
+  "masters": [],
+  "created_at": "2021-12-05T23:45:54.000000",
+  "updated_at": null,
+  "transferred_at": null,
+  "links": {
+    "self": "http://10.0.1.203/dns/v2/zones/6f106adb-0896-4114-b34f-4ac8dfee9465"
+  }
+}

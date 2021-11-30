@@ -1,0 +1,54 @@
+{
+  "zones": [
+    {
+      "id": "6f106adb-0896-4114-b34f-4ac8dfee9465",
+      "pool_id": "794ccc2c-d751-44fe-b57f-8894c9f5c842",
+      "project_id": "15a6ae43e4dd498383e127e5f2521301",
+      "name": "internal.example.org.",
+      "email": "fake@example.org",
+      "description": null,
+      "ttl": 3600,
+      "serial": 1638748076,
+      "status": "ACTIVE",
+      "action": "NONE",
+      "version": 8,
+      "attributes": {},
+      "type": "PRIMARY",
+      "masters": [],
+      "created_at": "2021-12-05T23:45:54.000000",
+      "updated_at": "2021-12-05T23:48:02.000000",
+      "transferred_at": null,
+      "links": {
+        "self": "http://10.0.1.203/dns/v2/zones/6f106adb-0896-4114-b34f-4ac8dfee9465"
+      }
+    },
+    {
+      "id": "a5f8e94e-af03-4e3e-b3eb-688a3b9f3b31",
+      "pool_id": "794ccc2c-d751-44fe-b57f-8894c9f5c842",
+      "project_id": "15a6ae43e4dd498383e127e5f2521301",
+      "name": "external.example.org.",
+      "email": "another_fake@example.org",
+      "description": null,
+      "ttl": 3600,
+      "serial": 1638748236,
+      "status": "ACTIVE",
+      "action": "NONE",
+      "version": 2,
+      "attributes": {},
+      "type": "PRIMARY",
+      "masters": [],
+      "created_at": "2021-12-05T23:50:36.000000",
+      "updated_at": "2021-12-05T23:50:42.000000",
+      "transferred_at": null,
+      "links": {
+        "self": "http://10.0.1.203/dns/v2/zones/a5f8e94e-af03-4e3e-b3eb-688a3b9f3b31"
+      }
+    }
+  ],
+  "links": {
+    "self": "http://10.0.1.203/dns/v2/zones?type=PRIMARY"
+  },
+  "metadata": {
+    "total_count": 2
+  }
+}

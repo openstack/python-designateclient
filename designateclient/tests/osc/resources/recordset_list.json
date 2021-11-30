@@ -1,0 +1,74 @@
+{
+  "recordsets": [
+    {
+      "id": "393d65fe-c0f1-4a55-a91e-bf6c1725dddc",
+      "zone_id": "6f106adb-0896-4114-b34f-4ac8dfee9465",
+      "project_id": "15a6ae43e4dd498383e127e5f2521301",
+      "name": "internal.example.org.",
+      "zone_name": "internal.example.org.",
+      "type": "NS",
+      "records": [
+        "ns1.example.org."
+      ],
+      "description": null,
+      "ttl": null,
+      "status": "ACTIVE",
+      "action": "NONE",
+      "version": 1,
+      "created_at": "2021-12-05T23:45:54.000000",
+      "updated_at": null,
+      "links": {
+        "self": "http://10.0.1.203/dns/v2/zones/6f106adb-0896-4114-b34f-4ac8dfee9465/recordsets/393d65fe-c0f1-4a55-a91e-bf6c1725dddc"
+      }
+    },
+    {
+      "id": "4055914e-0f2b-4c47-a8d3-287a5286fe92",
+      "zone_id": "6f106adb-0896-4114-b34f-4ac8dfee9465",
+      "project_id": "15a6ae43e4dd498383e127e5f2521301",
+      "name": "internal.example.org.",
+      "zone_name": "internal.example.org.",
+      "type": "SOA",
+      "records": [
+        "ns1.example.org. fake.example.org. 1638748076 3584 600 86400 3600"
+      ],
+      "description": null,
+      "ttl": null,
+      "status": "ACTIVE",
+      "action": "NONE",
+      "version": 4,
+      "created_at": "2021-12-05T23:45:54.000000",
+      "updated_at": "2021-12-05T23:47:57.000000",
+      "links": {
+        "self": "http://10.0.1.203/dns/v2/zones/6f106adb-0896-4114-b34f-4ac8dfee9465/recordsets/4055914e-0f2b-4c47-a8d3-287a5286fe92"
+      }
+    },
+    {
+      "id": "a00ac483-d74d-4555-b30f-2e0a176287e2",
+      "zone_id": "6f106adb-0896-4114-b34f-4ac8dfee9465",
+      "project_id": "15a6ae43e4dd498383e127e5f2521301",
+      "name": "example.internal.example.org.",
+      "zone_name": "internal.example.org.",
+      "type": "A",
+      "records": [
+        "127.0.0.2",
+        "127.0.0.1"
+      ],
+      "description": null,
+      "ttl": null,
+      "status": "ACTIVE",
+      "action": "NONE",
+      "version": 1,
+      "created_at": "2021-12-05T23:47:57.000000",
+      "updated_at": null,
+      "links": {
+        "self": "http://10.0.1.203/dns/v2/zones/6f106adb-0896-4114-b34f-4ac8dfee9465/recordsets/a00ac483-d74d-4555-b30f-2e0a176287e2"
+      }
+    }
+  ],
+  "links": {
+    "self": "http://10.0.1.203/dns/v2/zones/6f106adb-0896-4114-b34f-4ac8dfee9465/recordsets"
+  },
+  "metadata": {
+    "total_count": 3
+  }
+}
