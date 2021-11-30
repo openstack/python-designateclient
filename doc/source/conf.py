@@ -21,12 +21,13 @@ html_theme = 'openstackdocs'
 
 apidoc_module_dir = '../../designateclient'
 apidoc_output_dir = 'reference/api'
-apidoc_excluded_paths = [ 'tests/*', 'functionaltests/*' ]
+apidoc_excluded_paths = [ 'tests/*', 'functionaltests/*', 'hacking/*' ]
 apidoc_separate_modules = True
 
 autodoc_exclude_modules = [
   'designateclient.tests.*',
-  'designateclient.functionaltests.*']
+  'designateclient.functionaltests.*',
+  'designateclient.hacking.*']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']

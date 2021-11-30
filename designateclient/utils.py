@@ -21,7 +21,7 @@ from keystoneauth1 import adapter
 from designateclient import exceptions
 
 
-def get_item_properties(item, fields, mixed_case_fields=[], formatters={}):
+def get_item_properties(item, fields, mixed_case_fields=(), formatters=None):
     """Return a tuple containing the item properties.
 
     :param item: a single item resource (e.g. Server, Tenant, etc)
@@ -30,6 +30,8 @@ def get_item_properties(item, fields, mixed_case_fields=[], formatters={}):
     :param formatters: dictionary mapping field names to callables
         to format the values
     """
+    if formatters is None:
+        formatters = {}
     row = []
 
     for field in fields:
