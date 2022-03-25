@@ -242,6 +242,7 @@ class DeleteZoneCommand(command.ShowOne):
         parser.add_argument('id', help="Zone ID")
 
         common.add_all_common_options(parser)
+        common.add_hard_delete_option(parser)
 
         return parser
 

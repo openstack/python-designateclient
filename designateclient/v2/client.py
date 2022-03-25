@@ -49,6 +49,7 @@ class DesignateAdapter(adapter.LegacyJsonAdapter):
         self.timeout = kwargs.pop('timeout', None)
         self.all_projects = kwargs.pop('all_projects', False)
         self.edit_managed = kwargs.pop('edit_managed', False)
+        self.hard_delete = kwargs.pop('hard_delete', False)
         self.sudo_project_id = kwargs.pop('sudo_project_id', None)
         super(self.__class__, self).__init__(*args, **kwargs)
 
@@ -70,6 +71,12 @@ class DesignateAdapter(adapter.LegacyJsonAdapter):
             kwargs['headers'].setdefault(
                 'X-Designate-Edit-Managed-Records',
                 str(self.edit_managed)
+            )
+
+        if self.hard_delete:
+            kwargs['headers'].setdefault(
+                'X-Designate-Hard-Delete',
+                str(self.hard_delete)
             )
 
         if self.sudo_project_id is not None:
@@ -113,7 +120,7 @@ class Client(object):
                  extensions=None, service_type='dns', service_name=None,
                  http_log_debug=False, session=None, auth=None, timeout=None,
                  endpoint_override=None, all_projects=False,
-                 edit_managed=False, sudo_project_id=None):
+                 edit_managed=False, hard_delete=False, sudo_project_id=None):
         if session is None:
             raise ValueError("A session instance is required")
 
@@ -129,6 +136,7 @@ class Client(object):
             timeout=timeout,
             all_projects=all_projects,
             edit_managed=edit_managed,
+            hard_delete=hard_delete,
             sudo_project_id=sudo_project_id
         )
 

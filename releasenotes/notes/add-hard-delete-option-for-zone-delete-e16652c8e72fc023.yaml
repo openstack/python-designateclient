@@ -1,0 +1,5 @@
+---
+upgrade:
+  - |
+    Added option``hard-delete`` for zone delete API. This will allow user to
+    delete zone-files on the backend when zone is deleted.

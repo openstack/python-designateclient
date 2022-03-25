@@ -33,6 +33,16 @@ def add_edit_managed_option(parser):
     )
 
 
+def add_hard_delete_option(parser):
+    parser.add_argument(
+        '--hard-delete',
+        default=False,
+        action='store_true',
+        help='Delete zone along-with backend zone resources (i.e. files). '
+             'Default: False'
+    )
+
+
 def add_sudo_project_id_option(parser):
     parser.add_argument(
         '--sudo-project-id',
@@ -58,6 +68,10 @@ def set_edit_managed(client, value):
     client.session.edit_managed = value
 
 
+def set_hard_delete(client, value):
+    client.session.hard_delete = value
+
+
 def set_all_common_headers(client, parsed_args):
 
     if parsed_args.all_projects is not None and \
@@ -72,3 +86,8 @@ def set_all_common_headers(client, parsed_args):
     if parsed_args.sudo_project_id is not None and \
             isinstance(parsed_args.sudo_project_id, str):
         set_sudo_project_id(client, parsed_args.sudo_project_id)
+
+    if hasattr(parsed_args, 'hard_delete') and \
+            parsed_args.hard_delete is not None and \
+            isinstance(parsed_args.hard_delete, bool):
+        set_hard_delete(client, parsed_args.hard_delete)
