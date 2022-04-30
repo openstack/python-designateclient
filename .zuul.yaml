@@ -3,7 +3,6 @@
       - check-requirements
       - designate-devstack-jobs
       - openstack-cover-jobs
-      - openstack-lower-constraints-jobs
       - openstack-python3-yoga-jobs
       - openstackclient-plugin-jobs
       - publish-openstack-docs-pti
