@@ -3,10 +3,8 @@
       - check-requirements
       - designate-devstack-jobs
       - openstack-cover-jobs
-      - openstack-lower-constraints-jobs
       - openstack-python-jobs
       - openstack-python3-train-jobs
       - openstackclient-plugin-jobs
       - publish-openstack-docs-pti
-    gate:
-      queue: designate
+    queue: designate
