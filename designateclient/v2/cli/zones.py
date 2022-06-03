@@ -382,6 +382,10 @@ class SetTransferRequestCommand(command.ShowOne):
         description_group.add_argument('--description', help="Description")
         description_group.add_argument('--no-description', action='store_true')
 
+        parser.add_argument(
+            '--target-project-id',
+            help="Target Project ID to transfer to.")
+
         common.add_all_common_options(parser)
 
         return parser
@@ -396,6 +400,9 @@ class SetTransferRequestCommand(command.ShowOne):
             data['description'] = None
         elif parsed_args.description:
             data['description'] = parsed_args.description
+
+        if parsed_args.target_project_id:
+            data['target_project_id'] = parsed_args.target_project_id
 
         updated = client.zone_transfers.update_request(parsed_args.id, data)
         return six.moves.zip(*sorted(six.iteritems(updated)))
