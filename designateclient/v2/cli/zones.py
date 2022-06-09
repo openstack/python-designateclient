@@ -472,7 +472,7 @@ class ListTransferAcceptsCommand(command.Lister):
         client = self.app.client_manager.dns
         common.set_all_common_headers(client, parsed_args)
 
-        data = client.zone_transfers.list_requests()
+        data = client.zone_transfers.list_accepts()
 
         cols = self.columns
         return cols, (utils.get_item_properties(s, cols) for s in data)
