@@ -64,7 +64,7 @@ class ShowTLDCommand(command.ShowOne):
     def get_parser(self, prog_name):
         parser = super(ShowTLDCommand, self).get_parser(prog_name)
 
-        parser.add_argument('id', help="TLD ID")
+        parser.add_argument('id', help="TLD name or ID")
 
         common.add_all_common_options(parser)
 
@@ -105,7 +105,7 @@ class SetTLDCommand(command.ShowOne):
     def get_parser(self, prog_name):
         parser = super(SetTLDCommand, self).get_parser(prog_name)
 
-        parser.add_argument('id', help="TLD ID")
+        parser.add_argument('id', help="TLD name or ID")
         parser.add_argument('--name', help="TLD Name")
         description_group = parser.add_mutually_exclusive_group()
         description_group.add_argument('--description', help="Description")
@@ -140,7 +140,7 @@ class DeleteTLDCommand(command.Command):
     def get_parser(self, prog_name):
         parser = super(DeleteTLDCommand, self).get_parser(prog_name)
 
-        parser.add_argument('id', help="TLD ID")
+        parser.add_argument('id', help="TLD name or ID")
 
         common.add_all_common_options(parser)
 
