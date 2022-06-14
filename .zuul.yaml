@@ -8,5 +8,4 @@
       - openstackclient-plugin-jobs
       - publish-openstack-docs-pti
       - release-notes-jobs-python3
-    gate:
-      queue: designate
+    queue: designate
