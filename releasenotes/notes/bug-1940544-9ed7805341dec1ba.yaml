@@ -1,0 +1,6 @@
+---
+
+fixes:
+  - |
+    Include SECONDARY zone type to 'zone list' command output. Previously only
+    PRIMARY zones were shown

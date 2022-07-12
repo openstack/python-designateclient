@@ -56,7 +56,7 @@ class ListZonesCommand(command.Lister):
         parser.add_argument('--email', help="Zone Email", required=False)
         parser.add_argument('--type', help="Zone Type",
                             choices=["PRIMARY", "SECONDARY"],
-                            default="PRIMARY",
+                            default=None,
                             required=False)
         parser.add_argument('--ttl', help="Time To Live (Seconds)",
                             required=False)
