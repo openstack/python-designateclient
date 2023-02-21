@@ -159,8 +159,8 @@ class CreateZoneCommand(command.ShowOne):
                     k, v = attr.split(':')
                     payload["attributes"][k] = v
                 except ValueError:
-                    msg = "Attribute '%s' is in an incorrect format. "\
-                          "Attributes are <key>:<value> formated"
+                    msg = ("Attribute '%s' is in an incorrect format. "
+                           "Attributes are <key>:<value> formated")
                     raise osc_exc.CommandError(msg % attr)
 
         if parsed_args.type == 'PRIMARY':
@@ -177,8 +177,8 @@ class CreateZoneCommand(command.ShowOne):
         elif parsed_args.type == 'SECONDARY':
             payload["masters"] = parsed_args.masters
         else:
-            msg = "Type %s is not supported. Please choose between " \
-                "PRIMARY or SECONDARY"
+            msg = ("Type %s is not supported. Please choose between "
+                   "PRIMARY or SECONDARY")
             raise osc_exc.CommandError(msg % parsed_args.type)
 
         data = client.zones.create(

@@ -42,8 +42,8 @@ def get_item_properties(item, fields, mixed_case_fields=(), formatters=None):
                 field_name = field.replace(' ', '_')
             else:
                 field_name = field.lower().replace(' ', '_')
-            if not hasattr(item, field_name) and \
-                    (isinstance(item, dict) and field_name in item):
+            if (not hasattr(item, field_name) and
+                    (isinstance(item, dict) and field_name in item)):
                 data = item[field_name]
             else:
                 data = getattr(item, field_name, '')
