@@ -29,16 +29,17 @@ def resolve_by_name(func, name, *args):
     if uuidutils.is_uuid_like(name):
         return name
 
-    results = func(criterion={"name": "%s" % name}, *args)
+    results = func(criterion={"name": f"{name}"}, *args)
     length = len(results)
 
     if length == 1:
         return results[0]["id"]
     elif length == 0:
-        raise exceptions.NotFound("Name %s didn't resolve" % name)
+        raise exceptions.NotFound(f"Name {name} didn't resolve")
     else:
-        msg = "Multiple matches found for %s, please use ID instead." % name
-        raise exceptions.NoUniqueMatch(msg)
+        raise exceptions.NoUniqueMatch(
+            "Multiple matches found for {name}, please use ID instead."
+        )
 
 
 def parse_query_from_url(url):

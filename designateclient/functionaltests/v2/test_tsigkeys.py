@@ -25,7 +25,7 @@ from designateclient.functionaltests.v2.fixtures import ZoneFixture
 
 class TestTSIGKey(BaseDesignateTest):
     def setUp(self):
-        super(TestTSIGKey, self).setUp()
+        super().setUp()
         self.ensure_tsigkey_exists('com')
         self.zone = self.useFixture(ZoneFixture(
             name=random_zone_name(),

@@ -20,7 +20,7 @@ class TestServiceStatuses(v2.APIV2TestCase, v2.CrudMixin):
     RESOURCE = 'service_statuses'
 
     def new_ref(self, **kwargs):
-        ref = super(TestServiceStatuses, self).new_ref(**kwargs)
+        ref = super().new_ref(**kwargs)
         ref["name"] = "foo"
         return ref
 

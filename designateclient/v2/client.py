@@ -116,7 +116,7 @@ class DesignateAdapter(adapter.LegacyJsonAdapter):
         return response, body
 
 
-class Client(object):
+class Client:
     def __init__(self, region_name=None, endpoint_type='publicURL',
                  extensions=None, service_type='dns', service_name=None,
                  http_log_debug=False, session=None, auth=None, timeout=None,
@@ -131,7 +131,7 @@ class Client(object):
             region_name=region_name,
             service_type=service_type,
             interface=endpoint_type.rstrip('URL'),
-            user_agent='python-designateclient-%s' % version.version_info,
+            user_agent=f'python-designateclient-{version.version_info}',
             version=('2'),
             endpoint_override=endpoint_override,
             timeout=timeout,

@@ -37,11 +37,11 @@ class ListTLDsCommand(command.Lister):
     columns = ['id', 'name', 'description']
 
     def get_parser(self, prog_name):
-        parser = super(ListTLDsCommand, self).get_parser(prog_name)
+        parser = super().get_parser(prog_name)
 
-        parser.add_argument('--name', help="TLD NAME")
+        parser.add_argument('--name', help='TLD NAME')
 
-        parser.add_argument('--description', help="TLD Description")
+        parser.add_argument('--description', help='TLD Description')
 
         common.add_all_common_options(parser)
 
@@ -61,9 +61,9 @@ class ShowTLDCommand(command.ShowOne):
     """Show tld details"""
 
     def get_parser(self, prog_name):
-        parser = super(ShowTLDCommand, self).get_parser(prog_name)
+        parser = super().get_parser(prog_name)
 
-        parser.add_argument('id', help="TLD name or ID")
+        parser.add_argument('id', help='TLD name or ID')
 
         common.add_all_common_options(parser)
 
@@ -81,10 +81,10 @@ class CreateTLDCommand(command.ShowOne):
     """Create new tld"""
 
     def get_parser(self, prog_name):
-        parser = super(CreateTLDCommand, self).get_parser(prog_name)
+        parser = super().get_parser(prog_name)
 
-        parser.add_argument('--name', help="TLD Name", required=True)
-        parser.add_argument('--description', help="Description")
+        parser.add_argument('--name', help='TLD Name', required=True)
+        parser.add_argument('--description', help='Description')
 
         common.add_all_common_options(parser)
 
@@ -102,12 +102,12 @@ class SetTLDCommand(command.ShowOne):
     """Set tld properties"""
 
     def get_parser(self, prog_name):
-        parser = super(SetTLDCommand, self).get_parser(prog_name)
+        parser = super().get_parser(prog_name)
 
-        parser.add_argument('id', help="TLD name or ID")
-        parser.add_argument('--name', help="TLD Name")
+        parser.add_argument('id', help='TLD name or ID')
+        parser.add_argument('--name', help='TLD Name')
         description_group = parser.add_mutually_exclusive_group()
-        description_group.add_argument('--description', help="Description")
+        description_group.add_argument('--description', help='Description')
         description_group.add_argument('--no-description', action='store_true')
 
         common.add_all_common_options(parser)
@@ -137,9 +137,9 @@ class DeleteTLDCommand(command.Command):
     """Delete tld"""
 
     def get_parser(self, prog_name):
-        parser = super(DeleteTLDCommand, self).get_parser(prog_name)
+        parser = super().get_parser(prog_name)
 
-        parser.add_argument('id', help="TLD name or ID")
+        parser.add_argument('id', help='TLD name or ID')
 
         common.add_all_common_options(parser)
 

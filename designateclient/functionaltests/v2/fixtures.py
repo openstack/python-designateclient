@@ -28,7 +28,7 @@ class BaseFixture(fixtures.Fixture):
 
     def __init__(self, user='default', *args, **kwargs):
         """args/kwargs are forwarded to a create method on DesignateCLI"""
-        super(BaseFixture, self).__init__()
+        super().__init__()
         self.args = args
         self.kwargs = kwargs
         self.client = DesignateCLI.as_user(user)
@@ -39,7 +39,7 @@ class BaseFixture(fixtures.Fixture):
         # with an artificial SetupError, which produces bad error messages.
         # This just logs those stack traces to stderr for easier debugging.
         try:
-            super(BaseFixture, self).setUp()
+            super().setUp()
         except MultipleExceptions as e:
             for i, exc_info in enumerate(e.args):
                 print('--- printing MultipleExceptions traceback {} of {} ---'
@@ -52,7 +52,7 @@ class ZoneFixture(BaseFixture):
     """See DesignateCLI.zone_create for __init__ args"""
 
     def _setUp(self):
-        super(ZoneFixture, self)._setUp()
+        super()._setUp()
         self.zone = self.client.zone_create(*self.args, **self.kwargs)
         self.addCleanup(self.cleanup_zone, self.client, self.zone.id)
 
@@ -69,7 +69,7 @@ class TransferRequestFixture(BaseFixture):
 
     def __init__(self, zone, user='default', target_user='alt', *args,
                  **kwargs):
-        super(TransferRequestFixture, self).__init__(user, *args, **kwargs)
+        super().__init__(user, *args, **kwargs)
         self.zone = zone
         self.target_client = DesignateCLI.as_user(target_user)
 
@@ -78,7 +78,7 @@ class TransferRequestFixture(BaseFixture):
         self.kwargs['target_project_id'] = self.target_client.project_id
 
     def _setUp(self):
-        super(TransferRequestFixture, self)._setUp()
+        super()._setUp()
         self.transfer_request = self.client.zone_transfer_request_create(
             zone_id=self.zone.id,
             *self.args, **self.kwargs
@@ -101,11 +101,11 @@ class ExportFixture(BaseFixture):
     """See DesignateCLI.zone_export_create for __init__ args"""
 
     def __init__(self, zone, user='default', *args, **kwargs):
-        super(ExportFixture, self).__init__(user, *args, **kwargs)
+        super().__init__(user, *args, **kwargs)
         self.zone = zone
 
     def _setUp(self):
-        super(ExportFixture, self)._setUp()
+        super()._setUp()
         self.zone_export = self.client.zone_export_create(
             zone_id=self.zone.id,
             *self.args, **self.kwargs
@@ -126,11 +126,11 @@ class ImportFixture(BaseFixture):
     """See DesignateCLI.zone_import_create for __init__ args"""
 
     def __init__(self, zone_file_contents, user='default', *args, **kwargs):
-        super(ImportFixture, self).__init__(user, *args, **kwargs)
+        super().__init__(user, *args, **kwargs)
         self.zone_file_contents = zone_file_contents
 
     def _setUp(self):
-        super(ImportFixture, self)._setUp()
+        super()._setUp()
 
         with tempfile.NamedTemporaryFile() as f:
             f.write(self.zone_file_contents)
@@ -158,7 +158,7 @@ class RecordsetFixture(BaseFixture):
     """See DesignateCLI.recordset_create for __init__ args"""
 
     def _setUp(self):
-        super(RecordsetFixture, self)._setUp()
+        super()._setUp()
         self.recordset = self.client.recordset_create(
             *self.args, **self.kwargs)
         self.addCleanup(self.cleanup_recordset, self.client,
@@ -176,10 +176,10 @@ class TLDFixture(BaseFixture):
     """See DesignateCLI.tld_create for __init__ args"""
 
     def __init__(self, user='admin', *args, **kwargs):
-        super(TLDFixture, self).__init__(user=user, *args, **kwargs)
+        super().__init__(user=user, *args, **kwargs)
 
     def _setUp(self):
-        super(TLDFixture, self)._setUp()
+        super()._setUp()
         self.tld = self.client.tld_create(*self.args, **self.kwargs)
         self.addCleanup(self.cleanup_tld, self.client, self.tld.id)
 
@@ -195,10 +195,10 @@ class TSIGKeyFixture(BaseFixture):
     """See DesignateCLI.tsigkey_create for __init__ args"""
 
     def __init__(self, user='admin', *args, **kwargs):
-        super(TSIGKeyFixture, self).__init__(user=user, *args, **kwargs)
+        super().__init__(user=user, *args, **kwargs)
 
     def _setUp(self):
-        super(TSIGKeyFixture, self)._setUp()
+        super()._setUp()
         self.tsigkey = self.client.tsigkey_create(*self.args, **self.kwargs)
         self.addCleanup(self.cleanup_tsigkey(self.client, self.tsigkey.id))
 
@@ -214,10 +214,10 @@ class BlacklistFixture(BaseFixture):
     """See DesignateCLI.zone_blacklist_create for __init__ args"""
 
     def __init__(self, user='admin', *args, **kwargs):
-        super(BlacklistFixture, self).__init__(user=user, *args, **kwargs)
+        super().__init__(user=user, *args, **kwargs)
 
     def _setUp(self):
-        super(BlacklistFixture, self)._setUp()
+        super()._setUp()
         self.blacklist = self.client.zone_blacklist_create(*self.args,
                                                            **self.kwargs)
         self.addCleanup(self.cleanup_blacklist, self.client, self.blacklist.id)
@@ -234,11 +234,11 @@ class SharedZoneFixture(BaseFixture):
     """See DesignateCLI.recordset_create for __init__ args"""
 
     def __init__(self, zone, *args, **kwargs):
-        super(SharedZoneFixture, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.zone = zone
 
     def _setUp(self):
-        super(SharedZoneFixture, self)._setUp()
+        super()._setUp()
         self.zone_share = self.client.zone_share(zone_id=self.zone.id,
                                                  *self.args, **self.kwargs)
         self.addCleanup(self.cleanup_shared_zone, self.client, self.zone.id,

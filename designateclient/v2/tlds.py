@@ -24,7 +24,7 @@ class TLDController(V2Controller):
         }
 
         if description is not None:
-            data["description"] = description
+            data['description'] = description
 
         return self._post('/tlds', data=data)
 
@@ -36,14 +36,14 @@ class TLDController(V2Controller):
     def get(self, tld):
         tld = v2_utils.resolve_by_name(self.list, tld)
 
-        return self._get('/tlds/%s' % tld)
+        return self._get(f'/tlds/{tld}')
 
     def update(self, tld, values):
         tld = v2_utils.resolve_by_name(self.list, tld)
 
-        return self._patch('/tlds/%s' % tld, data=values)
+        return self._patch(f'/tlds/{tld}', data=values)
 
     def delete(self, tld):
         tld = v2_utils.resolve_by_name(self.list, tld)
 
-        return self._delete('/tlds/%s' % tld)
+        return self._delete(f'/tlds/{tld}')

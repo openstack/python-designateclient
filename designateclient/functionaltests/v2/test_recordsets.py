@@ -25,7 +25,7 @@ from designateclient.functionaltests.v2.fixtures import ZoneFixture
 class TestRecordset(BaseDesignateTest):
 
     def setUp(self):
-        super(TestRecordset, self).setUp()
+        super().setUp()
         self.ensure_tld_exists('com')
         self.zone = self.useFixture(ZoneFixture(
             name=random_zone_name(),

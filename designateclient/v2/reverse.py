@@ -23,12 +23,12 @@ class FloatingIPController(V2Controller):
         }
 
         if description is not None:
-            data["description"] = description
+            data['description'] = description
 
         if ttl is not None:
-            data["ttl"] = ttl
+            data['ttl'] = ttl
 
-        url = '/reverse/floatingips/%s' % floatingip_id
+        url = f'/reverse/floatingips/{floatingip_id}'
         return self._patch(url, data=data)
 
     def list(self, criterion=None):
@@ -37,13 +37,13 @@ class FloatingIPController(V2Controller):
         return self._get(url, response_key='floatingips')
 
     def get(self, floatingip_id):
-        url = '/reverse/floatingips/%s' % floatingip_id
+        url = f'/reverse/floatingips/{floatingip_id}'
 
         return self._get(url)
 
     def unset(self, floatingip_id):
-        data = {"ptrdname": None}
+        data = {'ptrdname': None}
 
-        url = '/reverse/floatingips/%s' % floatingip_id
+        url = f'/reverse/floatingips/{floatingip_id}'
 
         return self._patch(url, data=data)

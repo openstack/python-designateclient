@@ -1,4 +1,3 @@
-
 import logging
 import os
 
@@ -27,6 +26,6 @@ client = client.Client(session=session)
 try:
     zone = client.zones.create('i.io.', email='i@i.io')
 except exceptions.RemoteError:
-    zone = dict([(z['name'], z) for z in client.zones.list()])['i.io.']
+    zone = {z['name']: z for z in client.zones.list()}['i.io.']
 
 print(client.recordsets.list(zone['id']))

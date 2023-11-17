@@ -24,13 +24,13 @@ client = client.Client(session=session)
 
 # Primary Zone
 primary = client.zones.create(
-    'primary-%s.io.' % str(uuid.uuid4()),
+    f'primary-{str(uuid.uuid4())}.io.',
     'PRIMARY',
     'root@x.com')
 
 # Secondary Zone
 slave = client.zones.create(
-    'secondary-%s.io.' % str(uuid.uuid4()),
+    f'secondary-{str(uuid.uuid4())}.io.',
     'SECONDARY',
     masters=["127.0.1.1"])
 

@@ -23,7 +23,7 @@ from designateclient.functionaltests.v2.fixtures import TLDFixture
 class TestTld(BaseDesignateTest):
 
     def setUp(self):
-        super(TestTld, self).setUp()
+        super().setUp()
         tld_name = random_tld()
         self.tld = self.useFixture(TLDFixture(
             name=tld_name,

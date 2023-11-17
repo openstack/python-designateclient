@@ -24,7 +24,7 @@ client = client.Client(session=session)
 
 
 try:
-    zone = dict([(z['name'], z) for z in client.zones.list()])['i.io.']
+    zone = {z['name']: z for z in client.zones.list()}['i.io.']
     client.zones.delete(zone['id'])
 except exceptions.NotFound:
     pass
@@ -40,7 +40,7 @@ for rrset in client.recordsets.list(zone['id']):
 # Make some A records
 www = client.recordsets.create(
     zone['id'],
-    'www.%s' % zone['name'],
+    'www.{}'.format(zone['name']),
     'A',
     ['10.0.0.1'])
 
@@ -52,7 +52,7 @@ client.recordsets.update(zone['id'], www['id'], values)
 
 cname = client.recordsets.create(
     zone['id'],
-    'my-site.%s' % zone['name'],
+    'my-site.{}'.format(zone['name']),
     'CNAME',
     [www['name']])
 

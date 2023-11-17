@@ -21,7 +21,7 @@ from designateclient.v2.cli import zones
 
 class TestDesignateCreateZone(utils.TestCommand):
     def setUp(self):
-        super(TestDesignateCreateZone, self).setUp()
+        super().setUp()
         self.app.client_manager.dns = mock.MagicMock()
         self.cmd = zones.CreateZoneCommand(self.app, None)
         self.dns_client = self.app.client_manager.dns
@@ -49,7 +49,7 @@ class TestDesignateCreateZone(utils.TestCommand):
 
 class TestDesignateListZones(utils.TestCommand):
     def setUp(self):
-        super(TestDesignateListZones, self).setUp()
+        super().setUp()
         self.app.client_manager.dns = mock.MagicMock()
         self.cmd = zones.ListZonesCommand(self.app, None)
         self.dns_client = self.app.client_manager.dns

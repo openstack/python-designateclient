@@ -32,11 +32,11 @@ class RecordSetController(V2Controller):
 
         # We where given a name like "www" vs www.i.io., attempt to fix it on
         # the behalf of the actor.
-        if not name.endswith("."):
+        if not name.endswith('.'):
             if not isinstance(zone_info, dict):
                 zone_info = self.client.zones.get(zone)
 
-            name = "%s.%s" % (name, zone_info["name"])
+            name = '{}.{}'.format(name, zone_info['name'])
 
         return name, zone_info
 
@@ -57,24 +57,22 @@ class RecordSetController(V2Controller):
             data['description'] = description
 
         if zone_info is not None:
-            zone_id = zone_info["id"]
+            zone_id = zone_info['id']
         else:
             zone_id = zone
 
-        url = '/zones/%s/recordsets' % zone_id
-        return self._post(url, data=data)
+        return self._post(f'/zones/{zone_id}/recordsets', data=data)
 
     def list(self, zone, criterion=None, marker=None, limit=None):
         zone = v2_utils.resolve_by_name(self.client.zones.list, zone)
 
         url = self.build_url(
-            '/zones/%s/recordsets' % zone,
-            criterion, marker, limit)
+            f'/zones/{zone}/recordsets', criterion, marker, limit
+        )
 
         return self._get(url, response_key='recordsets')
 
     def list_all_zones(self, criterion=None, marker=None, limit=None):
-
         url = self.build_url('/recordsets', criterion, marker, limit)
 
         return self._get(url, response_key='recordsets')
@@ -83,8 +81,7 @@ class RecordSetController(V2Controller):
         zone = v2_utils.resolve_by_name(self.client.zones.list, zone)
         recordset = v2_utils.resolve_by_name(self.list, recordset, zone)
 
-        url = self.build_url('/zones/%s/recordsets/%s' % (
-                             zone, recordset))
+        url = self.build_url(f'/zones/{zone}/recordsets/{recordset}')
 
         return self._get(url)
 
@@ -92,7 +89,7 @@ class RecordSetController(V2Controller):
         zone = v2_utils.resolve_by_name(self.client.zones.list, zone)
         recordset = v2_utils.resolve_by_name(self.list, recordset, zone)
 
-        url = '/zones/%s/recordsets/%s' % (zone, recordset)
+        url = f'/zones/{zone}/recordsets/{recordset}'
 
         return self._put(url, data=values)
 
@@ -100,6 +97,6 @@ class RecordSetController(V2Controller):
         zone = v2_utils.resolve_by_name(self.client.zones.list, zone)
         recordset = v2_utils.resolve_by_name(self.list, recordset, zone)
 
-        url = '/zones/%s/recordsets/%s' % (zone, recordset)
+        url = f'/zones/{zone}/recordsets/{recordset}'
 
         return self._delete(url)

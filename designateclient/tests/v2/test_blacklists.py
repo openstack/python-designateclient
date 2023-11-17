@@ -22,7 +22,7 @@ class TestBlacklists(v2.APIV2TestCase, v2.CrudMixin):
     RESOURCE = 'blacklists'
 
     def new_ref(self, **kwargs):
-        ref = super(TestBlacklists, self).new_ref(**kwargs)
+        ref = super().new_ref(**kwargs)
         ref.setdefault("pattern", uuid.uuid4().hex)
         return ref
 

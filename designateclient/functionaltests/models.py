@@ -16,7 +16,7 @@ limitations under the License.
 from tempest.lib.cli import output_parser
 
 
-class Model(object):
+class Model:
 
     def __str__(self):
         return str(self.__dict__)

@@ -17,7 +17,7 @@ import uuid
 
 from designateclient.tests import v2
 
-FIP_ID = '%s:%s' % (str(uuid.uuid4()), "RegionOne")
+FIP_ID = '{}:{}'.format(str(uuid.uuid4()), "RegionOne")
 
 
 class TestFloatingIP(v2.APIV2TestCase, v2.CrudMixin):

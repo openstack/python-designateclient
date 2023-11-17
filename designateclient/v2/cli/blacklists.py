@@ -37,7 +37,7 @@ class ListBlacklistsCommand(command.Lister):
     columns = ['id', 'pattern', 'description']
 
     def get_parser(self, prog_name):
-        parser = super(ListBlacklistsCommand, self).get_parser(prog_name)
+        parser = super().get_parser(prog_name)
 
         common.add_all_common_options(parser)
 
@@ -56,9 +56,9 @@ class ShowBlacklistCommand(command.ShowOne):
     """Show blacklist details"""
 
     def get_parser(self, prog_name):
-        parser = super(ShowBlacklistCommand, self).get_parser(prog_name)
+        parser = super().get_parser(prog_name)
 
-        parser.add_argument('id', help="Blacklist ID")
+        parser.add_argument('id', help='Blacklist ID')
 
         common.add_all_common_options(parser)
 
@@ -76,11 +76,11 @@ class CreateBlacklistCommand(command.ShowOne):
     """Create new blacklist"""
 
     def get_parser(self, prog_name):
-        parser = super(CreateBlacklistCommand, self).get_parser(prog_name)
+        parser = super().get_parser(prog_name)
 
-        parser.add_argument('--pattern', help="Blacklist pattern",
+        parser.add_argument('--pattern', help='Blacklist pattern',
                             required=True)
-        parser.add_argument('--description', help="Description")
+        parser.add_argument('--description', help='Description')
 
         common.add_all_common_options(parser)
 
@@ -101,13 +101,13 @@ class SetBlacklistCommand(command.ShowOne):
     """Set blacklist properties"""
 
     def get_parser(self, prog_name):
-        parser = super(SetBlacklistCommand, self).get_parser(prog_name)
+        parser = super().get_parser(prog_name)
 
-        parser.add_argument('id', help="Blacklist ID")
-        parser.add_argument('--pattern', help="Blacklist pattern")
+        parser.add_argument('id', help='Blacklist ID')
+        parser.add_argument('--pattern', help='Blacklist pattern')
 
         description_group = parser.add_mutually_exclusive_group()
-        description_group.add_argument('--description', help="Description")
+        description_group.add_argument('--description', help='Description')
         description_group.add_argument('--no-description', action='store_true')
 
         common.add_all_common_options(parser)
@@ -138,9 +138,9 @@ class DeleteBlacklistCommand(command.Command):
     """Delete blacklist"""
 
     def get_parser(self, prog_name):
-        parser = super(DeleteBlacklistCommand, self).get_parser(prog_name)
+        parser = super().get_parser(prog_name)
 
-        parser.add_argument('id', help="Blacklist ID")
+        parser.add_argument('id', help='Blacklist ID')
 
         common.add_all_common_options(parser)
 

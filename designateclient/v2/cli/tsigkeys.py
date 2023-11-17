@@ -36,12 +36,12 @@ class ListTSIGKeysCommand(command.Lister):
     columns = ['id', 'name', 'algorithm', 'secret', 'scope', 'resource_id']
 
     def get_parser(self, prog_name):
-        parser = super(ListTSIGKeysCommand, self).get_parser(prog_name)
+        parser = super().get_parser(prog_name)
 
-        parser.add_argument('--name', help="TSIGKey NAME", required=False)
-        parser.add_argument('--algorithm', help="TSIGKey algorithm",
+        parser.add_argument('--name', help='TSIGKey NAME', required=False)
+        parser.add_argument('--algorithm', help='TSIGKey algorithm',
                             required=False)
-        parser.add_argument('--scope', help="TSIGKey scope", required=False)
+        parser.add_argument('--scope', help='TSIGKey scope', required=False)
 
         common.add_all_common_options(parser)
 
@@ -53,11 +53,11 @@ class ListTSIGKeysCommand(command.Lister):
 
         criterion = {}
         if parsed_args.name is not None:
-            criterion["name"] = parsed_args.name
+            criterion['name'] = parsed_args.name
         if parsed_args.algorithm is not None:
-            criterion["algorithm"] = parsed_args.algorithm
+            criterion['algorithm'] = parsed_args.algorithm
         if parsed_args.scope is not None:
-            criterion["scope"] = parsed_args.scope
+            criterion['scope'] = parsed_args.scope
 
         data = get_all(client.tsigkeys.list, criterion)
 
@@ -69,9 +69,9 @@ class ShowTSIGKeyCommand(command.ShowOne):
     """Show tsigkey details"""
 
     def get_parser(self, prog_name):
-        parser = super(ShowTSIGKeyCommand, self).get_parser(prog_name)
+        parser = super().get_parser(prog_name)
 
-        parser.add_argument('id', help="TSIGKey ID")
+        parser.add_argument('id', help='TSIGKey ID')
 
         common.add_all_common_options(parser)
 
@@ -89,14 +89,14 @@ class CreateTSIGKeyCommand(command.ShowOne):
     """Create new tsigkey"""
 
     def get_parser(self, prog_name):
-        parser = super(CreateTSIGKeyCommand, self).get_parser(prog_name)
+        parser = super().get_parser(prog_name)
 
-        parser.add_argument('--name', help="TSIGKey Name", required=True)
-        parser.add_argument('--algorithm', help="TSIGKey algorithm",
+        parser.add_argument('--name', help='TSIGKey Name', required=True)
+        parser.add_argument('--algorithm', help='TSIGKey algorithm',
                             required=True)
-        parser.add_argument('--secret', help="TSIGKey secret", required=True)
-        parser.add_argument('--scope', help="TSIGKey scope", required=True)
-        parser.add_argument('--resource-id', help="TSIGKey resource_id",
+        parser.add_argument('--secret', help='TSIGKey secret', required=True)
+        parser.add_argument('--scope', help='TSIGKey scope', required=True)
+        parser.add_argument('--resource-id', help='TSIGKey resource_id',
                             required=True)
 
         common.add_all_common_options(parser)
@@ -117,13 +117,13 @@ class SetTSIGKeyCommand(command.ShowOne):
     """Set tsigkey properties"""
 
     def get_parser(self, prog_name):
-        parser = super(SetTSIGKeyCommand, self).get_parser(prog_name)
+        parser = super().get_parser(prog_name)
 
-        parser.add_argument('id', help="TSIGKey ID")
-        parser.add_argument('--name', help="TSIGKey Name")
-        parser.add_argument('--algorithm', help="TSIGKey algorithm")
-        parser.add_argument('--secret', help="TSIGKey secret")
-        parser.add_argument('--scope', help="TSIGKey scope")
+        parser.add_argument('id', help='TSIGKey ID')
+        parser.add_argument('--name', help='TSIGKey Name')
+        parser.add_argument('--algorithm', help='TSIGKey algorithm')
+        parser.add_argument('--secret', help='TSIGKey secret')
+        parser.add_argument('--scope', help='TSIGKey scope')
 
         common.add_all_common_options(parser)
 
@@ -153,9 +153,9 @@ class DeleteTSIGKeyCommand(command.Command):
     """Delete tsigkey"""
 
     def get_parser(self, prog_name):
-        parser = super(DeleteTSIGKeyCommand, self).get_parser(prog_name)
+        parser = super().get_parser(prog_name)
 
-        parser.add_argument('id', help="TSIGKey ID")
+        parser.add_argument('id', help='TSIGKey ID')
 
         common.add_all_common_options(parser)
 

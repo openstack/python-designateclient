@@ -45,7 +45,7 @@ def build_option_string(options):
 
         "--email 'me@example.com' --name 'example.com.'
     """
-    return " ".join("{0} '{1}'".format(flag, value)
+    return " ".join(f"{flag} '{value}'"
                     for flag, value in options.items()
                     if value is not None)
 
@@ -72,18 +72,18 @@ def build_flags_string(flags):
     return " ".join(flags.keys())
 
 
-class ZoneCommands(object):
+class ZoneCommands:
     """This is a mixin that provides zone commands to DesignateCLI"""
 
     def zone_list(self, *args, **kwargs):
         return self.parsed_cmd('zone list', ListModel, *args, **kwargs)
 
     def zone_show(self, id, *args, **kwargs):
-        return self.parsed_cmd('zone show %s' % id, FieldValueModel, *args,
+        return self.parsed_cmd(f'zone show {id}', FieldValueModel, *args,
                                **kwargs)
 
     def zone_delete(self, id, *args, **kwargs):
-        return self.parsed_cmd('zone delete %s' % id, FieldValueModel, *args,
+        return self.parsed_cmd(f'zone delete {id}', FieldValueModel, *args,
                                **kwargs)
 
     def zone_create(self, name, email=None, ttl=None, description=None,
@@ -95,7 +95,7 @@ class ZoneCommands(object):
             "--masters": masters,
             "--type": type,
         })
-        cmd = 'zone create {0} {1}'.format(name, options_str)
+        cmd = f'zone create {name} {options_str}'
         return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
 
     def zone_set(self, id, email=None, ttl=None, description=None,
@@ -107,11 +107,11 @@ class ZoneCommands(object):
             "--masters": masters,
             "--type": type,
         })
-        cmd = 'zone set {0} {1}'.format(id, options_str)
+        cmd = f'zone set {id} {options_str}'
         return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
 
 
-class ZoneTransferCommands(object):
+class ZoneTransferCommands:
     """A mixin for DesignateCLI to add zone transfer commands"""
 
     def zone_transfer_request_list(self, *args, **kwargs):
@@ -124,21 +124,20 @@ class ZoneTransferCommands(object):
             "--target-project-id": target_project_id,
             "--description": description,
         })
-        cmd = 'zone transfer request create {0} {1}'.format(
-            zone_id, options_str)
+        cmd = f'zone transfer request create {zone_id} {options_str}'
         return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
 
     def zone_transfer_request_show(self, id, *args, **kwargs):
-        cmd = 'zone transfer request show {0}'.format(id)
+        cmd = f'zone transfer request show {id}'
         return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
 
     def zone_transfer_request_set(self, id, description=None, *args, **kwargs):
         options_str = build_option_string({"--description": description})
-        cmd = 'zone transfer request set {0} {1}'.format(options_str, id)
+        cmd = f'zone transfer request set {options_str} {id}'
         return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
 
     def zone_transfer_request_delete(self, id, *args, **kwargs):
-        cmd = 'zone transfer request delete {0}'.format(id)
+        cmd = f'zone transfer request delete {id}'
         return self.parsed_cmd(cmd, *args, **kwargs)
 
     def zone_transfer_accept_request(self, id, key, *args, **kwargs):
@@ -146,11 +145,11 @@ class ZoneTransferCommands(object):
             "--transfer-id": id,
             "--key": key,
         })
-        cmd = 'zone transfer accept request {0}'.format(options_str)
+        cmd = f'zone transfer accept request {options_str}'
         return self.parsed_cmd(cmd, *args, **kwargs)
 
     def zone_transfer_accept_show(self, id, *args, **kwargs):
-        cmd = 'zone transfer accept show {0}'.format(id)
+        cmd = f'zone transfer accept show {id}'
         return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
 
     def zone_transfer_accept_list(self, *args, **kwargs):
@@ -158,7 +157,7 @@ class ZoneTransferCommands(object):
         return self.parsed_cmd(cmd, ListModel, *args, **kwargs)
 
 
-class ZoneExportCommands(object):
+class ZoneExportCommands:
     """A mixin for DesignateCLI to add zone export commands"""
 
     def zone_export_list(self, *args, **kwargs):
@@ -166,24 +165,23 @@ class ZoneExportCommands(object):
         return self.parsed_cmd(cmd, ListModel, *args, **kwargs)
 
     def zone_export_create(self, zone_id, *args, **kwargs):
-        cmd = 'zone export create {0}'.format(
-            zone_id)
+        cmd = f'zone export create {zone_id}'
         return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
 
     def zone_export_show(self, zone_export_id, *args, **kwargs):
-        cmd = 'zone export show {0}'.format(zone_export_id)
+        cmd = f'zone export show {zone_export_id}'
         return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
 
     def zone_export_delete(self, zone_export_id, *args, **kwargs):
-        cmd = 'zone export delete {0}'.format(zone_export_id)
+        cmd = f'zone export delete {zone_export_id}'
         return self.parsed_cmd(cmd, *args, **kwargs)
 
     def zone_export_showfile(self, zone_export_id, *args, **kwargs):
-        cmd = 'zone export showfile {0}'.format(zone_export_id)
+        cmd = f'zone export showfile {zone_export_id}'
         return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
 
 
-class ZoneImportCommands(object):
+class ZoneImportCommands:
     """A mixin for DesignateCLI to add zone import commands"""
 
     def zone_import_list(self, *args, **kwargs):
@@ -191,26 +189,26 @@ class ZoneImportCommands(object):
         return self.parsed_cmd(cmd, ListModel, *args, **kwargs)
 
     def zone_import_create(self, zone_file_path, *args, **kwargs):
-        cmd = 'zone import create {0}'.format(zone_file_path)
+        cmd = f'zone import create {zone_file_path}'
         return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
 
     def zone_import_show(self, zone_import_id, *args, **kwargs):
-        cmd = 'zone import show {0}'.format(zone_import_id)
+        cmd = f'zone import show {zone_import_id}'
         return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
 
     def zone_import_delete(self, zone_import_id, *args, **kwargs):
-        cmd = 'zone import delete {0}'.format(zone_import_id)
+        cmd = f'zone import delete {zone_import_id}'
         return self.parsed_cmd(cmd, *args, **kwargs)
 
 
-class RecordsetCommands(object):
+class RecordsetCommands:
 
     def recordset_show(self, zone_id, id, *args, **kwargs):
-        cmd = 'recordset show {0} {1}'.format(zone_id, id)
+        cmd = f'recordset show {zone_id} {id}'
         return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
 
     def recordset_list(self, zone_id, *args, **kwargs):
-        cmd = 'recordset list {0}'.format(zone_id)
+        cmd = f'recordset list {zone_id}'
         return self.parsed_cmd(cmd, ListModel, *args, **kwargs)
 
     def recordset_create(self, zone_id, name, records=None, type=None,
@@ -221,7 +219,7 @@ class RecordsetCommands(object):
             '--description': description,
             '--ttl': ttl,
         })
-        cmd = 'recordset create {0} {1} {2}'.format(zone_id, name, options_str)
+        cmd = f'recordset create {zone_id} {name} {options_str}'
         return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
 
     def recordset_set(self, zone_id, id, records=None, type=None,
@@ -237,33 +235,32 @@ class RecordsetCommands(object):
             '--no-description': no_description,
             '--no-ttl': no_ttl,
         })
-        cmd = 'recordset set {0} {1} {2} {3}'.format(
-            zone_id, id, flags_str, options_str)
+        cmd = f'recordset set {zone_id} {id} {flags_str} {options_str}'
         return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
 
     def recordset_delete(self, zone_id, id, *args, **kwargs):
-        cmd = 'recordset delete {0} {1}'.format(zone_id, id)
+        cmd = f'recordset delete {zone_id} {id}'
         return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
 
 
-class TLDCommands(object):
+class TLDCommands:
 
     def tld_list(self, *args, **kwargs):
         return self.parsed_cmd('tld list', ListModel, *args, **kwargs)
 
     def tld_show(self, id, *args, **kwargs):
-        return self.parsed_cmd('tld show {0}'.format(id), FieldValueModel,
+        return self.parsed_cmd(f'tld show {id}', FieldValueModel,
                                *args, **kwargs)
 
     def tld_delete(self, id, *args, **kwargs):
-        return self.parsed_cmd('tld delete {0}'.format(id), *args, **kwargs)
+        return self.parsed_cmd(f'tld delete {id}', *args, **kwargs)
 
     def tld_create(self, name, description=None, *args, **kwargs):
         options_str = build_option_string({
             '--name': name,
             '--description': description,
         })
-        cmd = 'tld create {0}'.format(options_str)
+        cmd = f'tld create {options_str}'
         return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
 
     def tld_set(self, id, name=None, description=None, no_description=False,
@@ -273,20 +270,20 @@ class TLDCommands(object):
             '--description': description,
         })
         flags_str = build_flags_string({'--no-description': no_description})
-        cmd = 'tld set {0} {1} {2}'.format(id, options_str, flags_str)
+        cmd = f'tld set {id} {options_str} {flags_str}'
         return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
 
 
-class TSIGKeyCommands(object):
+class TSIGKeyCommands:
     def tsigkey_list(self, *args, **kwargs):
         return self.parsed_cmd('tsigkey list', ListModel, *args, **kwargs)
 
     def tsigkey_show(self, id, *args, **kwargs):
-        return self.parsed_cmd('tsigkey show {0}'.format(id), FieldValueModel,
+        return self.parsed_cmd(f'tsigkey show {id}', FieldValueModel,
                                *args, **kwargs)
 
     def tsigkey_delete(self, id, *args, **kwargs):
-        return self.parsed_cmd('tsigkey delete {0}'.format(id), *args,
+        return self.parsed_cmd(f'tsigkey delete {id}', *args,
                                **kwargs)
 
     def tsigkey_create(self, name, algorithm, secret, scope, resource_id,
@@ -298,7 +295,7 @@ class TSIGKeyCommands(object):
             '--scope': scope,
             '--resource-id': resource_id,
         })
-        cmd = 'tsigkey create {0}'.format(options_str)
+        cmd = f'tsigkey create {options_str}'
         return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
 
     def tsigkey_set(self, id, name=None, algorithm=None, secret=None,
@@ -310,11 +307,11 @@ class TSIGKeyCommands(object):
             '--secret': secret,
             '--scope': scope,
         })
-        cmd = 'tsigkey set {0} {1}'.format(id, options_str)
+        cmd = f'tsigkey set {id} {options_str}'
         return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
 
 
-class BlacklistCommands(object):
+class BlacklistCommands:
     def zone_blacklist_list(self, *args, **kwargs):
         cmd = 'zone blacklist list'
         return self.parsed_cmd(cmd, ListModel, *args, **kwargs)
@@ -325,7 +322,7 @@ class BlacklistCommands(object):
             '--pattern': pattern,
             '--description': description,
         })
-        cmd = 'zone blacklist create {0}'.format(options_str)
+        cmd = f'zone blacklist create {options_str}'
         return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
 
     def zone_blacklist_set(self, id, pattern=None, description=None,
@@ -335,35 +332,34 @@ class BlacklistCommands(object):
             '--description': description,
         })
         flags_str = build_flags_string({'--no-description': no_description})
-        cmd = 'zone blacklist set {0} {1} {2}'.format(id, options_str,
-                                                      flags_str)
+        cmd = f'zone blacklist set {id} {options_str} {flags_str}'
         return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
 
     def zone_blacklist_show(self, id, *args, **kwargs):
-        cmd = 'zone blacklist show {0}'.format(id)
+        cmd = f'zone blacklist show {id}'
         return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
 
     def zone_blacklist_delete(self, id, *args, **kwargs):
-        cmd = 'zone blacklist delete {0}'.format(id)
+        cmd = f'zone blacklist delete {id}'
         return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
 
 
-class SharedZoneCommands(object):
+class SharedZoneCommands:
 
     def shared_zone_show(self, zone_id, shared_zone_id, *args, **kwargs):
-        cmd = 'zone share show {0} {1}'.format(zone_id, shared_zone_id)
+        cmd = f'zone share show {zone_id} {shared_zone_id}'
         return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
 
     def shared_zone_list(self, zone_id, *args, **kwargs):
-        cmd = 'zone share list {0}'.format(zone_id)
+        cmd = f'zone share list {zone_id}'
         return self.parsed_cmd(cmd, ListModel, *args, **kwargs)
 
     def share_zone(self, zone_id, target_project_id, *args, **kwargs):
-        cmd = 'zone share create {0} {1}'.format(zone_id, target_project_id)
+        cmd = f'zone share create {zone_id} {target_project_id}'
         return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
 
     def unshare_zone(self, zone_id, shared_zone_id, *args, **kwargs):
-        cmd = 'zone share delete {0} {1}'.format(zone_id, shared_zone_id)
+        cmd = f'zone share delete {zone_id} {shared_zone_id}'
         return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
 
 
@@ -375,7 +371,7 @@ class DesignateCLI(base.CLIClient, ZoneCommands, ZoneTransferCommands,
     _CLIENTS = None
 
     def __init__(self, *args, **kwargs):
-        super(DesignateCLI, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         # grab the project id. this is used for zone transfer requests
         resp = FieldValueModel(self.openstack('token issue'))
         self.project_id = resp.project_id
@@ -421,7 +417,7 @@ class DesignateCLI(base.CLIClient, ZoneCommands, ZoneTransferCommands,
         clients = self.get_clients()
         if user in clients:
             return clients[user]
-        raise Exception("User '{0}' does not exist".format(user))
+        raise Exception(f"User '{user}' does not exist")
 
     def parsed_cmd(self, cmd, model=None, *args, **kwargs):
         if self.using_auth_override:

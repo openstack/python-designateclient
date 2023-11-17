@@ -37,14 +37,14 @@ class TSIGKeysController(V2Controller):
     def get(self, tsigkey):
         tsigkey = v2_utils.resolve_by_name(self.list, tsigkey)
 
-        return self._get('/tsigkeys/%s' % tsigkey)
+        return self._get(f'/tsigkeys/{tsigkey}')
 
     def update(self, tsigkey, values):
         tsigkey = v2_utils.resolve_by_name(self.list, tsigkey)
 
-        return self._patch('/tsigkeys/%s' % tsigkey, data=values)
+        return self._patch(f'/tsigkeys/{tsigkey}', data=values)
 
     def delete(self, tsigkey):
         tsigkey = v2_utils.resolve_by_name(self.list, tsigkey)
 
-        return self._delete('/tsigkeys/%s' % tsigkey)
+        return self._delete(f'/tsigkeys/{tsigkey}')

@@ -61,8 +61,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Designate Client Release Notes'
-copyright = u'2015, Designate Developers'
+project = 'Designate Client Release Notes'
+copyright = '2015, Designate Developers'
 
 # Release notes are version independent.
 # The full version, including alpha/beta/rc tags.
@@ -212,9 +212,9 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     ('index', 'DesignateClientReleaseNotes.tex',
-     u'Designate Client Release Notes '
-     u'Documentation',
-     u'Designate Developers', 'manual'),
+     'Designate Client Release Notes '
+     'Documentation',
+     'Designate Developers', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -243,8 +243,8 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'designateclientreleasenotes', u'Designate Client Release Notes '
-     u'Documentation', [u'Designate Developers'], 1)
+    ('index', 'designateclientreleasenotes', 'Designate Client Release Notes '
+     'Documentation', ['Designate Developers'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -258,9 +258,9 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     ('index', 'DesignateClientReleaseNotes',
-     u'Designate Client Release Notes '
-     u'Documentation',
-     u'Designate Developers', 'DesignateClientReleaseNotes',
+     'Designate Client Release Notes '
+     'Documentation',
+     'Designate Developers', 'DesignateClientReleaseNotes',
      'One line description of project.',
      'Miscellaneous'),
 ]
