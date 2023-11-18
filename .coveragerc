@@ -1,0 +1,7 @@
+[run]
+branch = True
+source = designateclient
+omit = designateclient/tests/*,designateclient/functionaltests/*,designateclient/hacking/*
+
+[report]
+ignore_errors = True
