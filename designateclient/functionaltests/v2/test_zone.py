@@ -23,7 +23,7 @@ from designateclient.functionaltests.v2.fixtures import ZoneFixture
 class TestZone(BaseDesignateTest):
 
     def setUp(self):
-        super(TestZone, self).setUp()
+        super().setUp()
         self.ensure_tld_exists('com')
         self.fixture = self.useFixture(ZoneFixture(
             name=random_zone_name(),
@@ -61,7 +61,7 @@ class TestZone(BaseDesignateTest):
 
     def test_zone_set(self):
         ttl = int(self.zone.ttl) + 123
-        email = 'updated{0}'.format(self.zone.email)
+        email = f'updated{self.zone.email}'
         description = 'new description'
 
         zone = self.clients.zone_set(self.zone.id, ttl=ttl, email=email,
@@ -71,8 +71,9 @@ class TestZone(BaseDesignateTest):
         self.assertEqual(description, zone.description)
 
     def test_invalid_option_on_zone_create(self):
-        cmd = 'zone create %s --invalid "not a valid option"'.format(
-            random_zone_name())
+        cmd = 'zone create {} --invalid "not a valid option"'.format(
+            random_zone_name()
+        )
         self.assertRaises(CommandFailed, self.clients.openstack, cmd)
 
     def test_invalid_zone_command(self):
@@ -83,7 +84,7 @@ class TestZone(BaseDesignateTest):
 class TestsPassingZoneFlags(BaseDesignateTest):
 
     def setUp(self):
-        super(TestsPassingZoneFlags, self).setUp()
+        super().setUp()
         self.ensure_tld_exists('com')
 
     def test_zone_create_primary_with_all_args(self):

@@ -23,7 +23,7 @@ class TestZones(v2.APIV2TestCase, v2.CrudMixin):
     RESOURCE = 'zones'
 
     def new_ref(self, **kwargs):
-        ref = super(TestZones, self).new_ref(**kwargs)
+        ref = super().new_ref(**kwargs)
         ref.setdefault("name", uuid.uuid4().hex)
         ref.setdefault("type", "PRIMARY")
         return ref
@@ -278,7 +278,7 @@ class TestZoneTransfers(v2.APIV2TestCase, v2.CrudMixin):
 
 class TestZoneExports(v2.APIV2TestCase, v2.CrudMixin):
     def new_ref(self, **kwargs):
-        ref = super(TestZoneExports, self).new_ref(**kwargs)
+        ref = super().new_ref(**kwargs)
         ref.setdefault("zone_id", uuid.uuid4().hex)
         ref.setdefault("created_at", time.strftime("%c"))
         ref.setdefault("updated_at", time.strftime("%c"))
@@ -342,7 +342,7 @@ class TestZoneExports(v2.APIV2TestCase, v2.CrudMixin):
 
 class TestZoneImports(v2.APIV2TestCase, v2.CrudMixin):
     def new_ref(self, **kwargs):
-        ref = super(TestZoneImports, self).new_ref(**kwargs)
+        ref = super().new_ref(**kwargs)
         ref.setdefault("zone_id", uuid.uuid4().hex)
         ref.setdefault("created_at", time.strftime("%c"))
         ref.setdefault("updated_at", time.strftime("%c"))
@@ -396,7 +396,7 @@ class TestZoneImports(v2.APIV2TestCase, v2.CrudMixin):
 
 class TestZoneShared(v2.APIV2TestCase, v2.CrudMixin):
     def setUp(self):
-        super(TestZoneShared, self).setUp()
+        super().setUp()
         self.zone_id = str(uuid.uuid4())
         self.target_project_id = str(uuid.uuid4())
         self.project_id = str(uuid.uuid4())
@@ -404,7 +404,7 @@ class TestZoneShared(v2.APIV2TestCase, v2.CrudMixin):
         self.updated_at = time.strftime("%c")
 
     def new_ref(self, **kwargs):
-        ref = super(TestZoneShared, self).new_ref(**kwargs)
+        ref = super().new_ref(**kwargs)
         ref.setdefault("zone_id", self.zone_id)
         ref.setdefault("target_project_id", self.target_project_id)
         ref.setdefault("project_id", self.project_id)

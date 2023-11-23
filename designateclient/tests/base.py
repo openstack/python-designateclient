@@ -35,7 +35,7 @@ class TestCase(test.BaseTestCase):
     def setUp(self):
         """Run before each test method to initialize test environment."""
 
-        super(TestCase, self).setUp()
+        super().setUp()
         test_timeout = os.environ.get('OS_TEST_TIMEOUT', 0)
         try:
             test_timeout = int(test_timeout)
@@ -74,7 +74,7 @@ class APITestCase(TestCase):
 
     def get_base(self, base_url=None):
         if not base_url:
-            base_url = '%sv%s' % (self.TEST_URL, self.VERSION)
+            base_url = f'{self.TEST_URL}v{self.VERSION}'
         return base_url
 
     def stub_url(self, method, parts=None, base_url=None, json=None, **kwargs):

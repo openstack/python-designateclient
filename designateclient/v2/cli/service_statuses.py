@@ -27,10 +27,10 @@ LOG = logging.getLogger(__name__)
 
 
 def _format_status(status):
-    status.pop("links", None)
+    status.pop('links', None)
     # Remove unneeded fields for display output formatting
-    for k in ("capabilities", "stats"):
-        status[k] = "\n".join(status[k]) if status[k] else "-"
+    for k in ('capabilities', 'stats'):
+        status[k] = '\n'.join(status[k]) if status[k] else '-'
     return status
 
 
@@ -41,12 +41,12 @@ class ListServiceStatusesCommand(command.Lister):
                'capabilities']
 
     def get_parser(self, prog_name):
-        parser = super(ListServiceStatusesCommand, self).get_parser(prog_name)
+        parser = super().get_parser(prog_name)
 
-        parser.add_argument("--hostname", help="Hostname", required=False)
-        parser.add_argument("--service_name", help="Service Name",
+        parser.add_argument('--hostname', help='Hostname', required=False)
+        parser.add_argument('--service_name', help='Service Name',
                             required=False)
-        parser.add_argument("--status", help="Status", required=False)
+        parser.add_argument('--status', help='Status', required=False)
         common.add_all_common_options(parser)
 
         return parser
@@ -58,7 +58,7 @@ class ListServiceStatusesCommand(command.Lister):
         cols = self.columns
 
         criterion = {}
-        for i in ["hostname", "service_name", "status"]:
+        for i in ['hostname', 'service_name', 'status']:
             v = getattr(parsed_args, i)
             if v is not None:
                 criterion[i] = v
@@ -76,9 +76,9 @@ class ShowServiceStatusCommand(command.ShowOne):
     """Show service status details"""
 
     def get_parser(self, prog_name):
-        parser = super(ShowServiceStatusCommand, self).get_parser(prog_name)
+        parser = super().get_parser(prog_name)
 
-        parser.add_argument('id', help="Service Status ID")
+        parser.add_argument('id', help='Service Status ID')
 
         common.add_all_common_options(parser)
 

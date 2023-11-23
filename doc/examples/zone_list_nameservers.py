@@ -23,7 +23,7 @@ session = keystone_session.Session(auth=auth)
 client = client.Client(session=session)
 
 zone = client.zones.create(
-    'primary-%s.io.' % str(uuid.uuid4()),
+    f'primary-{str(uuid.uuid4())}.io.',
     'PRIMARY',
     'root@x.com')
 

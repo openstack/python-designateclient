@@ -19,7 +19,7 @@ class Base(Exception):
     def __init__(self, message=None):
         if not message:
             message = self.__class__.__name__
-        super(Base, self).__init__(message)
+        super().__init__(message)
 
 
 class UnsupportedVersion(Base):
@@ -44,7 +44,7 @@ class RemoteError(Base):
         self.errors = errors
         self.request_id = request_id
 
-        super(RemoteError, self).__init__(err_message)
+        super().__init__(err_message)
 
     def _get_error_message(self, _message, _type, _errors):
         # Try to get a useful error msg if 'message' has nothing

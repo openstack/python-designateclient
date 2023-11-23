@@ -22,7 +22,7 @@ class TestTlds(v2.APIV2TestCase, v2.CrudMixin):
     RESOURCE = 'tlds'
 
     def new_ref(self, **kwargs):
-        ref = super(TestTlds, self).new_ref(**kwargs)
+        ref = super().new_ref(**kwargs)
         ref.setdefault("name", uuid.uuid4().hex)
         return ref
 

@@ -32,7 +32,7 @@ class TestRecordSets(v2.APIV2TestCase, v2.CrudMixin):
     RESOURCE = 'recordsets'
 
     def new_ref(self, **kwargs):
-        ref = super(TestRecordSets, self).new_ref(**kwargs)
+        ref = super().new_ref(**kwargs)
         ref.setdefault("name", uuid.uuid4().hex)
         ref.setdefault("type", "A")
         ref.setdefault("records", ["10.0.0.1"])
@@ -49,11 +49,11 @@ class TestRecordSets(v2.APIV2TestCase, v2.CrudMixin):
 
         self.client.recordsets.create(
             ZONE,
-            "%s.%s" % (values["name"], ZONE["name"]),
+            "{}.{}".format(values["name"], ZONE["name"]),
             values["type"],
             values["records"])
 
-        values["name"] = "%s.%s" % (ref["name"], ZONE["name"])
+        values["name"] = "{}.{}".format(ref["name"], ZONE["name"])
         self.assertRequestBodyIs(json=values)
 
     @patch.object(zones.ZoneController, "get")
@@ -70,11 +70,11 @@ class TestRecordSets(v2.APIV2TestCase, v2.CrudMixin):
 
         self.client.recordsets.create(
             ZONE["name"],
-            "%s.%s" % (values["name"], ZONE["name"]),
+            "{}.{}".format(values["name"], ZONE["name"]),
             values["type"],
             values["records"])
 
-        values["name"] = "%s.%s" % (ref["name"], ZONE["name"])
+        values["name"] = "{}.{}".format(ref["name"], ZONE["name"])
         self.assertRequestBodyIs(json=values)
 
     @patch.object(zones.ZoneController, "get")
@@ -95,7 +95,7 @@ class TestRecordSets(v2.APIV2TestCase, v2.CrudMixin):
             values["type"],
             values["records"])
 
-        values["name"] = "%s.%s" % (ref["name"], ZONE["name"])
+        values["name"] = "{}.{}".format(ref["name"], ZONE["name"])
         self.assertRequestBodyIs(json=values)
 
     @patch.object(zones.ZoneController, "list")
@@ -112,7 +112,7 @@ class TestRecordSets(v2.APIV2TestCase, v2.CrudMixin):
         with testtools.ExpectedException(exceptions.NoUniqueMatch):
             self.client.recordsets.create(
                 ZONE["name"],
-                "%s.%s" % (values["name"], ZONE["name"]),
+                "{}.{}".format(values["name"], ZONE["name"]),
                 values["type"],
                 values["records"])
 
@@ -127,11 +127,11 @@ class TestRecordSets(v2.APIV2TestCase, v2.CrudMixin):
 
         self.client.recordsets.create(
             ZONE["id"],
-            "%s.%s" % (values["name"], ZONE["name"]),
+            "{}.{}".format(values["name"], ZONE["name"]),
             values["type"],
             values["records"])
 
-        values["name"] = "%s.%s" % (ref["name"], ZONE["name"])
+        values["name"] = "{}.{}".format(ref["name"], ZONE["name"])
         self.assertRequestBodyIs(json=values)
 
     @patch.object(zones.ZoneController, "get")
@@ -152,7 +152,7 @@ class TestRecordSets(v2.APIV2TestCase, v2.CrudMixin):
             values["type"],
             values["records"])
 
-        values["name"] = "%s.%s" % (ref["name"], ZONE["name"])
+        values["name"] = "{}.{}".format(ref["name"], ZONE["name"])
         self.assertRequestBodyIs(json=values)
 
     def test_create_with_description(self):
@@ -166,12 +166,12 @@ class TestRecordSets(v2.APIV2TestCase, v2.CrudMixin):
 
         self.client.recordsets.create(
             ZONE["id"],
-            "%s.%s" % (values["name"], ZONE["name"]),
+            "{}.{}".format(values["name"], ZONE["name"]),
             values["type"],
             values["records"],
             description=values["description"])
 
-        values["name"] = "%s.%s" % (ref["name"], ZONE["name"])
+        values["name"] = "{}.{}".format(ref["name"], ZONE["name"])
         self.assertRequestBodyIs(json=values)
 
     def test_create_with_ttl(self):
@@ -185,12 +185,12 @@ class TestRecordSets(v2.APIV2TestCase, v2.CrudMixin):
 
         self.client.recordsets.create(
             ZONE["id"],
-            "%s.%s" % (values["name"], ZONE["name"]),
+            "{}.{}".format(values["name"], ZONE["name"]),
             values["type"],
             values["records"],
             ttl=values["ttl"])
 
-        values["name"] = "%s.%s" % (ref["name"], ZONE["name"])
+        values["name"] = "{}.{}".format(ref["name"], ZONE["name"])
         self.assertRequestBodyIs(json=values)
 
     def test_get(self):

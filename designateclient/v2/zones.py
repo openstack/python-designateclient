@@ -20,52 +20,52 @@ from designateclient.v2 import utils as v2_utils
 class ZoneController(V2Controller):
     def create(self, name, type_=None, email=None, description=None, ttl=None,
                masters=None, attributes=None):
-        type_ = type_ or "PRIMARY"
+        type_ = type_ or 'PRIMARY'
 
         data = {
-            "name": name,
-            "type": type_
+            'name': name,
+            'type': type_
         }
 
-        if type_ == "PRIMARY":
+        if type_ == 'PRIMARY':
             if email:
-                data["email"] = email
+                data['email'] = email
 
             if ttl is not None:
-                data["ttl"] = ttl
+                data['ttl'] = ttl
 
-        elif type_ == "SECONDARY" and masters:
-            data["masters"] = masters
+        elif type_ == 'SECONDARY' and masters:
+            data['masters'] = masters
 
         if description is not None:
-            data["description"] = description
+            data['description'] = description
 
         if attributes is not None:
-            data["attributes"] = attributes
+            data['attributes'] = attributes
 
         return self._post('/zones', data=data)
 
     def list(self, criterion=None, marker=None, limit=None):
         url = self.build_url('/zones', criterion, marker, limit)
 
-        return self._get(url, response_key="zones")
+        return self._get(url, response_key='zones')
 
     def get(self, zone):
         zone = v2_utils.resolve_by_name(self.list, zone)
 
-        return self._get('/zones/%s' % zone)
+        return self._get(f'/zones/{zone}')
 
     def update(self, zone, values):
         zone = v2_utils.resolve_by_name(self.list, zone)
 
-        url = self.build_url('/zones/%s' % zone)
+        url = self.build_url(f'/zones/{zone}')
 
         return self._patch(url, data=values)
 
     def delete(self, zone, delete_shares=False):
         zone = v2_utils.resolve_by_name(self.list, zone)
 
-        url = self.build_url('/zones/%s' % zone)
+        url = self.build_url(f'/zones/{zone}')
 
         if delete_shares:
             headers = {'X-Designate-Delete-Shares': 'true'}
@@ -78,14 +78,14 @@ class ZoneController(V2Controller):
     def abandon(self, zone):
         zone = v2_utils.resolve_by_name(self.list, zone)
 
-        url = '/zones/%s/tasks/abandon' % zone
+        url = f'/zones/{zone}/tasks/abandon'
 
         self.client.session.post(url)
 
     def axfr(self, zone):
         zone = v2_utils.resolve_by_name(self.list, zone)
 
-        url = '/zones/%s/tasks/xfr' % zone
+        url = f'/zones/{zone}/tasks/xfr'
 
         self.client.session.post(url)
 
@@ -95,67 +95,67 @@ class ZoneTransfersController(V2Controller):
         zone = v2_utils.resolve_by_name(self.client.zones.list, zone)
 
         data = {
-            "target_project_id": target_project_id
+            'target_project_id': target_project_id
         }
 
         if description is not None:
-            data["description"] = description
+            data['description'] = description
 
-        url = '/zones/%s/tasks/transfer_requests' % zone
+        url = f'/zones/{zone}/tasks/transfer_requests'
 
         return self._post(url, data=data)
 
     def get_request(self, transfer_id):
-        url = '/zones/tasks/transfer_requests/%s' % transfer_id
+        url = f'/zones/tasks/transfer_requests/{transfer_id}'
         return self._get(url)
 
     def list_requests(self):
         url = '/zones/tasks/transfer_requests'
-        return self._get(url, response_key="transfer_requests")
+        return self._get(url, response_key='transfer_requests')
 
     def update_request(self, transfer_id, values):
-        url = '/zones/tasks/transfer_requests/%s' % transfer_id
+        url = f'/zones/tasks/transfer_requests/{transfer_id}'
         return self._patch(url, data=values)
 
     def delete_request(self, transfer_id):
-        url = '/zones/tasks/transfer_requests/%s' % transfer_id
+        url = f'/zones/tasks/transfer_requests/{transfer_id}'
         self._delete(url)
 
     def accept_request(self, transfer_id, key):
         url = '/zones/tasks/transfer_accepts'
 
         data = {
-            "key": key,
-            "zone_transfer_request_id": transfer_id
+            'key': key,
+            'zone_transfer_request_id': transfer_id
         }
         return self._post(url, data=data)
 
     def get_accept(self, accept_id):
-        url = '/zones/tasks/transfer_accepts/%s' % accept_id
+        url = f'/zones/tasks/transfer_accepts/{accept_id}'
         return self._get(url)
 
     def list_accepts(self):
         url = '/zones/tasks/transfer_accepts'
-        return self._get(url, response_key="transfer_accepts")
+        return self._get(url, response_key='transfer_accepts')
 
 
 class ZoneExportsController(V2Controller):
     def create(self, zone):
         zone_id = v2_utils.resolve_by_name(self.client.zones.list, zone)
 
-        return self._post('/zones/%s/tasks/export' % zone_id)
+        return self._post(f'/zones/{zone_id}/tasks/export')
 
     def get_export_record(self, zone_export_id):
-        return self._get('/zones/tasks/exports/%s' % zone_export_id)
+        return self._get(f'/zones/tasks/exports/{zone_export_id}')
 
     def list(self):
         return self._get('/zones/tasks/exports')
 
     def delete(self, zone_export_id):
-        return self._delete('/zones/tasks/exports/%s' % zone_export_id)
+        return self._delete(f'/zones/tasks/exports/{zone_export_id}')
 
     def get_export(self, zone_export_id):
-        return self._get('/zones/tasks/exports/%s/export' % zone_export_id,
+        return self._get(f'/zones/tasks/exports/{zone_export_id}/export',
                          headers={'Accept': 'text/dns'})
 
 
@@ -165,20 +165,20 @@ class ZoneImportsController(V2Controller):
                           headers={'Content-Type': 'text/dns'})
 
     def get_import_record(self, zone_import_id):
-        return self._get('/zones/tasks/imports/%s' % zone_import_id)
+        return self._get(f'/zones/tasks/imports/{zone_import_id}')
 
     def list(self):
         return self._get('/zones/tasks/imports')
 
     def delete(self, zone_import_id):
-        return self._delete('/zones/tasks/imports/%s' % zone_import_id)
+        return self._delete(f'/zones/tasks/imports/{zone_import_id}')
 
 
 class ZoneShareController(V2Controller):
     def create(self, zone, target_project_id):
         zone_id = v2_utils.resolve_by_name(self.client.zones.list, zone)
 
-        data = {"target_project_id": target_project_id}
+        data = {'target_project_id': target_project_id}
 
         return self._post(f'/zones/{zone_id}/shares', data=data)
 

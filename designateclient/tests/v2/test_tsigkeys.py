@@ -22,7 +22,7 @@ class TestTSIGKeys(v2.APIV2TestCase, v2.CrudMixin):
     RESOURCE = 'tsigkeys'
 
     def new_ref(self, **kwargs):
-        ref = super(TestTSIGKeys, self).new_ref(**kwargs)
+        ref = super().new_ref(**kwargs)
         ref.setdefault("name", uuid.uuid4().hex)
         ref.setdefault("algorithm", "hmac-sha256")
         ref.setdefault("secret", uuid.uuid4().hex)

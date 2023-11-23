@@ -21,7 +21,7 @@ from designateclient.v2.cli import recordsets
 
 class TestDesignateCreateRecordSets(utils.TestCommand):
     def setUp(self):
-        super(TestDesignateCreateRecordSets, self).setUp()
+        super().setUp()
         self.app.client_manager.dns = mock.MagicMock()
         self.cmd = recordsets.CreateRecordSetCommand(self.app, None)
         self.dns_client = self.app.client_manager.dns
@@ -54,7 +54,7 @@ class TestDesignateCreateRecordSets(utils.TestCommand):
 
 class TestDesignateListRecordSets(utils.TestCommand):
     def setUp(self):
-        super(TestDesignateListRecordSets, self).setUp()
+        super().setUp()
         self.app.client_manager.dns = mock.MagicMock()
         self.cmd = recordsets.ListRecordSetsCommand(self.app, None)
         self.dns_client = self.app.client_manager.dns

@@ -39,13 +39,13 @@ class ListQuotasCommand(show.ShowOne):
     # columns = ['resource', 'hard_limit']
 
     def get_parser(self, prog_name):
-        parser = super(ListQuotasCommand, self).get_parser(prog_name)
+        parser = super().get_parser(prog_name)
 
         common.add_all_common_options(parser)
 
         parser.add_argument(
             '--project-id',
-            help="Project ID Default: current project")
+            help='Project ID Default: current project')
 
         return parser
 
@@ -70,18 +70,18 @@ class SetQuotasCommand(show.ShowOne):
         return itertools.chain(DNS_QUOTAS.items())
 
     def get_parser(self, prog_name):
-        parser = super(SetQuotasCommand, self).get_parser(prog_name)
+        parser = super().get_parser(prog_name)
 
         common.add_all_common_options(parser)
 
-        parser.add_argument('--project-id', help="Project ID")
+        parser.add_argument('--project-id', help='Project ID')
         for k, v in self._build_options_list():
             parser.add_argument(
-                '--%s' % v,
-                metavar='<%s>' % v,
+                f'--{v}',
+                metavar=f'<{v}>',
                 dest=k,
                 type=int,
-                help='New value for the %s quota' % v,
+                help=f'New value for the {v} quota',
             )
 
         return parser
@@ -111,11 +111,11 @@ class ResetQuotasCommand(command.Command):
     """Reset quotas"""
 
     def get_parser(self, prog_name):
-        parser = super(ResetQuotasCommand, self).get_parser(prog_name)
+        parser = super().get_parser(prog_name)
 
         common.add_all_common_options(parser)
 
-        parser.add_argument('--project-id', help="Project ID")
+        parser.add_argument('--project-id', help='Project ID')
 
         return parser
 

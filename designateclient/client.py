@@ -24,7 +24,7 @@ from oslo_serialization import jsonutils
 from designateclient import exceptions
 
 
-class Controller(object, metaclass=abc.ABCMeta):
+class Controller(metaclass=abc.ABCMeta):
 
     def __init__(self, client):
         self.client = client
@@ -38,10 +38,10 @@ class Controller(object, metaclass=abc.ABCMeta):
             params['limit'] = limit
 
         q = parse.urlencode(params) if params else ''
-        return '%(url)s%(params)s' % {
-            'url': url,
-            'params': '?%s' % q
-        }
+        return '{url}{params}'.format(
+            url=url,
+            params=f'?{q}'
+        )
 
     def _serialize(self, kwargs):
         headers = kwargs.get('headers')
@@ -122,13 +122,14 @@ class CrudController(Controller, metaclass=abc.ABCMeta):
 
 def get_versions():
     mgr = extension.ExtensionManager('designateclient.versions')
-    return dict([(ep.name, ep.plugin) for ep in mgr.extensions])
+    return {ep.name: ep.plugin for ep in mgr.extensions}
 
 
 def Client(version, *args, **kwargs):  # noqa
     versions = get_versions()
     if version not in versions:
-        msg = 'Version %s is not supported, use one of (%s)' % (
-            version, list(versions.keys()))
+        msg = 'Version {} is not supported, use one of ({})'.format(
+            version, list(versions.keys())
+        )
         raise exceptions.UnsupportedVersion(msg)
     return versions[version](*args, **kwargs)

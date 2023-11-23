@@ -29,10 +29,10 @@ LOG = logging.getLogger(__name__)
 
 def _format_zone(zone):
     zone.pop('links', None)
-    zone['masters'] = ", ".join(zone['masters'])
+    zone['masters'] = ', '.join(zone['masters'])
     attrib = ''
     for attr in zone['attributes']:
-        attrib += "%s:%s\n" % (attr, zone['attributes'][attr])
+        attrib += '{}:{}\n'.format(attr, zone['attributes'][attr])
     zone['attributes'] = attrib
 
 
@@ -50,19 +50,19 @@ class ListZonesCommand(command.Lister):
     columns = ['id', 'name', 'type', 'serial', 'status', 'action']
 
     def get_parser(self, prog_name):
-        parser = super(ListZonesCommand, self).get_parser(prog_name)
+        parser = super().get_parser(prog_name)
 
-        parser.add_argument('--name', help="Zone Name", required=False)
-        parser.add_argument('--email', help="Zone Email", required=False)
-        parser.add_argument('--type', help="Zone Type",
-                            choices=["PRIMARY", "SECONDARY"],
+        parser.add_argument('--name', help='Zone Name', required=False)
+        parser.add_argument('--email', help='Zone Email', required=False)
+        parser.add_argument('--type', help='Zone Type',
+                            choices=['PRIMARY', 'SECONDARY'],
                             default=None,
                             required=False)
-        parser.add_argument('--ttl', help="Time To Live (Seconds)",
+        parser.add_argument('--ttl', help='Time To Live (Seconds)',
                             required=False)
-        parser.add_argument('--description', help="Description",
+        parser.add_argument('--description', help='Description',
                             required=False)
-        parser.add_argument('--status', help="Zone Status", required=False)
+        parser.add_argument('--status', help='Zone Status', required=False)
 
         common.add_all_common_options(parser)
 
@@ -74,22 +74,22 @@ class ListZonesCommand(command.Lister):
 
         criterion = {}
         if parsed_args.type is not None:
-            criterion["type"] = parsed_args.type
+            criterion['type'] = parsed_args.type
 
         if parsed_args.name is not None:
-            criterion["name"] = parsed_args.name
+            criterion['name'] = parsed_args.name
 
         if parsed_args.ttl is not None:
-            criterion["ttl"] = parsed_args.ttl
+            criterion['ttl'] = parsed_args.ttl
 
         if parsed_args.description is not None:
-            criterion["description"] = parsed_args.description
+            criterion['description'] = parsed_args.description
 
         if parsed_args.email is not None:
-            criterion["email"] = parsed_args.email
+            criterion['email'] = parsed_args.email
 
         if parsed_args.status is not None:
-            criterion["status"] = parsed_args.status
+            criterion['status'] = parsed_args.status
 
         data = get_all(client.zones.list, criterion)
 
@@ -105,9 +105,9 @@ class ShowZoneCommand(command.ShowOne):
     """Show zone details"""
 
     def get_parser(self, prog_name):
-        parser = super(ShowZoneCommand, self).get_parser(prog_name)
+        parser = super().get_parser(prog_name)
 
-        parser.add_argument('id', help="Zone ID")
+        parser.add_argument('id', help='Zone ID')
 
         common.add_all_common_options(parser)
 
@@ -127,17 +127,17 @@ class CreateZoneCommand(command.ShowOne):
     """Create new zone"""
 
     def get_parser(self, prog_name):
-        parser = super(CreateZoneCommand, self).get_parser(prog_name)
+        parser = super().get_parser(prog_name)
 
-        parser.add_argument('name', help="Zone Name")
-        parser.add_argument('--email', help="Zone Email")
-        parser.add_argument('--type', help="Zone Type",
-                            choices=["PRIMARY", "SECONDARY"],
+        parser.add_argument('name', help='Zone Name')
+        parser.add_argument('--email', help='Zone Email')
+        parser.add_argument('--type', help='Zone Type',
+                            choices=['PRIMARY', 'SECONDARY'],
                             default='PRIMARY')
-        parser.add_argument('--ttl', type=int, help="Time To Live (Seconds)")
-        parser.add_argument('--description', help="Description")
-        parser.add_argument('--masters', help="Zone Masters", nargs='+')
-        parser.add_argument('--attributes', help="Zone Attributes", nargs='+')
+        parser.add_argument('--ttl', type=int, help='Time To Live (Seconds)')
+        parser.add_argument('--description', help='Description')
+        parser.add_argument('--masters', help='Zone Masters', nargs='+')
+        parser.add_argument('--attributes', help='Zone Attributes', nargs='+')
 
         common.add_all_common_options(parser)
 
@@ -150,36 +150,39 @@ class CreateZoneCommand(command.ShowOne):
         payload = {}
 
         if parsed_args.description:
-            payload["description"] = parsed_args.description
+            payload['description'] = parsed_args.description
 
         if parsed_args.attributes:
-            payload["attributes"] = {}
+            payload['attributes'] = {}
             for attr in parsed_args.attributes:
                 try:
                     k, v = attr.split(':')
-                    payload["attributes"][k] = v
+                    payload['attributes'][k] = v
                 except ValueError:
-                    msg = ("Attribute '%s' is in an incorrect format. "
-                           "Attributes are <key>:<value> formated")
-                    raise osc_exc.CommandError(msg % attr)
+                    raise osc_exc.CommandError(
+                        f"Attribute '{attr}' is in an incorrect format. "
+                        "Attributes are <key>:<value> formated"
+                    )
 
         if parsed_args.type == 'PRIMARY':
             # email is just for PRIMARY.
             if not parsed_args.email:
-                msg = "Zone type PRIMARY requires --email."
-                raise osc_exc.CommandError(msg)
+                raise osc_exc.CommandError(
+                    'Zone type PRIMARY requires --email.'
+                )
 
-            payload["email"] = parsed_args.email
+            payload['email'] = parsed_args.email
 
             # TTL is just valid for PRIMARY
             if parsed_args.ttl is not None:
-                payload["ttl"] = parsed_args.ttl
+                payload['ttl'] = parsed_args.ttl
         elif parsed_args.type == 'SECONDARY':
-            payload["masters"] = parsed_args.masters
+            payload['masters'] = parsed_args.masters
         else:
-            msg = ("Type %s is not supported. Please choose between "
-                   "PRIMARY or SECONDARY")
-            raise osc_exc.CommandError(msg % parsed_args.type)
+            raise osc_exc.CommandError(
+                f'Type {parsed_args.type} is not supported. Please choose '
+                'between PRIMARY or SECONDARY'
+            )
 
         data = client.zones.create(
             parsed_args.name, parsed_args.type, **payload)
@@ -192,16 +195,16 @@ class SetZoneCommand(command.ShowOne):
     """Set zone properties"""
 
     def get_parser(self, prog_name):
-        parser = super(SetZoneCommand, self).get_parser(prog_name)
+        parser = super().get_parser(prog_name)
 
-        parser.add_argument('id', help="Zone ID")
-        parser.add_argument('--email', help="Zone Email")
-        parser.add_argument('--ttl', type=int, help="Time To Live (Seconds)")
+        parser.add_argument('id', help='Zone ID')
+        parser.add_argument('--email', help='Zone Email')
+        parser.add_argument('--ttl', type=int, help='Time To Live (Seconds)')
         description_group = parser.add_mutually_exclusive_group()
-        description_group.add_argument('--description', help="Description")
+        description_group.add_argument('--description', help='Description')
         description_group.add_argument('--no-description', action='store_true')
 
-        parser.add_argument('--masters', help="Zone Masters", nargs='+')
+        parser.add_argument('--masters', help='Zone Masters', nargs='+')
 
         common.add_all_common_options(parser)
 
@@ -237,9 +240,9 @@ class DeleteZoneCommand(command.ShowOne):
     """Delete zone"""
 
     def get_parser(self, prog_name):
-        parser = super(DeleteZoneCommand, self).get_parser(prog_name)
+        parser = super().get_parser(prog_name)
 
-        parser.add_argument('id', help="Zone ID")
+        parser.add_argument('id', help='Zone ID')
 
         parser.add_argument('--delete-shares', default=False,
                             action='store_true',
@@ -270,9 +273,9 @@ class DeleteZoneCommand(command.ShowOne):
 class AbandonZoneCommand(command.Command):
     """Abandon a zone"""
     def get_parser(self, prog_name):
-        parser = super(AbandonZoneCommand, self).get_parser(prog_name)
+        parser = super().get_parser(prog_name)
 
-        parser.add_argument('id', help="Zone ID")
+        parser.add_argument('id', help='Zone ID')
 
         common.add_all_common_options(parser)
 
@@ -284,16 +287,16 @@ class AbandonZoneCommand(command.Command):
 
         client.zones.abandon(parsed_args.id)
 
-        LOG.info("Z %(zone_id)s abandoned",
-                 {"zone_id": parsed_args.id})
+        LOG.info('Z %(zone_id)s abandoned',
+                 {'zone_id': parsed_args.id})
 
 
 class AXFRZoneCommand(command.Command):
     """AXFR a zone"""
     def get_parser(self, prog_name):
-        parser = super(AXFRZoneCommand, self).get_parser(prog_name)
+        parser = super().get_parser(prog_name)
 
-        parser.add_argument('id', help="Zone ID")
+        parser.add_argument('id', help='Zone ID')
 
         common.add_all_common_options(parser)
 
@@ -305,22 +308,22 @@ class AXFRZoneCommand(command.Command):
 
         client.zones.axfr(parsed_args.id)
 
-        LOG.info("Scheduled AXFR for zone %(zone_id)s",
-                 {"zone_id": parsed_args.id})
+        LOG.info('Scheduled AXFR for zone %(zone_id)s',
+                 {'zone_id': parsed_args.id})
 
 
 class CreateTransferRequestCommand(command.ShowOne):
     """Create new zone transfer request"""
 
     def get_parser(self, prog_name):
-        parser = super(CreateTransferRequestCommand, self).get_parser(
+        parser = super().get_parser(
             prog_name)
 
-        parser.add_argument('zone_id', help="Zone ID to transfer.",)
+        parser.add_argument('zone_id', help='Zone ID to transfer.',)
         parser.add_argument(
             '--target-project-id',
-            help="Target Project ID to transfer to.")
-        parser.add_argument('--description', help="Description")
+            help='Target Project ID to transfer to.')
+        parser.add_argument('--description', help='Description')
 
         common.add_all_common_options(parser)
 
@@ -343,7 +346,7 @@ class ListTransferRequestsCommand(command.Lister):
                'target_project_id', 'status', 'key']
 
     def get_parser(self, prog_name):
-        parser = super(ListTransferRequestsCommand, self).get_parser(
+        parser = super().get_parser(
             prog_name)
 
         common.add_all_common_options(parser)
@@ -364,9 +367,9 @@ class ShowTransferRequestCommand(command.ShowOne):
     """Show Zone Transfer Request Details"""
 
     def get_parser(self, prog_name):
-        parser = super(ShowTransferRequestCommand, self).get_parser(prog_name)
+        parser = super().get_parser(prog_name)
 
-        parser.add_argument('id', help="Zone Tranfer Request ID")
+        parser.add_argument('id', help='Zone Tranfer Request ID')
 
         common.add_all_common_options(parser)
 
@@ -385,16 +388,16 @@ class SetTransferRequestCommand(command.ShowOne):
     """Set a Zone Transfer Request"""
 
     def get_parser(self, prog_name):
-        parser = super(SetTransferRequestCommand, self).get_parser(prog_name)
+        parser = super().get_parser(prog_name)
 
-        parser.add_argument('id', help="Zone Transfer Request ID")
+        parser.add_argument('id', help='Zone Transfer Request ID')
         description_group = parser.add_mutually_exclusive_group()
-        description_group.add_argument('--description', help="Description")
+        description_group.add_argument('--description', help='Description')
         description_group.add_argument('--no-description', action='store_true')
 
         parser.add_argument(
             '--target-project-id',
-            help="Target Project ID to transfer to.")
+            help='Target Project ID to transfer to.')
 
         common.add_all_common_options(parser)
 
@@ -421,10 +424,10 @@ class SetTransferRequestCommand(command.ShowOne):
 class DeleteTransferRequestCommand(command.Command):
     """Delete a Zone Transfer Request"""
     def get_parser(self, prog_name):
-        parser = super(DeleteTransferRequestCommand, self).get_parser(
+        parser = super().get_parser(
             prog_name)
 
-        parser.add_argument('id', help="Zone Transfer Request ID")
+        parser.add_argument('id', help='Zone Transfer Request ID')
 
         common.add_all_common_options(parser)
 
@@ -443,12 +446,12 @@ class AcceptTransferRequestCommand(command.ShowOne):
     """Accept a Zone Transfer Request"""
 
     def get_parser(self, prog_name):
-        parser = super(AcceptTransferRequestCommand, self).get_parser(
+        parser = super().get_parser(
             prog_name)
 
-        parser.add_argument('--transfer-id', help="Transfer ID", type=str,
+        parser.add_argument('--transfer-id', help='Transfer ID', type=str,
                             required=True)
-        parser.add_argument('--key', help="Transfer Key", type=str,
+        parser.add_argument('--key', help='Transfer Key', type=str,
                             required=True)
 
         common.add_all_common_options(parser)
@@ -471,7 +474,7 @@ class ListTransferAcceptsCommand(command.Lister):
                'zone_transfer_request_id', 'status', 'key']
 
     def get_parser(self, prog_name):
-        parser = super(ListTransferAcceptsCommand, self).get_parser(
+        parser = super().get_parser(
             prog_name)
 
         common.add_all_common_options(parser)
@@ -492,9 +495,9 @@ class ShowTransferAcceptCommand(command.ShowOne):
     """Show Zone Transfer Accept"""
 
     def get_parser(self, prog_name):
-        parser = super(ShowTransferAcceptCommand, self).get_parser(prog_name)
+        parser = super().get_parser(prog_name)
 
-        parser.add_argument('id', help="Zone Tranfer Accept ID")
+        parser.add_argument('id', help='Zone Tranfer Accept ID')
 
         common.add_all_common_options(parser)
 
@@ -513,12 +516,12 @@ class ExportZoneCommand(command.ShowOne):
     """Export a Zone"""
 
     def get_parser(self, prog_name):
-        parser = super(ExportZoneCommand, self).get_parser(
+        parser = super().get_parser(
             prog_name)
 
         common.add_all_common_options(parser)
 
-        parser.add_argument('zone_id', help="Zone ID", type=str)
+        parser.add_argument('zone_id', help='Zone ID', type=str)
 
         return parser
 
@@ -545,7 +548,7 @@ class ListZoneExportsCommand(command.Lister):
     ]
 
     def get_parser(self, prog_name):
-        parser = super(ListZoneExportsCommand, self).get_parser(
+        parser = super().get_parser(
             prog_name)
 
         common.add_all_common_options(parser)
@@ -567,10 +570,10 @@ class ShowZoneExportCommand(command.ShowOne):
     """Show a Zone Export"""
 
     def get_parser(self, prog_name):
-        parser = super(ShowZoneExportCommand, self).get_parser(
+        parser = super().get_parser(
             prog_name)
 
-        parser.add_argument('zone_export_id', help="Zone Export ID", type=str)
+        parser.add_argument('zone_export_id', help='Zone Export ID', type=str)
 
         common.add_all_common_options(parser)
 
@@ -591,10 +594,10 @@ class DeleteZoneExportCommand(command.Command):
     """Delete a Zone Export"""
 
     def get_parser(self, prog_name):
-        parser = super(DeleteZoneExportCommand, self).get_parser(
+        parser = super().get_parser(
             prog_name)
 
-        parser.add_argument('zone_export_id', help="Zone Export ID", type=str)
+        parser.add_argument('zone_export_id', help='Zone Export ID', type=str)
 
         common.add_all_common_options(parser)
 
@@ -613,10 +616,10 @@ class ShowZoneExportFileCommand(command.ShowOne):
     """Show the zone file for the Zone Export"""
 
     def get_parser(self, prog_name):
-        parser = super(ShowZoneExportFileCommand, self).get_parser(
+        parser = super().get_parser(
             prog_name)
 
-        parser.add_argument('zone_export_id', help="Zone Export ID", type=str)
+        parser.add_argument('zone_export_id', help='Zone Export ID', type=str)
 
         common.add_all_common_options(parser)
 
@@ -635,11 +638,11 @@ class ImportZoneCommand(command.ShowOne):
     """Import a Zone from a file on the filesystem"""
 
     def get_parser(self, prog_name):
-        parser = super(ImportZoneCommand, self).get_parser(
+        parser = super().get_parser(
             prog_name)
 
         parser.add_argument('zone_file_path',
-                            help="Path to a zone file", type=str)
+                            help='Path to a zone file', type=str)
 
         common.add_all_common_options(parser)
 
@@ -649,7 +652,7 @@ class ImportZoneCommand(command.ShowOne):
         client = self.app.client_manager.dns
         common.set_all_common_headers(client, parsed_args)
 
-        with open(parsed_args.zone_file_path, 'r') as f:
+        with open(parsed_args.zone_file_path) as f:
             zone_file_contents = f.read()
 
         data = client.zone_imports.create(zone_file_contents)
@@ -672,7 +675,7 @@ class ListZoneImportsCommand(command.Lister):
     ]
 
     def get_parser(self, prog_name):
-        parser = super(ListZoneImportsCommand, self).get_parser(
+        parser = super().get_parser(
             prog_name)
 
         common.add_all_common_options(parser)
@@ -694,10 +697,10 @@ class ShowZoneImportCommand(command.ShowOne):
     """Show a Zone Import"""
 
     def get_parser(self, prog_name):
-        parser = super(ShowZoneImportCommand, self).get_parser(
+        parser = super().get_parser(
             prog_name)
 
-        parser.add_argument('zone_import_id', help="Zone Import ID", type=str)
+        parser.add_argument('zone_import_id', help='Zone Import ID', type=str)
 
         common.add_all_common_options(parser)
 
@@ -718,10 +721,10 @@ class DeleteZoneImportCommand(command.Command):
     """Delete a Zone Import"""
 
     def get_parser(self, prog_name):
-        parser = super(DeleteZoneImportCommand, self).get_parser(
+        parser = super().get_parser(
             prog_name)
 
-        parser.add_argument('zone_import_id', help="Zone Import ID", type=str)
+        parser.add_argument('zone_import_id', help='Zone Import ID', type=str)
 
         common.add_all_common_options(parser)
 
@@ -740,7 +743,7 @@ class ShareZoneCommand(command.ShowOne):
     """Share a Zone"""
 
     def get_parser(self, prog_name):
-        parser = super(ShareZoneCommand, self).get_parser(
+        parser = super().get_parser(
             prog_name)
 
         common.add_all_common_options(parser)
@@ -777,7 +780,7 @@ class ListSharedZonesCommand(command.Lister):
     ]
 
     def get_parser(self, prog_name):
-        parser = super(ListSharedZonesCommand, self).get_parser(
+        parser = super().get_parser(
             prog_name)
 
         common.add_all_common_options(parser)
@@ -812,7 +815,7 @@ class ShowSharedZoneCommand(command.ShowOne):
     """Show Zone Share Details"""
 
     def get_parser(self, prog_name):
-        parser = super(ShowSharedZoneCommand, self).get_parser(prog_name)
+        parser = super().get_parser(prog_name)
 
         parser.add_argument('zone', help='The zone name or ID to share.')
         parser.add_argument('shared_zone_id',
@@ -837,7 +840,7 @@ class DeleteSharedZoneCommand(command.Command):
     """Delete a Zone Share"""
 
     def get_parser(self, prog_name):
-        parser = super(DeleteSharedZoneCommand, self).get_parser(
+        parser = super().get_parser(
             prog_name)
 
         parser.add_argument('zone', help='The zone name or ID to share.')

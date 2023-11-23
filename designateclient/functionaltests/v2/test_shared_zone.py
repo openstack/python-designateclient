@@ -23,7 +23,7 @@ from designateclient.functionaltests.v2.fixtures import ZoneFixture
 class TestSharedZone(BaseDesignateTest):
 
     def setUp(self):
-        super(TestSharedZone, self).setUp()
+        super().setUp()
         self.ensure_tld_exists('com')
         fixture = self.useFixture(ZoneFixture(
             name=random_zone_name(),

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #
 # designateclient documentation build configuration file
 
@@ -39,7 +38,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-copyright = u'2012, Managed I.T. 2013-2014, Hewlett-Packard Development Company, L.P.'
+copyright = '2012, Managed I.T. 2013-2014, Hewlett-Packard Development Company, L.P.'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.

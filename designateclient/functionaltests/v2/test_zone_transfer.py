@@ -27,7 +27,7 @@ from designateclient.functionaltests.v2.fixtures import ZoneFixture
 class TestZoneTransferRequest(BaseDesignateTest):
 
     def setUp(self):
-        super(TestZoneTransferRequest, self).setUp()
+        super().setUp()
         self.ensure_tld_exists('com')
         fixture = self.useFixture(ZoneFixture(
             name=random_zone_name(),
@@ -92,7 +92,7 @@ class TestZoneTransferRequest(BaseDesignateTest):
 class TestZoneTransferAccept(BaseDesignateTest):
 
     def setUp(self):
-        super(TestZoneTransferAccept, self).setUp()
+        super().setUp()
         self.ensure_tld_exists('com')
         fixture = self.useFixture(ZoneFixture(
             name=random_zone_name(),

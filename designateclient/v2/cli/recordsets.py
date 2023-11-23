@@ -48,19 +48,19 @@ class ListRecordSetsCommand(command.Lister):
     columns = ['id', 'name', 'type', 'records', 'status', 'action']
 
     def get_parser(self, prog_name):
-        parser = super(ListRecordSetsCommand, self).get_parser(prog_name)
+        parser = super().get_parser(prog_name)
 
-        parser.add_argument('--name', help="RecordSet Name", required=False)
-        parser.add_argument('--type', help="RecordSet Type", required=False)
-        parser.add_argument('--data', help="RecordSet Record Data",
+        parser.add_argument('--name', help='RecordSet Name', required=False)
+        parser.add_argument('--type', help='RecordSet Type', required=False)
+        parser.add_argument('--data', help='RecordSet Record Data',
                             required=False)
-        parser.add_argument('--ttl', help="Time To Live (Seconds)",
+        parser.add_argument('--ttl', help='Time To Live (Seconds)',
                             required=False)
-        parser.add_argument('--description', help="Description",
+        parser.add_argument('--description', help='Description',
                             required=False)
-        parser.add_argument('--status', help="RecordSet Status",
+        parser.add_argument('--status', help='RecordSet Status',
                             required=False)
-        parser.add_argument('--action', help="RecordSet Action",
+        parser.add_argument('--action', help='RecordSet Action',
                             required=False)
 
         parser.add_argument('zone_id', help="Zone ID. To list all"
@@ -76,25 +76,25 @@ class ListRecordSetsCommand(command.Lister):
 
         criterion = {}
         if parsed_args.type is not None:
-            criterion["type"] = parsed_args.type
+            criterion['type'] = parsed_args.type
 
         if parsed_args.name is not None:
-            criterion["name"] = parsed_args.name
+            criterion['name'] = parsed_args.name
 
         if parsed_args.data is not None:
-            criterion["data"] = parsed_args.data
+            criterion['data'] = parsed_args.data
 
         if parsed_args.ttl is not None:
-            criterion["ttl"] = parsed_args.ttl
+            criterion['ttl'] = parsed_args.ttl
 
         if parsed_args.description is not None:
-            criterion["description"] = parsed_args.description
+            criterion['description'] = parsed_args.description
 
         if parsed_args.status is not None:
-            criterion["status"] = parsed_args.status
+            criterion['status'] = parsed_args.status
 
         if parsed_args.action is not None:
-            criterion["action"] = parsed_args.action
+            criterion['action'] = parsed_args.action
 
         cols = list(self.columns)
 
@@ -119,10 +119,10 @@ class ShowRecordSetCommand(command.ShowOne):
     """Show recordset details"""
 
     def get_parser(self, prog_name):
-        parser = super(ShowRecordSetCommand, self).get_parser(prog_name)
+        parser = super().get_parser(prog_name)
 
-        parser.add_argument('zone_id', help="Zone ID")
-        parser.add_argument('id', help="RecordSet ID")
+        parser.add_argument('zone_id', help='Zone ID')
+        parser.add_argument('id', help='RecordSet ID')
 
         common.add_all_common_options(parser)
 
@@ -143,10 +143,10 @@ class CreateRecordSetCommand(command.ShowOne):
     log = logging.getLogger('deprecated')
 
     def get_parser(self, prog_name):
-        parser = super(CreateRecordSetCommand, self).get_parser(prog_name)
+        parser = super().get_parser(prog_name)
 
-        parser.add_argument('zone_id', help="Zone ID")
-        parser.add_argument('name', help="RecordSet Name")
+        parser.add_argument('zone_id', help='Zone ID')
+        parser.add_argument('name', help='RecordSet Name')
         req_group = parser.add_mutually_exclusive_group(required=True)
         req_group.add_argument(
             '--records',
@@ -154,11 +154,11 @@ class CreateRecordSetCommand(command.ShowOne):
             nargs='+')
         req_group.add_argument(
             '--record',
-            help="RecordSet Record, repeat if necessary",
+            help='RecordSet Record, repeat if necessary',
             action='append')
-        parser.add_argument('--type', help="RecordSet Type", required=True)
-        parser.add_argument('--ttl', type=int, help="Time To Live (Seconds)")
-        parser.add_argument('--description', help="Description")
+        parser.add_argument('--type', help='RecordSet Type', required=True)
+        parser.add_argument('--ttl', type=int, help='Time To Live (Seconds)')
+        parser.add_argument('--description', help='Description')
 
         common.add_all_common_options(parser)
 
@@ -171,7 +171,7 @@ class CreateRecordSetCommand(command.ShowOne):
         all_records = parsed_args.record or parsed_args.records
         if parsed_args.records:
             self.log.warning(
-                "Option --records is deprecated, use --record instead.")
+                'Option --records is deprecated, use --record instead.')
         data = client.recordsets.create(
             parsed_args.zone_id,
             parsed_args.name,
@@ -188,10 +188,10 @@ class SetRecordSetCommand(command.ShowOne):
     """Set recordset properties"""
 
     def get_parser(self, prog_name):
-        parser = super(SetRecordSetCommand, self).get_parser(prog_name)
+        parser = super().get_parser(prog_name)
 
-        parser.add_argument('zone_id', help="Zone ID")
-        parser.add_argument('id', help="RecordSet ID")
+        parser.add_argument('zone_id', help='Zone ID')
+        parser.add_argument('id', help='RecordSet ID')
         req_group = parser.add_mutually_exclusive_group()
         req_group.add_argument(
             '--records',
@@ -199,15 +199,15 @@ class SetRecordSetCommand(command.ShowOne):
             nargs='+')
         req_group.add_argument(
             '--record',
-            help="RecordSet Record, repeat if necessary",
+            help='RecordSet Record, repeat if necessary',
             action='append')
 
         description_group = parser.add_mutually_exclusive_group()
-        description_group.add_argument('--description', help="Description")
+        description_group.add_argument('--description', help='Description')
         description_group.add_argument('--no-description', action='store_true')
 
         ttl_group = parser.add_mutually_exclusive_group()
-        ttl_group.add_argument('--ttl', type=int, help="TTL")
+        ttl_group.add_argument('--ttl', type=int, help='TTL')
         ttl_group.add_argument('--no-ttl', action='store_true')
 
         common.add_all_common_options(parser)
@@ -231,7 +231,7 @@ class SetRecordSetCommand(command.ShowOne):
         all_records = parsed_args.record or parsed_args.records
         if parsed_args.records:
             self.log.warning(
-                "Option --records is deprecated, use --record instead.")
+                'Option --records is deprecated, use --record instead.')
 
         if all_records:
             data['records'] = all_records
@@ -253,10 +253,10 @@ class DeleteRecordSetCommand(command.ShowOne):
     """Delete recordset"""
 
     def get_parser(self, prog_name):
-        parser = super(DeleteRecordSetCommand, self).get_parser(prog_name)
+        parser = super().get_parser(prog_name)
 
-        parser.add_argument('zone_id', help="Zone ID")
-        parser.add_argument('id', help="RecordSet ID")
+        parser.add_argument('zone_id', help='Zone ID')
+        parser.add_argument('id', help='RecordSet ID')
 
         common.add_all_common_options(parser)
         common.add_edit_managed_option(parser)

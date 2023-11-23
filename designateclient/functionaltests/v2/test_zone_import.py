@@ -23,7 +23,7 @@ from designateclient.functionaltests.v2.fixtures import ImportFixture
 class TestZoneImport(BaseDesignateTest):
 
     def setUp(self):
-        super(TestZoneImport, self).setUp()
+        super().setUp()
         self.ensure_tld_exists('com')
         self.zone_file_contents = random_zone_file()
 

@@ -30,19 +30,19 @@ class BlacklistController(V2Controller):
     def list(self, criterion=None, marker=None, limit=None):
         url = self.build_url('/blacklists', criterion, marker, limit)
 
-        return self._get(url, response_key="blacklists")
+        return self._get(url, response_key='blacklists')
 
     def get(self, blacklist_id):
-        url = '/blacklists/%s' % blacklist_id
+        url = f'/blacklists/{blacklist_id}'
 
         return self._get(url)
 
     def update(self, blacklist_id, values):
-        url = '/blacklists/%s' % blacklist_id
+        url = f'/blacklists/{blacklist_id}'
 
         return self._patch(url, data=values)
 
     def delete(self, blacklist_id):
-        url = '/blacklists/%s' % blacklist_id
+        url = f'/blacklists/{blacklist_id}'
 
         return self._delete(url)

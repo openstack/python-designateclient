@@ -37,7 +37,7 @@ class ListFloatingIPCommand(command.Lister):
     columns = ['id', 'ptrdname', 'description', 'ttl']
 
     def get_parser(self, prog_name):
-        parser = super(ListFloatingIPCommand, self).get_parser(prog_name)
+        parser = super().get_parser(prog_name)
 
         common.add_all_common_options(parser)
 
@@ -56,10 +56,10 @@ class ShowFloatingIPCommand(command.ShowOne):
     """Show floatingip ptr record details"""
 
     def get_parser(self, prog_name):
-        parser = super(ShowFloatingIPCommand, self).get_parser(prog_name)
+        parser = super().get_parser(prog_name)
 
-        parser.add_argument('floatingip_id', help="Floating IP ID in format "
-                            "region:floatingip_id")
+        parser.add_argument('floatingip_id', help='Floating IP ID in format '
+                            'region:floatingip_id')
 
         common.add_all_common_options(parser)
 
@@ -77,18 +77,18 @@ class SetFloatingIPCommand(command.ShowOne):
     """Set floatingip ptr record"""
 
     def get_parser(self, prog_name):
-        parser = super(SetFloatingIPCommand, self).get_parser(prog_name)
+        parser = super().get_parser(prog_name)
 
-        parser.add_argument('floatingip_id', help="Floating IP ID in format "
-                            "region:floatingip_id")
-        parser.add_argument('ptrdname', help="PTRD Name")
+        parser.add_argument('floatingip_id', help='Floating IP ID in format '
+                            'region:floatingip_id')
+        parser.add_argument('ptrdname', help='PTRD Name')
 
         description_group = parser.add_mutually_exclusive_group()
-        description_group.add_argument('--description', help="Description")
+        description_group.add_argument('--description', help='Description')
         description_group.add_argument('--no-description', action='store_true')
 
         ttl_group = parser.add_mutually_exclusive_group()
-        ttl_group.add_argument('--ttl', type=int, help="TTL")
+        ttl_group.add_argument('--ttl', type=int, help='TTL')
         ttl_group.add_argument('--no-ttl', action='store_true')
 
         common.add_all_common_options(parser)
@@ -125,10 +125,10 @@ class UnsetFloatingIPCommand(command.Command):
     """Unset floatingip ptr record"""
 
     def get_parser(self, prog_name):
-        parser = super(UnsetFloatingIPCommand, self).get_parser(prog_name)
+        parser = super().get_parser(prog_name)
 
-        parser.add_argument('floatingip_id', help="Floating IP ID in format "
-                            "region:floatingip_id")
+        parser.add_argument('floatingip_id', help='Floating IP ID in format '
+                            'region:floatingip_id')
 
         common.add_all_common_options(parser)
 

@@ -23,7 +23,7 @@ from designateclient.functionaltests.v2.fixtures import BlacklistFixture
 class TestBlacklist(BaseDesignateTest):
 
     def setUp(self):
-        super(TestBlacklist, self).setUp()
+        super().setUp()
         pattern = random_blacklist()
         self.blacklist = self.useFixture(BlacklistFixture(
             pattern=pattern,

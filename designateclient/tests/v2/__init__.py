@@ -18,7 +18,7 @@ import uuid
 from designateclient.tests import base
 
 
-class CrudMixin(object):
+class CrudMixin:
     path_prefix = None
 
     def new_ref(self, **kwargs):

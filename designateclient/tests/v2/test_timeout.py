@@ -31,7 +31,7 @@ def create_session(timeout=None):
 class TestTimeout(v2.APIV2TestCase, v2.CrudMixin):
 
     def setUp(self):
-        super(TestTimeout, self).setUp()
+        super().setUp()
 
         # Mock methods in KeyStone's Session
         self._saved_methods = (
@@ -56,7 +56,7 @@ class TestTimeout(v2.APIV2TestCase, v2.CrudMixin):
         self.mock_send_request = keystone_session.Session._send_request
 
     def tearDown(self):
-        super(TestTimeout, self).tearDown()
+        super().tearDown()
         (
             keystone_session.Session.get_auth_headers,
             keystone_session.Session.get_endpoint,

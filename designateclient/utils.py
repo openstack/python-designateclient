@@ -82,11 +82,11 @@ def find_resourceid_by_name_or_id(resource_client, name_or_id):
     candidate_ids = [r['id'] for r in resources if r.get('name') == name_or_id]
     if not candidate_ids:
         raise exceptions.ResourceNotFound(
-            'Could not find resource with name "%s"' % name_or_id)
+            f'Could not find resource with name "{name_or_id}"')
     elif len(candidate_ids) > 1:
         str_ids = ','.join(candidate_ids)
         raise exceptions.NoUniqueMatch(
-            'Multiple resources with name "%s": %s' % (name_or_id, str_ids))
+            f'Multiple resources with name "{name_or_id}": {str_ids}')
     return candidate_ids[0]
 
 
@@ -108,4 +108,4 @@ class AdapterWithTimeout(adapter.Adapter):
         if self.timeout is not None:
             kwargs.setdefault('timeout', self.timeout)
 
-        return super(AdapterWithTimeout, self).request(*args, **kwargs)
+        return super().request(*args, **kwargs)
