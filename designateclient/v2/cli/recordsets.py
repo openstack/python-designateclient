@@ -14,7 +14,6 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
-import argparse
 import logging
 
 from osc_lib.command import command
@@ -140,18 +139,12 @@ class ShowRecordSetCommand(command.ShowOne):
 class CreateRecordSetCommand(command.ShowOne):
     """Create new recordset"""
 
-    log = logging.getLogger('deprecated')
-
     def get_parser(self, prog_name):
         parser = super().get_parser(prog_name)
 
         parser.add_argument('zone_id', help='Zone ID')
         parser.add_argument('name', help='RecordSet Name')
         req_group = parser.add_mutually_exclusive_group(required=True)
-        req_group.add_argument(
-            '--records',
-            help=argparse.SUPPRESS,
-            nargs='+')
         req_group.add_argument(
             '--record',
             help='RecordSet Record, repeat if necessary',
@@ -168,15 +161,11 @@ class CreateRecordSetCommand(command.ShowOne):
         client = self.app.client_manager.dns
         common.set_all_common_headers(client, parsed_args)
 
-        all_records = parsed_args.record or parsed_args.records
-        if parsed_args.records:
-            self.log.warning(
-                'Option --records is deprecated, use --record instead.')
         data = client.recordsets.create(
             parsed_args.zone_id,
             parsed_args.name,
             parsed_args.type,
-            all_records,
+            parsed_args.record,
             description=parsed_args.description,
             ttl=parsed_args.ttl)
 
@@ -193,10 +182,6 @@ class SetRecordSetCommand(command.ShowOne):
         parser.add_argument('zone_id', help='Zone ID')
         parser.add_argument('id', help='RecordSet ID')
         req_group = parser.add_mutually_exclusive_group()
-        req_group.add_argument(
-            '--records',
-            help=argparse.SUPPRESS,
-            nargs='+')
         req_group.add_argument(
             '--record',
             help='RecordSet Record, repeat if necessary',
@@ -228,13 +213,8 @@ class SetRecordSetCommand(command.ShowOne):
         elif parsed_args.ttl:
             data['ttl'] = parsed_args.ttl
 
-        all_records = parsed_args.record or parsed_args.records
-        if parsed_args.records:
-            self.log.warning(
-                'Option --records is deprecated, use --record instead.')
-
-        if all_records:
-            data['records'] = all_records
+        if parsed_args.record:
+            data['records'] = parsed_args.record
 
         client = self.app.client_manager.dns
         common.set_all_common_headers(client, parsed_args)

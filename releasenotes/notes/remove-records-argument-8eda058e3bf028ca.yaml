@@ -1,0 +1,8 @@
+---
+upgrade:
+  - |
+    The following commands no longer support the ``--records`` argument. Use
+    the ``--record`` argument instead.
+
+    - ``openstack recordset create``
+    - ``openstack recordset set``
