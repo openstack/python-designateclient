@@ -76,7 +76,7 @@ the DNS standard, and we didn't set a TTL.
 
 .. code-block:: shell-session
 
-  $ openstack recordset create --type A --records 192.0.2.20 example.com. www
+  $ openstack recordset create --type A --record 192.0.2.20 example.com. www
   +-------------+--------------------------------------+
   | Field       | Value                                |
   +-------------+--------------------------------------+
@@ -221,7 +221,7 @@ Using the zone above, create a recordset with the following command:
 
 .. code-block:: shell-session
 
-  $ openstack recordset create example.com. --type A www --records 192.0.2.20
+  $ openstack recordset create example.com. --type A www --record 192.0.2.20
   +-------------+--------------------------------------+
   | Field       | Value                                |
   +-------------+--------------------------------------+
@@ -243,7 +243,7 @@ Multiple records can be provided for a specific recordset type:
 
 .. code-block:: shell-session
 
-  $ openstack recordset create example.com. --type A www --records 192.0.2.20 192.0.2.21
+  $ openstack recordset create example.com. --type A www --record 192.0.2.20 --record 192.0.2.21
 
 See the new recordset in the list of recordsets with the following command:
 
@@ -261,7 +261,7 @@ Update a specific recordset:
 
 .. code-block:: shell-session
 
-   $ openstack recordset set example.com. www.example.com. --ttl 10000 --records 192.0.2.20 192.0.2.21
+   $ openstack recordset set example.com. www.example.com. --ttl 10000 --record 192.0.2.20 --record 192.0.2.21
 
 Delete a recordset:
 

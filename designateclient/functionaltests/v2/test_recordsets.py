@@ -36,7 +36,7 @@ class TestRecordset(BaseDesignateTest):
         self.recordset = self.useFixture(RecordsetFixture(
             zone_id=self.zone.id,
             name=name,
-            records='1.2.3.4',
+            record='1.2.3.4',
             description='An a recordset',
             type='A',
             ttl=1234,
@@ -77,7 +77,7 @@ class TestRecordset(BaseDesignateTest):
         rset = self.clients.recordset_set(
             self.zone.id,
             self.recordset.id,
-            records='2.3.4.5',
+            record='2.3.4.5',
             ttl=2345,
             description='Updated description',
         )
@@ -102,7 +102,7 @@ class TestRecordsetNegative(BaseDesignateTest):
 
     def test_invalid_option_on_recordset_create(self):
         cmd = ('recordset create de47d30b-41c5-4e38-b2c5-e0b908e19ec7 '
-               'aaa.desig.com. --type A --records 1.2.3.4 '
+               'aaa.desig.com. --type A --record 1.2.3.4 '
                '--invalid "not valid"')
         self.assertRaises(CommandFailed, self.clients.openstack, cmd)
 

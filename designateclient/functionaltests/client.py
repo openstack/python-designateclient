@@ -211,10 +211,13 @@ class RecordsetCommands:
         cmd = f'recordset list {zone_id}'
         return self.parsed_cmd(cmd, ListModel, *args, **kwargs)
 
-    def recordset_create(self, zone_id, name, records=None, type=None,
+    def recordset_create(self, zone_id, name, record=None, type=None,
                          description=None, ttl=None, *args, **kwargs):
         options_str = build_option_string({
-            '--records': records,
+            # NOTE(tkajinam): --record argument should be repeated when
+            # multiple records are used. This code needs update when multiple
+            # records are used in functional tests.
+            '--record': record,
             '--type': type,
             '--description': description,
             '--ttl': ttl,
@@ -222,11 +225,14 @@ class RecordsetCommands:
         cmd = f'recordset create {zone_id} {name} {options_str}'
         return self.parsed_cmd(cmd, FieldValueModel, *args, **kwargs)
 
-    def recordset_set(self, zone_id, id, records=None, type=None,
+    def recordset_set(self, zone_id, id, record=None, type=None,
                       description=None, ttl=None, no_description=False,
                       no_ttl=False, *args, **kwargs):
         options_str = build_option_string({
-            '--records': records,
+            # NOTE(tkajinam): --record argument should be repeated when
+            # multiple records are used. This code needs update when multiple
+            # records are used in functional tests.
+            '--record': record,
             '--type': type,
             '--description': description,
             '--ttl': ttl,
