@@ -130,7 +130,7 @@ class CreateZoneCommand(command.ShowOne):
         parser = super().get_parser(prog_name)
 
         parser.add_argument('name', help='Zone Name')
-        parser.add_argument('--email', help='Zone Email')
+        parser.add_argument('--email', help='Zone Email', required=True)
         parser.add_argument('--type', help='Zone Type',
                             choices=['PRIMARY', 'SECONDARY'],
                             default='PRIMARY')
