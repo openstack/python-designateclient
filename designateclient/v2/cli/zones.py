@@ -63,6 +63,13 @@ class ListZonesCommand(command.Lister):
         parser.add_argument('--description', help='Description',
                             required=False)
         parser.add_argument('--status', help='Zone Status', required=False)
+        parser.add_argument(
+            '--long',
+            help='List additional fields in output',
+            default=False,
+            action='store_true',
+            required=False
+        )
 
         common.add_all_common_options(parser)
 
@@ -94,6 +101,9 @@ class ListZonesCommand(command.Lister):
         data = get_all(client.zones.list, criterion)
 
         cols = list(self.columns)
+
+        if parsed_args.long:
+            cols += ['ttl', 'pool_id', 'email', 'attributes', 'masters']
 
         if client.session.all_projects:
             cols.insert(1, 'project_id')
