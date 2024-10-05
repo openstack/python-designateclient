@@ -98,6 +98,7 @@ tsigkey_list = "designateclient.v2.cli.tsigkeys:ListTSIGKeysCommand"
 tsigkey_show = "designateclient.v2.cli.tsigkeys:ShowTSIGKeyCommand"
 tsigkey_set = "designateclient.v2.cli.tsigkeys:SetTSIGKeyCommand"
 tsigkey_delete = "designateclient.v2.cli.tsigkeys:DeleteTSIGKeyCommand"
+dns_limit_list = "designateclient.v2.cli.limits:ListLimitsCommand"
 
 [tool.setuptools.packages.find]
 include = ["designateclient*"]

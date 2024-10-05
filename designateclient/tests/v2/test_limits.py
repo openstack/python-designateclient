@@ -16,7 +16,7 @@
 from designateclient.tests import v2
 
 
-class TestLimits(v2.APIV2TestCase, v2.CrudMixin):
+class TestLimits(v2.APIV2TestCase):
     def test_get(self):
         ref = {"max_zones": "foo"}
         self.stub_url("GET", parts=["limits"], json=ref)

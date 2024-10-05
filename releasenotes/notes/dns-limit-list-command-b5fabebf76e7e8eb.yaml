@@ -1,0 +1,4 @@
+---
+features:
+  - Adds a ``dns limit list`` CLI command to display the DNS service
+    limits (``GET /limits``).
