@@ -64,6 +64,13 @@ class ListRecordSetsCommand(command.Lister):
 
         parser.add_argument('zone_id', help="Zone ID. To list all"
                             " recordsets specify 'all'")
+        parser.add_argument(
+            '--long',
+            help='List additional fields in output',
+            default=False,
+            action='store_true',
+            required=False
+        )
 
         common.add_all_common_options(parser)
 
@@ -107,6 +114,9 @@ class ListRecordSetsCommand(command.Lister):
 
         if client.session.all_projects and _has_project_id(data):
             cols.insert(1, 'project_id')
+
+        if parsed_args.long:
+            cols += ['ttl', 'version', 'description']
 
         for i, rs in enumerate(data):
             data[i] = _format_recordset(rs)

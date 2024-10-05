@@ -96,3 +96,23 @@ class TestDesignateListRecordSets(utils.TestCommand):
         results = list(data)
 
         self.assertEqual(5, len(results))
+
+    def test_list_recordsets_with_long_option(self):
+
+        arg_list = ['6f106adb-0896-4114-b34f-4ac8dfee9465', '--long']
+        verify_args = [
+            ('zone_id', '6f106adb-0896-4114-b34f-4ac8dfee9465'),
+            ('long', True)
+        ]
+
+        body = resources.load('recordset_list')
+        result = base.DesignateList()
+        result.extend(body['recordsets'])
+        self.dns_client.recordsets.list.return_value = result
+
+        parsed_args = self.check_parser(self.cmd, arg_list, verify_args)
+        columns, data = self.cmd.take_action(parsed_args)
+
+        self.assertIn('ttl', columns)
+        self.assertIn('version', columns)
+        self.assertIn('description', columns)
