@@ -70,3 +70,22 @@ class TestDesignateListZones(utils.TestCommand):
         results = list(data)
 
         self.assertEqual(2, len(results))
+
+    def test_list_zones_with_long_option(self):
+        arg_list = ['--long']
+        verify_args = [('long', True)]
+
+        body = resources.load('zone_list')
+        result = base.DesignateList()
+        result.extend(body['zones'])
+
+        self.dns_client.zones.list.return_value = result
+
+        parsed_args = self.check_parser(self.cmd, arg_list, verify_args)
+        columns, data = self.cmd.take_action(parsed_args)
+
+        self.assertIn('ttl', columns)
+        self.assertIn('pool_id', columns)
+        self.assertIn('email', columns)
+        self.assertIn('attributes', columns)
+        self.assertIn('masters', columns)
