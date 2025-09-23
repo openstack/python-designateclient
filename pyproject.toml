@@ -13,8 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import setuptools
-
-setuptools.setup(
-    setup_requires=['pbr>=2.0.0'],
-    pbr=True)
+[build-system]
+requires = [
+  "pbr>=5.5.1",
+]
+build-backend = "pbr.build"
