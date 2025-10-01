@@ -10,4 +10,5 @@ fixes:
   - Wires up the existing ``--pattern`` filter option in the
     ``dns blacklist list`` command so it is actually passed to the API.
   - Wires up the existing ``--name`` filter option in the ``tld list``
-    command so it is actually passed to the API.
+    command so it is actually passed to the API. Removes the
+    ``--description`` filter which is not supported by the API.
