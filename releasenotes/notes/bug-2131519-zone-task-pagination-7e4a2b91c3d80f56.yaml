@@ -1,0 +1,17 @@
+---
+features:
+  - Zone task list methods (``zone_transfers.list_requests()``,
+    ``zone_transfers.list_accepts()``, ``zone_exports.list()``, and
+    ``zone_imports.list()``) now support pagination parameters
+    (``criterion``, ``marker``, ``limit``), matching the pattern used
+    by other v2 controllers.
+  - CLI list commands for zone exports, zone imports, and zone transfer
+    accepts now automatically paginate through all results using
+    ``get_all()``.
+upgrade:
+  - |
+    ``zone_exports.list()`` and ``zone_imports.list()`` now return a list
+    of items directly instead of the raw API response dict. Code that
+    previously accessed ``result["exports"]`` or ``result["imports"]``
+    should use the return value directly. This aligns these methods with
+    all other v2 list controllers which already use ``response_key``.

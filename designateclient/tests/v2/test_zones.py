@@ -218,6 +218,26 @@ class TestZoneTransfers(v2.APIV2TestCase, v2.CrudMixin):
         self.client.zone_transfers.list_requests()
         self.assertRequestBodyIs("")
 
+    def test_list_requests_with_pagination(self):
+        items = [
+            {
+                "id": uuid.uuid4().hex,
+                "zone_id": uuid.uuid4().hex,
+                "target_project_id": uuid.uuid4().hex,
+                "status": "ACTIVE"
+            }
+        ]
+
+        parts = ["zones", "tasks", "transfer_requests"]
+        self.stub_url('GET', parts=parts, json={"transfer_requests": items})
+
+        response = self.client.zone_transfers.list_requests(
+            marker=uuid.uuid4().hex,
+            limit=10
+        )
+        self.assertEqual(items, response)
+        self.assertQueryStringContains(limit="10")
+
     def test_update_request(self):
         transfer = "098bee04-fe30-4a83-8ccd-e0c496755816"
         project = "098bee04-fe30-4a83-8ccd-e0c496755817"
@@ -286,6 +306,25 @@ class TestZoneTransfers(v2.APIV2TestCase, v2.CrudMixin):
         self.client.zone_transfers.list_accepts()
         self.assertRequestBodyIs("")
 
+    def test_list_accepts_with_pagination(self):
+        items = [
+            {
+                "id": uuid.uuid4().hex,
+                "zone_transfer_request_id": uuid.uuid4().hex,
+                "status": "COMPLETE"
+            }
+        ]
+
+        parts = ["zones", "tasks", "transfer_accepts"]
+        self.stub_url('GET', parts=parts, json={"transfer_accepts": items})
+
+        response = self.client.zone_transfers.list_accepts(
+            marker=uuid.uuid4().hex,
+            limit=5
+        )
+        self.assertEqual(items, response)
+        self.assertQueryStringContains(limit="5")
+
 
 class TestZoneExports(v2.APIV2TestCase, v2.CrudMixin):
     def new_ref(self, **kwargs):
@@ -327,8 +366,23 @@ class TestZoneExports(v2.APIV2TestCase, v2.CrudMixin):
         self.stub_url('GET', parts=parts, json={"exports": items})
 
         listed = self.client.zone_exports.list()
-        self.assertList(items, listed["exports"])
+        self.assertList(items, listed)
         self.assertQueryStringIs("")
+
+    def test_list_exports_with_pagination(self):
+        items = [
+            self.new_ref()
+        ]
+
+        parts = ["zones", "tasks", "exports"]
+        self.stub_url('GET', parts=parts, json={"exports": items})
+
+        response = self.client.zone_exports.list(
+            marker=uuid.uuid4().hex,
+            limit=20
+        )
+        self.assertList(items, response)
+        self.assertQueryStringContains(limit="20")
 
     def test_delete_export(self):
         ref = self.new_ref()
@@ -391,8 +445,23 @@ class TestZoneImports(v2.APIV2TestCase, v2.CrudMixin):
         self.stub_url('GET', parts=parts, json={"imports": items})
 
         listed = self.client.zone_imports.list()
-        self.assertList(items, listed["imports"])
+        self.assertList(items, listed)
         self.assertQueryStringIs("")
+
+    def test_list_imports_with_pagination(self):
+        items = [
+            self.new_ref()
+        ]
+
+        parts = ["zones", "tasks", "imports"]
+        self.stub_url('GET', parts=parts, json={"imports": items})
+
+        response = self.client.zone_imports.list(
+            marker=uuid.uuid4().hex,
+            limit=15
+        )
+        self.assertList(items, response)
+        self.assertQueryStringContains(limit="15")
 
     def test_delete_import(self):
         ref = self.new_ref()
