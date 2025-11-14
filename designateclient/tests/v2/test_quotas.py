@@ -19,6 +19,14 @@ from designateclient.tests import v2
 class TestQuotas(v2.APIV2TestCase, v2.CrudMixin):
     RESOURCE = 'quotas'
 
+    def test_list(self):
+        ref = {"zones": 100}
+
+        self.stub_url("GET", parts=[self.RESOURCE], json=ref)
+
+        response = self.client.quotas.list()
+        self.assertEqual(ref, response)
+
     def test_list_with_project_id(self):
         project_id = uuid.uuid4().hex
         ref = {"zones": 100}
