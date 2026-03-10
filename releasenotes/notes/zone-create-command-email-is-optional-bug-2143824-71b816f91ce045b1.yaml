@@ -1,0 +1,6 @@
+---
+fixes:
+  - |
+    "--email" is no longer an effectively required argument when creating zone.
+    It is now only required for PRIMARY zone type, and is silently ignored
+    for SECONDARY zone type.

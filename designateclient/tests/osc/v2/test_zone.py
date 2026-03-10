@@ -12,6 +12,7 @@
 
 from unittest import mock
 
+from osc_lib import exceptions as osc_exc
 from osc_lib.tests import utils
 
 from designateclient.tests.osc import resources
@@ -45,6 +46,22 @@ class TestDesignateCreateZone(utils.TestCommand):
         results = list(data)
 
         self.assertEqual(17, len(results))
+
+    def test_create_primary_zone_no_email(self):
+        arg_list = [
+            'example.devstack.org.',
+        ]
+        verify_args = [
+            ('name', 'example.devstack.org.'),
+        ]
+
+        parsed_args = self.check_parser(self.cmd, arg_list, verify_args)
+        exc = self.assertRaises(
+            osc_exc.CommandError,
+            self.cmd.take_action,
+            parsed_args,
+        )
+        self.assertIn("Zone type PRIMARY requires --email", str(exc))
 
 
 class TestDesignateListZones(utils.TestCommand):
