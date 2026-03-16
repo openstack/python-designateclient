@@ -1,0 +1,13 @@
+---
+features:
+  - Adds ``--status`` and ``--zone-id`` filter options to the
+    ``zone export list`` command.
+  - Adds ``--status``, ``--zone-id``, and ``--message`` filter options to the
+    ``zone import list`` command.
+  - Adds ``--status`` filter option to the ``zone transfer accept list``
+    command.
+fixes:
+  - Wires up the existing ``--pattern`` filter option in the
+    ``dns blacklist list`` command so it is actually passed to the API.
+  - Wires up the existing ``--name`` filter option in the ``tld list``
+    command so it is actually passed to the API.

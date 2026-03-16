@@ -513,6 +513,10 @@ class ListTransferAcceptsCommand(command.Lister):
         parser = super().get_parser(
             prog_name)
 
+        parser.add_argument('--status',
+                            help='Zone Transfer Accept Status',
+                            required=False)
+
         common.add_all_common_options(parser)
 
         return parser
@@ -521,7 +525,11 @@ class ListTransferAcceptsCommand(command.Lister):
         client = self.app.client_manager.dns
         common.set_all_common_headers(client, parsed_args)
 
-        data = client.zone_transfers.list_accepts()
+        criterion = {}
+        if parsed_args.status is not None:
+            criterion['status'] = parsed_args.status
+
+        data = get_all(client.zone_transfers.list_accepts, criterion)
 
         cols = self.columns
         return cols, (utils.get_item_properties(s, cols) for s in data)
@@ -587,6 +595,10 @@ class ListZoneExportsCommand(command.Lister):
         parser = super().get_parser(
             prog_name)
 
+        parser.add_argument('--status', help='Zone Export Status',
+                            required=False)
+        parser.add_argument('--zone-id', help='Zone ID', required=False)
+
         common.add_all_common_options(parser)
 
         return parser
@@ -595,7 +607,13 @@ class ListZoneExportsCommand(command.Lister):
         client = self.app.client_manager.dns
         common.set_all_common_headers(client, parsed_args)
 
-        data = client.zone_exports.list()
+        criterion = {}
+        if parsed_args.status is not None:
+            criterion['status'] = parsed_args.status
+        if parsed_args.zone_id is not None:
+            criterion['zone_id'] = parsed_args.zone_id
+
+        data = client.zone_exports.list(criterion=criterion)
 
         cols = self.columns
         return cols, (utils.get_item_properties(s, cols)
@@ -714,6 +732,12 @@ class ListZoneImportsCommand(command.Lister):
         parser = super().get_parser(
             prog_name)
 
+        parser.add_argument('--status', help='Zone Import Status',
+                            required=False)
+        parser.add_argument('--zone-id', help='Zone ID', required=False)
+        parser.add_argument('--message', help='Zone Import Message',
+                            required=False)
+
         common.add_all_common_options(parser)
 
         return parser
@@ -722,7 +746,15 @@ class ListZoneImportsCommand(command.Lister):
         client = self.app.client_manager.dns
         common.set_all_common_headers(client, parsed_args)
 
-        data = client.zone_imports.list()
+        criterion = {}
+        if parsed_args.status is not None:
+            criterion['status'] = parsed_args.status
+        if parsed_args.zone_id is not None:
+            criterion['zone_id'] = parsed_args.zone_id
+        if parsed_args.message is not None:
+            criterion['message'] = parsed_args.message
+
+        data = client.zone_imports.list(criterion=criterion)
 
         cols = self.columns
         return cols, (utils.get_item_properties(s, cols)
