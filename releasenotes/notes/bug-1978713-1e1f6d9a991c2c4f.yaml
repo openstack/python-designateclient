@@ -1,0 +1,4 @@
+---
+features:
+  - Adds a ``--status`` filter option to the ``zone transfer request list``
+    command, allowing users to filter zone transfer requests by status.

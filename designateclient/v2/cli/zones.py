@@ -404,6 +404,9 @@ class ListTransferRequestsCommand(command.Lister):
         parser = super().get_parser(
             prog_name)
 
+        parser.add_argument('--status', help='Zone Transfer Request Status',
+                            required=False)
+
         common.add_all_common_options(parser)
 
         return parser
@@ -412,7 +415,11 @@ class ListTransferRequestsCommand(command.Lister):
         client = self.app.client_manager.dns
         common.set_all_common_headers(client, parsed_args)
 
-        data = get_all(client.zone_transfers.list_requests)
+        criterion = {}
+        if parsed_args.status is not None:
+            criterion['status'] = parsed_args.status
+
+        data = get_all(client.zone_transfers.list_requests, criterion)
 
         cols = self.columns
         return cols, (utils.get_item_properties(s, cols) for s in data)
