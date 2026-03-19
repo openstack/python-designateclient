@@ -371,6 +371,23 @@ class TestZoneImports(v2.APIV2TestCase, v2.CrudMixin):
         self.client.zone_imports.create(zonefile)
         self.assertRequestBodyIs(body=zonefile)
 
+    def test_create_import_with_attributes(self):
+        zonefile = '$ORIGIN example.com'
+        attributes = {'pool_id': '794ccc2c-d751-44fe-b57f-8894c9f5c842'}
+
+        parts = ["zones", "tasks", "imports"]
+        self.stub_url('POST', parts=parts, json=self.new_ref())
+
+        self.client.zone_imports.create(zonefile, attributes=attributes)
+        self.assertRequestBodyIs(json={
+            'zonefile': zonefile,
+            'attributes': attributes,
+        })
+        self.assertEqual(
+            'application/json',
+            self.requests.last_request.headers['Content-Type']
+        )
+
     def test_get_import(self):
         ref = self.new_ref()
 

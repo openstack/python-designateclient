@@ -171,7 +171,7 @@ class CreateZoneCommand(command.ShowOne):
                 except ValueError:
                     raise osc_exc.CommandError(
                         f"Attribute '{attr}' is in an incorrect format. "
-                        "Attributes are <key>:<value> formated"
+                        "Attributes are <key>:<value> formatted"
                     )
 
         if parsed_args.type == 'PRIMARY':
@@ -697,6 +697,8 @@ class ImportZoneCommand(command.ShowOne):
 
         parser.add_argument('zone_file_path',
                             help='Path to a zone file', type=str)
+        parser.add_argument('--attributes', help='Zone Attributes',
+                            nargs='+')
 
         common.add_all_common_options(parser)
 
@@ -709,7 +711,20 @@ class ImportZoneCommand(command.ShowOne):
         with open(parsed_args.zone_file_path) as f:
             zone_file_contents = f.read()
 
-        data = client.zone_imports.create(zone_file_contents)
+        attributes = None
+        if parsed_args.attributes:
+            attributes = {}
+            for attr in parsed_args.attributes:
+                try:
+                    k, v = attr.split(':')
+                    attributes[k] = v
+                except ValueError:
+                    raise osc_exc.CommandError(
+                        "Attribute '%s' is in an incorrect format. "
+                        "Attributes are <key>:<value> formatted" % attr
+                    )
+
+        data = client.zone_imports.create(zone_file_contents, attributes)
         _format_zone_import_record(data)
 
         LOG.info('Zone Import %s was created', data['id'])

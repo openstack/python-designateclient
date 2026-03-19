@@ -1,0 +1,9 @@
+---
+features:
+  - |
+    Added ``--attributes`` option to ``openstack zone import create`` command.
+    This allows users to pass zone attributes (e.g. ``pool_id``) when
+    importing a zonefile, using the same ``key:value`` format as
+    ``openstack zone create``. When attributes are provided, the client sends
+    the request as ``application/json`` instead of ``text/dns``. Existing
+    behavior without ``--attributes`` is unchanged.
