@@ -6,7 +6,7 @@ build-backend = "pbr.build"
 name = "python-designateclient"
 description = "OpenStack DNS-as-a-Service - Client"
 readme = {file = "README.rst", content-type = "text/x-rst"}
-license = {text = "Apache-2.0"}
+license = "Apache-2.0"
 requires-python = ">=3.10"
 authors = [
     {name = "OpenStack", email = "openstack-discuss@lists.openstack.org"},
@@ -15,7 +15,6 @@ classifiers = [
     "Environment :: OpenStack",
     "Intended Audience :: Information Technology",
     "Intended Audience :: System Administrators",
-    "License :: OSI Approved :: Apache Software License",
     "Operating System :: POSIX :: Linux",
     "Programming Language :: Python",
     "Programming Language :: Python :: Implementation :: CPython",
@@ -100,5 +99,5 @@ tsigkey_show = "designateclient.v2.cli.tsigkeys:ShowTSIGKeyCommand"
 tsigkey_set = "designateclient.v2.cli.tsigkeys:SetTSIGKeyCommand"
 tsigkey_delete = "designateclient.v2.cli.tsigkeys:DeleteTSIGKeyCommand"
 
-[tool.setuptools]
-packages = ["designateclient"]
+[tool.setuptools.packages.find]
+include = ["designateclient*"]
