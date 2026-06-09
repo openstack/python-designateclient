@@ -17,7 +17,9 @@ from designateclient.v2.base import V2Controller
 
 
 class QuotasController(V2Controller):
-    def list(self, project_id):
+    def list(self, project_id=None):
+        if project_id is None:
+            return self._get('/quotas')
         return self._get(f'/quotas/{project_id}')
 
     def update(self, project_id, values):
