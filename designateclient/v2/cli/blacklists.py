@@ -39,6 +39,9 @@ class ListBlacklistsCommand(command.Lister):
     def get_parser(self, prog_name):
         parser = super().get_parser(prog_name)
 
+        parser.add_argument('--pattern', help='Blacklist Pattern',
+                            required=False)
+
         common.add_all_common_options(parser)
 
         return parser
@@ -47,8 +50,12 @@ class ListBlacklistsCommand(command.Lister):
         client = self.app.client_manager.dns
         common.set_all_common_headers(client, parsed_args)
 
+        criterion = {}
+        if parsed_args.pattern is not None:
+            criterion['pattern'] = parsed_args.pattern
+
         cols = self.columns
-        data = get_all(client.blacklists.list)
+        data = get_all(client.blacklists.list, criterion)
         return cols, (utils.get_item_properties(s, cols) for s in data)
 
 

@@ -41,8 +41,6 @@ class ListTLDsCommand(command.Lister):
 
         parser.add_argument('--name', help='TLD NAME')
 
-        parser.add_argument('--description', help='TLD Description')
-
         common.add_all_common_options(parser)
 
         return parser
@@ -51,7 +49,11 @@ class ListTLDsCommand(command.Lister):
         client = self.app.client_manager.dns
         common.set_all_common_headers(client, parsed_args)
 
-        data = get_all(client.tlds.list)
+        criterion = {}
+        if parsed_args.name is not None:
+            criterion['name'] = parsed_args.name
+
+        data = get_all(client.tlds.list, criterion)
 
         cols = self.columns
         return cols, (utils.get_item_properties(s, cols) for s in data)

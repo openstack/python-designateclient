@@ -141,8 +141,9 @@ class ZoneTransfersController(V2Controller):
         url = f'/zones/tasks/transfer_accepts/{accept_id}'
         return self._get(url)
 
-    def list_accepts(self):
-        url = '/zones/tasks/transfer_accepts'
+    def list_accepts(self, criterion=None, marker=None, limit=None):
+        url = self.build_url('/zones/tasks/transfer_accepts',
+                             criterion, marker, limit)
         return self._get(url, response_key='transfer_accepts')
 
 
@@ -155,8 +156,10 @@ class ZoneExportsController(V2Controller):
     def get_export_record(self, zone_export_id):
         return self._get(f'/zones/tasks/exports/{zone_export_id}')
 
-    def list(self):
-        return self._get('/zones/tasks/exports')
+    def list(self, criterion=None, marker=None, limit=None):
+        url = self.build_url('/zones/tasks/exports',
+                             criterion, marker, limit)
+        return self._get(url)
 
     def delete(self, zone_export_id):
         return self._delete(f'/zones/tasks/exports/{zone_export_id}')
@@ -174,8 +177,10 @@ class ZoneImportsController(V2Controller):
     def get_import_record(self, zone_import_id):
         return self._get(f'/zones/tasks/imports/{zone_import_id}')
 
-    def list(self):
-        return self._get('/zones/tasks/imports')
+    def list(self, criterion=None, marker=None, limit=None):
+        url = self.build_url('/zones/tasks/imports',
+                             criterion, marker, limit)
+        return self._get(url)
 
     def delete(self, zone_import_id):
         return self._delete(f'/zones/tasks/imports/{zone_import_id}')
