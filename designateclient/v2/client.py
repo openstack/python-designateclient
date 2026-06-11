@@ -98,7 +98,10 @@ class DesignateAdapter(adapter.LegacyJsonAdapter):
         try:
             response_payload = response.json()
         except ValueError:
-            response_payload = {}
+            response_payload = {
+                'code': response.status_code,
+                'message': response.text,
+            }
             body = response.text
 
         if response.status_code == 400:
