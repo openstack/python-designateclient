@@ -256,7 +256,7 @@ class DeleteZoneCommand(command.ShowOne):
 
         parser.add_argument('--delete-shares', default=False,
                             action='store_true',
-                            help='Delete existing zone shares. Default: False')
+                            help='Delete existing zone shares.')
 
         common.add_all_common_options(parser)
         common.add_hard_delete_option(parser)
@@ -267,13 +267,8 @@ class DeleteZoneCommand(command.ShowOne):
         client = self.app.client_manager.dns
         common.set_all_common_headers(client, parsed_args)
 
-        delete_shares = False
-        if (hasattr(parsed_args, 'delete_shares') and
-                parsed_args.delete_shares is not None and
-                isinstance(parsed_args.delete_shares, bool)):
-            delete_shares = parsed_args.delete_shares
-
-        data = client.zones.delete(parsed_args.id, delete_shares=delete_shares)
+        data = client.zones.delete(
+            parsed_args.id, delete_shares=parsed_args.delete_shares)
         LOG.info('Zone %s was deleted', parsed_args.id)
 
         _format_zone(data)
