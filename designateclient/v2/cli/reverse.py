@@ -32,7 +32,7 @@ def _format_floatingip(fip):
 
 
 class ListFloatingIPCommand(command.Lister):
-    """List floatingip ptr records"""
+    """List floating IP ptr records"""
 
     columns = ['id', 'ptrdname', 'description', 'ttl']
 
@@ -53,7 +53,7 @@ class ListFloatingIPCommand(command.Lister):
 
 
 class ShowFloatingIPCommand(command.ShowOne):
-    """Show floatingip ptr record details"""
+    """Show floating IP ptr record details"""
 
     def get_parser(self, prog_name):
         parser = super().get_parser(prog_name)
@@ -74,7 +74,7 @@ class ShowFloatingIPCommand(command.ShowOne):
 
 
 class SetFloatingIPCommand(command.ShowOne):
-    """Set floatingip ptr record"""
+    """Set floating IP ptr record"""
 
     def get_parser(self, prog_name):
         parser = super().get_parser(prog_name)
@@ -122,7 +122,7 @@ class SetFloatingIPCommand(command.ShowOne):
 
 
 class UnsetFloatingIPCommand(command.Command):
-    """Unset floatingip ptr record"""
+    """Unset floating IP ptr record"""
 
     def get_parser(self, prog_name):
         parser = super().get_parser(prog_name)
