@@ -170,9 +170,19 @@ class ZoneExportsController(V2Controller):
 
 
 class ZoneImportsController(V2Controller):
-    def create(self, zone_file_contents):
-        return self._post('/zones/tasks/imports', data=zone_file_contents,
-                          headers={'Content-Type': 'text/dns'})
+    def create(self, zone_file_contents, attributes=None):
+        if attributes:
+            data = {
+                'zonefile': zone_file_contents,
+                'attributes': attributes,
+            }
+            headers = {'Content-Type': 'application/json'}
+        else:
+            data = zone_file_contents
+            headers = {'Content-Type': 'text/dns'}
+
+        return self._post('/zones/tasks/imports', data=data,
+                          headers=headers)
 
     def get_import_record(self, zone_import_id):
         return self._get(f'/zones/tasks/imports/{zone_import_id}')
