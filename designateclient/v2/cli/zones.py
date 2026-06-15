@@ -389,7 +389,7 @@ class ListTransferRequestsCommand(command.Lister):
         client = self.app.client_manager.dns
         common.set_all_common_headers(client, parsed_args)
 
-        data = client.zone_transfers.list_requests()
+        data = get_all(client.zone_transfers.list_requests)
 
         cols = self.columns
         return cols, (utils.get_item_properties(s, cols) for s in data)
@@ -609,11 +609,10 @@ class ListZoneExportsCommand(command.Lister):
         if parsed_args.zone_id is not None:
             criterion['zone_id'] = parsed_args.zone_id
 
-        data = client.zone_exports.list(criterion=criterion)
+        data = get_all(client.zone_exports.list, criterion)
 
         cols = self.columns
-        return cols, (utils.get_item_properties(s, cols)
-                      for s in data['exports'])
+        return cols, (utils.get_item_properties(s, cols) for s in data)
 
 
 class ShowZoneExportCommand(command.ShowOne):
@@ -765,11 +764,10 @@ class ListZoneImportsCommand(command.Lister):
         if parsed_args.message is not None:
             criterion['message'] = parsed_args.message
 
-        data = client.zone_imports.list(criterion=criterion)
+        data = get_all(client.zone_imports.list, criterion)
 
         cols = self.columns
-        return cols, (utils.get_item_properties(s, cols)
-                      for s in data['imports'])
+        return cols, (utils.get_item_properties(s, cols) for s in data)
 
 
 class ShowZoneImportCommand(command.ShowOne):

@@ -116,8 +116,9 @@ class ZoneTransfersController(V2Controller):
         url = f'/zones/tasks/transfer_requests/{transfer_id}'
         return self._get(url)
 
-    def list_requests(self):
-        url = '/zones/tasks/transfer_requests'
+    def list_requests(self, criterion=None, marker=None, limit=None):
+        url = self.build_url('/zones/tasks/transfer_requests', criterion,
+                             marker, limit)
         return self._get(url, response_key='transfer_requests')
 
     def update_request(self, transfer_id, values):
@@ -142,8 +143,8 @@ class ZoneTransfersController(V2Controller):
         return self._get(url)
 
     def list_accepts(self, criterion=None, marker=None, limit=None):
-        url = self.build_url('/zones/tasks/transfer_accepts',
-                             criterion, marker, limit)
+        url = self.build_url('/zones/tasks/transfer_accepts', criterion,
+                             marker, limit)
         return self._get(url, response_key='transfer_accepts')
 
 
@@ -157,9 +158,8 @@ class ZoneExportsController(V2Controller):
         return self._get(f'/zones/tasks/exports/{zone_export_id}')
 
     def list(self, criterion=None, marker=None, limit=None):
-        url = self.build_url('/zones/tasks/exports',
-                             criterion, marker, limit)
-        return self._get(url)
+        url = self.build_url('/zones/tasks/exports', criterion, marker, limit)
+        return self._get(url, response_key='exports')
 
     def delete(self, zone_export_id):
         return self._delete(f'/zones/tasks/exports/{zone_export_id}')
@@ -188,9 +188,8 @@ class ZoneImportsController(V2Controller):
         return self._get(f'/zones/tasks/imports/{zone_import_id}')
 
     def list(self, criterion=None, marker=None, limit=None):
-        url = self.build_url('/zones/tasks/imports',
-                             criterion, marker, limit)
-        return self._get(url)
+        url = self.build_url('/zones/tasks/imports', criterion, marker, limit)
+        return self._get(url, response_key='imports')
 
     def delete(self, zone_import_id):
         return self._delete(f'/zones/tasks/imports/{zone_import_id}')
