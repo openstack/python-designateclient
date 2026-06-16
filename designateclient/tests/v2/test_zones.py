@@ -99,6 +99,19 @@ class TestZones(v2.APIV2TestCase, v2.CrudMixin):
         self.assertList(items, listed)
         self.assertQueryStringIs("")
 
+    def test_nameservers(self):
+        nameservers = {"nameservers": [
+            {"priority": 1, "hostname": "ns1.devstack.org."}
+        ]}
+        zone = self.new_ref()
+
+        parts = ["zones", zone["id"], "nameservers"]
+        self.stub_url('GET', parts=parts, json=nameservers)
+
+        response = self.client.zones.nameservers(zone["id"])
+
+        self.assertList(nameservers["nameservers"], response)
+
     def test_update(self):
         ref = self.new_ref()
 
