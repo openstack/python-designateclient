@@ -38,7 +38,7 @@ def resolve_by_name(func, name, *args):
         raise exceptions.NotFound(f"Name {name} didn't resolve")
     else:
         raise exceptions.NoUniqueMatch(
-            "Multiple matches found for {name}, please use ID instead."
+            f"Multiple matches found for {name}, please use ID instead."
         )
 
 
